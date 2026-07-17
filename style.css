@@ -82,6 +82,12 @@ margin-bottom:20px;
 box-shadow:var(--shadow);
 }
 
+.exercise-card.completed{
+background:linear-gradient(135deg, #1b2028 0%, #263a2a 100%);
+border-left: 4px solid #25c26e;
+padding-left: 16px;
+}
+
 .exercise-header{
 display:flex;
 justify-content:space-between;
@@ -154,6 +160,7 @@ cursor:pointer;
 color:var(--accent);
 font-weight:700;
 }
+
 .set-btn.completed{
     background:#25c26e;
     color:#fff;
@@ -174,6 +181,7 @@ font-weight:700;
     transform:translateY(-2px);
     box-shadow:0 20px 40px rgba(0,0,0,.45);
 }
+
 .progress-card{
 margin-bottom:22px;
 }
@@ -191,6 +199,7 @@ height:100%;
 background:linear-gradient(90deg,#ff7a00,#ffb347);
 transition:.3s;
 }
+
 .exercise-check{
 cursor:pointer;
 transform:scale(1.2);
@@ -199,6 +208,7 @@ transform:scale(1.2);
 .exercise-check:checked{
 accent-color:#25c26e;
 }
+
 .timer-card{
 
 text-align:center;
@@ -255,6 +265,8 @@ cursor:pointer;
 
 transition:.2s;
 
+width:100%;
+
 }
 
 .secondary-btn:hover{
@@ -262,6 +274,7 @@ transition:.2s;
 background:#444d5d;
 
 }
+
 .day-buttons{
 display:flex;
 gap:10px;
@@ -286,4 +299,100 @@ background:#ff7a00;
 
 .day-btn.active{
 background:#ff7a00;
+}
+
+/* Progress Page Styles */
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 16px;
+margin-top: 16px;
+}
+
+.stat-item {
+background: var(--card2);
+padding: 16px;
+border-radius: 12px;
+text-align: center;
+}
+
+.stat-label {
+font-size: 12px;
+color: var(--muted);
+margin-bottom: 8px;
+}
+
+.stat-value {
+font-size: 32px;
+font-weight: 700;
+color: var(--accent);
+margin: 0;
+}
+
+.history-item {
+background: var(--card2);
+padding: 16px;
+border-radius: 12px;
+margin-bottom: 12px;
+border-left: 3px solid var(--accent);
+}
+
+.history-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+margin-bottom: 12px;
+}
+
+.history-workout {
+margin: 0;
+font-size: 16px;
+color: var(--text);
+}
+
+.history-date {
+margin: 4px 0 0 0;
+font-size: 12px;
+color: var(--muted);
+}
+
+.history-stats {
+text-align: right;
+}
+
+.history-percentage {
+margin: 0;
+font-size: 20px;
+font-weight: 700;
+color: var(--accent);
+}
+
+.history-exercises {
+margin: 4px 0 0 0;
+font-size: 12px;
+color: var(--muted);
+}
+
+.history-duration {
+margin-top: 8px;
+font-size: 12px;
+color: var(--muted);
+}
+
+.hero-card {
+text-align: center;
+background: linear-gradient(135deg, #1b2028 0%, #262d38 100%);
+}
+
+.split-list {
+list-style: none;
+}
+
+.split-list li {
+padding: 8px 0;
+border-bottom: 1px solid var(--card2);
+}
+
+.split-list li:last-child {
+border-bottom: none;
 }
