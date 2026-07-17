@@ -162,24 +162,23 @@ font-weight:700;
 }
 
 .set-btn.completed{
-    background:#25c26e;
-    color:#fff;
-    transform:scale(.96);
+background:#25c26e;
+color:#fff;
+transform:scale(.96);
 }
 
-.exercise-card input{
-    width:22px;
-    height:22px;
-    accent-color:#ff7a00;
-}
-
-.exercise-card{
-    transition:.2s;
+.exercise-card input[type="checkbox"]{
+width:22px;
+height:22px;
+accent-color:#ff7a00;
+cursor:pointer;
+transform:scale(1.2);
 }
 
 .exercise-card:hover{
-    transform:translateY(-2px);
-    box-shadow:0 20px 40px rgba(0,0,0,.45);
+transform:translateY(-2px);
+box-shadow:0 20px 40px rgba(0,0,0,.45);
+transition:.2s;
 }
 
 .progress-card{
@@ -200,79 +199,43 @@ background:linear-gradient(90deg,#ff7a00,#ffb347);
 transition:.3s;
 }
 
-.exercise-check{
-cursor:pointer;
-transform:scale(1.2);
-}
-
-.exercise-check:checked{
-accent-color:#25c26e;
-}
-
 .timer-card{
-
 text-align:center;
-
 }
 
 .timer-display{
-
 font-size:72px;
-
 font-weight:700;
-
 margin:20px 0;
-
 letter-spacing:3px;
-
 color:#ff7a00;
-
 }
 
 .timer-buttons{
-
 display:flex;
-
 gap:12px;
-
 margin-top:20px;
-
 }
 
 .timer-buttons button{
-
 flex:1;
-
 }
 
 .secondary-btn{
-
 padding:18px;
-
 border:none;
-
 border-radius:14px;
-
 background:#323947;
-
 color:#fff;
-
 font-size:17px;
-
 font-weight:600;
-
 cursor:pointer;
-
 transition:.2s;
-
 width:100%;
-
 }
 
 .secondary-btn:hover{
-
 background:#444d5d;
-
 }
 
 .day-buttons{
@@ -299,6 +262,149 @@ background:#ff7a00;
 
 .day-btn.active{
 background:#ff7a00;
+}
+
+/* Exercise Logbook Styles */
+.last-workout-section{
+background:var(--card2);
+padding:12px;
+border-radius:10px;
+margin:12px 0;
+border-left:3px solid var(--accent);
+}
+
+.section-label{
+font-size:11px;
+color:var(--muted);
+text-transform:uppercase;
+font-weight:600;
+margin-bottom:8px;
+margin:0 0 8px 0;
+}
+
+.last-workout-info{
+display:flex;
+flex-wrap:wrap;
+gap:16px;
+}
+
+.last-workout-info span{
+font-size:13px;
+color:var(--text);
+}
+
+.exercise-inputs{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin:16px 0;
+}
+
+.input-group{
+display:flex;
+flex-direction:column;
+gap:6px;
+font-size:13px;
+font-weight:600;
+color:var(--muted);
+}
+
+.input-group input,
+.input-group textarea{
+background:var(--card2);
+border:1px solid #404554;
+color:var(--text);
+padding:10px;
+border-radius:8px;
+font-family:inherit;
+font-size:14px;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder{
+color:var(--muted);
+}
+
+.input-group input:focus,
+.input-group textarea:focus{
+outline:none;
+border-color:var(--accent);
+box-shadow:0 0 0 2px rgba(255,122,0,.2);
+}
+
+.input-group textarea{
+grid-column:1/-1;
+min-height:60px;
+resize:vertical;
+}
+
+/* Modal Styles */
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.7);
+z-index:1000;
+}
+
+.modal-content{
+background:var(--card);
+margin:10% auto;
+padding:24px;
+width:90%;
+max-width:500px;
+border-radius:var(--radius);
+box-shadow:var(--shadow);
+position:relative;
+}
+
+.modal-close{
+position:absolute;
+top:12px;
+right:16px;
+font-size:28px;
+cursor:pointer;
+color:var(--muted);
+}
+
+.modal-close:hover{
+color:var(--accent);
+}
+
+.exercise-history-list{
+margin-top:16px;
+}
+
+.history-log-item{
+background:var(--card2);
+padding:12px;
+border-radius:8px;
+margin-bottom:8px;
+border-left:3px solid var(--accent);
+}
+
+.history-date{
+font-size:12px;
+color:var(--muted);
+margin:0 0 4px 0;
+}
+
+.history-performance{
+font-size:16px;
+font-weight:700;
+color:var(--accent);
+margin:0;
+}
+
+.history-note{
+font-size:12px;
+color:var(--muted);
+font-style:italic;
+margin-top:4px;
+margin-bottom:0;
 }
 
 /* Progress Page Styles */
@@ -395,4 +501,22 @@ border-bottom: 1px solid var(--card2);
 
 .split-list li:last-child {
 border-bottom: none;
+}
+
+/* PR Badge Animation */
+@keyframes prPulse {
+0% { transform: scale(1); }
+50% { transform: scale(1.05); }
+100% { transform: scale(1); }
+}
+
+.pr-badge {
+background: linear-gradient(135deg, #ff7a00, #ffb347);
+color: #000;
+padding: 8px 16px;
+border-radius: 20px;
+font-weight: 700;
+font-size: 12px;
+margin: 8px 0;
+animation: prPulse 1s ease-in-out;
 }
