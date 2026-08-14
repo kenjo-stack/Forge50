@@ -1,317 +1,294 @@
 // ==========================================
-// ⚒ FORGE50 v0.5
+// ⚒ FORGE50 v0.8
 // Workout Page with Exercise Logbook
 // ==========================================
 
 const WorkoutPage = {
-    
+
     currentDay: "sunday",
     exerciseModal: null,
     currentExerciseModal: null,
-    lastRestPeriod: null,
-    
+    historySavedToday: false,
+
+    /**
+     * Show a non-blocking toast notification
+     */
+    showToast(message, type) {
+        const existing = document.getElementById("forgeToast");
+        if (existing) existing.remove();
+
+        const toast = document.createElement("div");
+        toast.id = "forgeToast";
+        toast.setAttribute("role", "status");
+        toast.setAttribute("aria-live", "polite");
+        toast.style.cssText = `
+          position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
+          background:${type === 'pr' ? '#ff7a00' : type === 'success' ? '#25c26e' : '#1b2028'};
+          color:#fff;padding:14px 24px;border-radius:14px;
+          font-weight:600;font-size:15px;z-index:300;
+          box-shadow:0 8px 32px rgba(0,0,0,0.5);
+          animation:slideUp 0.3s ease;max-width:90%;text-align:center;
+          border:1px solid rgba(255,255,255,0.08);
+        `;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.transition = 'opacity 0.3s ease';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    },
+
+    /**
+     * Confetti burst for PR celebrations
+     * Respects prefers-reduced-motion
+     */
+    confetti() {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const container = document.createElement('div');
+        container.className = 'confetti-container';
+        container.setAttribute('aria-hidden', 'true');
+        const colors = ['#ff7a00', '#ffb347', '#25c26e', '#4da3ff', '#ff5e5e', '#c77dff'];
+        for (let i = 0; i < 60; i++) {
+            const p = document.createElement('div');
+            p.className = 'confetti-piece';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.background = colors[i % colors.length];
+            p.style.width = (5 + Math.random() * 7) + 'px';
+            p.style.height = (8 + Math.random() * 8) + 'px';
+            p.style.animationDelay = (Math.random() * 0.4) + 's';
+            p.style.animationDuration = (1.6 + Math.random() * 1.2) + 's';
+            container.appendChild(p);
+        }
+        document.body.appendChild(container);
+        setTimeout(() => container.remove(), 3200);
+    },
+
+    /**
+     * Parse exercise rest string to seconds
+     * @param {string} restStr - e.g. "2-3 min", "90 sec", "60 sec", "2 min"
+     * @returns {number} Duration in seconds
+     */
+    parseRestToSeconds(restStr) {
+        if (!restStr) return 120;
+        const match = restStr.match(/(\d+)/);
+        if (!match) return 120;
+        const num = parseInt(match[1], 10);
+        if (restStr.includes('min')) return num * 60;
+        return num;
+    },
+
     /**
      * Load and render workout for specified day
-     * @param {string} day - Workout day (sunday, tuesday, wednesday, friday)
      */
-    load(day = "sunday") {
+    load(day) {
         this.currentDay = day;
-        
-        // Reset per-day flags when switching workout days
         this.historySavedToday = false;
-        
-        // Check for new day and reset if needed
+
         const isNewDay = WorkoutStorage.checkNewDay();
         if (isNewDay) {
-            console.log("New day detected - clearing previous workout");
             WorkoutStorage.clearWorkoutProgress(day);
         }
-        
-        // Load saved progress from localStorage
+
         const savedProgress = WorkoutStorage.loadWorkoutProgress(day);
         const workout = appData.workouts[day];
-        
+
+        if (!workout) {
+            document.getElementById("app").innerHTML = `
+              <div class="card">
+                <h1>Workout Not Found</h1>
+                <p>No workout data for "${day}". Please try another day.</p>
+                <button class="primary-btn" onclick="App.showHome()">Back Home</button>
+              </div>
+              <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+                <button onclick="App.showHome()" aria-label="Home">🏠<br>Home</button>
+                <button class="active" aria-label="Workout" aria-current="page">💪<br>Workout</button>
+                <button onclick="App.showProgress()" aria-label="Progress">📈<br>Progress</button>
+                <button onclick="App.showSettings()" aria-label="Settings">⚙<br>Settings</button>
+              </nav>`;
+            return;
+        }
+
         let html = `
-        
         <div class="card">
-        
-        <h1>${workout.title}</h1>
-        
-        <p>${workout.focus.join(" • ")}</p>
-        
+          <h1>${workout.title}</h1>
+          <p>${workout.focus.join(" · ")}</p>
         </div>
-        
+
+        <div class="card search-card">
+          <input type="text" id="exerciseSearch" class="search-input"
+                 placeholder="🔍 Filter exercises..."
+                 oninput="WorkoutPage.filterExercises(this.value)"
+                 aria-label="Filter exercises by name">
+        </div>
+
         <div class="card">
-        
-        <h2>Select Workout</h2>
-        
-        <div class="day-buttons">
-        
-        <button class="day-btn ${day==="sunday"?"active":""}"
-        data-action="load-workout" data-day="sunday">
-        
-        Sunday
-        
-        </button>
-        
-        <button class="day-btn ${day==="tuesday"?"active":""}"
-        data-action="load-workout" data-day="tuesday">
-        
-        Tuesday
-        
-        </button>
-        
-        <button class="day-btn ${day==="wednesday"?"active":""}"
-        data-action="load-workout" data-day="wednesday">
-        
-        Wednesday / Thursday
-        
-        </button>
-        
-        <button class="day-btn ${day==="friday"?"active":""}"
-        data-action="load-workout" data-day="friday">
-        
-        Friday
-        
-        </button>
-        
+          <h2>Select Workout</h2>
+          <div class="day-buttons" role="group" aria-label="Select workout day">
+            <button class="day-btn ${day==="sunday" ? "active" : ""}" onclick="WorkoutPage.load('sunday')" aria-label="Sunday workout"${day==="sunday" ? ' aria-pressed="true"' : ''}>Sunday</button>
+            <button class="day-btn ${day==="tuesday" ? "active" : ""}" onclick="WorkoutPage.load('tuesday')" aria-label="Tuesday workout"${day==="tuesday" ? ' aria-pressed="true"' : ''}>Tuesday</button>
+            <button class="day-btn ${day==="thursday" ? "active" : ""}" onclick="WorkoutPage.load('thursday')" aria-label="Thursday workout"${day==="thursday" ? ' aria-pressed="true"' : ''}>Thursday</button>
+            <button class="day-btn ${day==="friday" ? "active" : ""}" onclick="WorkoutPage.load('friday')" aria-label="Friday workout"${day==="friday" ? ' aria-pressed="true"' : ''}>Friday</button>
+          </div>
         </div>
-        
-        </div>
-        
         `;
-        
-        // Render exercise cards with logbook inputs
+
+        // Render exercise cards
         workout.exercises.forEach((exercise, index) => {
             const isCompleted = savedProgress.completed.includes(index);
             const lastExercise = ExerciseLogbook.getLastExercise(day, exercise.name);
-            const prStatus = ExerciseLogbook.checkNewPR({
-                exercise: exercise.name,
-                day: day,
-                weight: lastExercise?.weight || 0,
-                reps: lastExercise?.reps || 0
-            });
-            
+            const progression = ExerciseLogbook.getProgressionRecommendation(day, exercise.name, exercise.reps);
+            const safeName = exercise.name.replace(/'/g, "\\'");
+            const restSeconds = this.parseRestToSeconds(exercise.rest);
+
             html += `
-            
-            <div class="card exercise-card ${isCompleted ? 'completed' : ''}">
-            
-            <div class="exercise-header">
-            <h2 style="cursor:pointer; flex:1;" data-action="exercise-history" data-day="${day}" data-exercise="${exercise.name}" data-index="${index}">
-            ${index+1}. ${exercise.name} 📊
-            </h2>
-            </div>
-            
-            <p>
-            
-            <strong>Sets:</strong> ${exercise.sets}<br>
-            
-            <strong>Reps:</strong> ${exercise.reps}<br>
-            
-            <strong>RIR:</strong> ${exercise.rir}<br>
-            
-            <strong>Rest:</strong> ${exercise.rest}
-            
-            </p>
-            
-            ${exercise.notes ? `<p class="small">${exercise.notes}</p>` : ""}
-            
-            ${lastExercise ? `
-            <div class="last-workout-section">
-            <p class="section-label">Last Workout</p>
-            <div class="last-workout-info">
-            <span>Weight: <strong>${lastExercise.weight} kg</strong></span>
-            <span>Reps: <strong>${lastExercise.reps}</strong></span>
-            <span>Date: <strong>${new Date(lastExercise.date).toLocaleDateString('en-GB', {day:'numeric', month:'short'})}</strong></span>
-            </div>
-            </div>
-            ` : ""}
-            
-            <div class="exercise-inputs">
-            
-            <label class="input-group">
-            <span>Weight (kg)</span>
-            <input type="number" step="0.5" class="weight-input" placeholder="0" value="${lastExercise?.weight || ''}">
-            </label>
-            
-            <label class="input-group">
-            <span>Actual Reps</span>
-            <input type="number" class="reps-input" placeholder="0" value="${lastExercise?.reps || ''}">
-            </label>
-            
-            </div>
-            
-            <label class="input-group">
-            <span>Notes</span>
-            <textarea class="notes-input" placeholder="How did it feel?"></textarea>
-            </label>
-            
-            <button class="primary-btn" data-action="complete-exercise" data-day="${day}" data-exercise="${exercise.name}" data-reps="${exercise.reps}" data-rir="${exercise.rir}" data-index="${index}" data-muscle="${exercise.muscle || 'Upper Body'}">✓ Complete Exercise</button>
-            
-            <label>
-            
-            <input
-            type="checkbox"
-            class="exercise-check"
-            data-index="${index}"
-            data-action="exercise-check" data-day="${day}" data-index="${index}"
-            ${isCompleted ? 'checked' : ''}>
-            
-            Completed
-            
-            </label>
-            
-            </div>
-            
-            `;
+            <div class="card exercise-card ${isCompleted ? 'completed' : ''}" data-ex-index="${index}" role="article" aria-label="Exercise ${index+1}: ${exercise.name}">
+
+              <div class="exercise-header">
+                <h2 onclick="WorkoutPage.showExerciseModal('${day}', '${safeName}', ${index})" role="button" tabindex="0" aria-label="View history for ${exercise.name}">
+                  ${index+1}. ${exercise.name} <span style="font-size:14px;" aria-hidden="true">📊</span>
+                </h2>
+                <button class="guide-btn" onclick="event.stopPropagation(); ExerciseGuides.openByName(encodeURIComponent('${safeName}'))" aria-label="Open exercise guide for ${exercise.name}">📖 Guide</button>
+              </div>
+
+              <div class="exercise-meta" role="list" aria-label="Exercise details">
+                <span role="listitem">${exercise.sets} sets</span>
+                <span role="listitem">${exercise.reps} reps</span>
+                <span role="listitem">RIR ${exercise.rir}</span>
+                <span role="listitem">${exercise.rest} rest</span>
+              </div>
+
+              ${exercise.notes ? `<p class="small">${exercise.notes}</p>` : ""}
+
+              ${lastExercise ? `
+              <div class="last-workout-section" aria-label="Last workout data">
+                <p class="section-label">Last Workout</p>
+                <div class="last-workout-info">
+                  <span>Weight: <strong>${lastExercise.weight} kg</strong></span>
+                  <span>Reps: <strong>${lastExercise.reps}</strong></span>
+                  <span>${new Date(lastExercise.date).toLocaleDateString('en-GB', {day:'numeric', month:'short'})}</span>
+                </div>
+              </div>` : ""}
+
+              ${progression.hasData ? `
+              <div class="progression-card ${progression.action === 'increase-weight' ? 'progression-up' : ''}" aria-label="Progressive overload recommendation">
+                <div>
+                  <span class="section-label">NEXT SESSION</span>
+                  <strong>${progression.weight} kg × ${progression.reps} reps</strong>
+                  <span class="progression-reason">${progression.reason}</span>
+                </div>
+                <button class="secondary-btn progression-use-btn" onclick="WorkoutPage.useProgression(${index}, ${progression.weight}, ${progression.reps})" aria-label="Use suggested ${progression.weight} kilograms and ${progression.reps} reps">Use</button>
+              </div>` : `
+              <div class="progression-card" aria-label="Progressive overload guidance">
+                <div><span class="section-label">PROGRESSION</span><span class="progression-reason">${progression.reason}</span></div>
+              </div>`}
+
+              <div class="exercise-inputs" role="group" aria-label="Exercise input fields">
+                <label class="input-group">
+                  <span>Weight (kg)</span>
+                  <input type="number" step="0.5" min="0" max="500" class="weight-input" placeholder="0" value="${lastExercise?.weight || ''}" inputmode="decimal" aria-label="Weight in kilograms">
+                </label>
+                <label class="input-group">
+                  <span>Actual Reps</span>
+                  <input type="number" min="0" max="100" class="reps-input" placeholder="0" value="${lastExercise?.reps || ''}" inputmode="numeric" aria-label="Actual reps performed">
+                </label>
+              </div>
+
+              <label class="input-group" style="margin-top:12px;">
+                <span>Notes</span>
+                <textarea class="notes-input" placeholder="How did it feel?" rows="2" aria-label="Exercise notes"></textarea>
+              </label>
+
+              <div class="exercise-action-row" style="margin-top:16px;">
+                <button class="primary-btn" onclick="WorkoutPage.completeExercise('${day}', '${safeName}', '${exercise.reps}', ${exercise.rir}, ${index}, '${exercise.muscle || 'Upper Body'}')" aria-label="Complete ${exercise.name}">
+                  ✓ Complete Exercise
+                </button>
+                <button class="secondary-btn rest-start-btn" onclick="Timer.start(${restSeconds}, 'Rest: ${exercise.rest.replace(/'/g, "\\'")}')" aria-label="Start ${exercise.rest} rest for ${exercise.name}">
+                  ⏱ Start Rest · ${Timer.format(restSeconds)}
+                </button>
+              </div>
+
+              <label>
+                <input type="checkbox" class="exercise-check" data-index="${index}" ${isCompleted ? 'checked' : ''} onchange="WorkoutPage.handleExerciseCheck('${day}', ${index}, this.checked)" aria-label="Mark ${exercise.name} as completed">
+                Completed
+              </label>
+
+            </div>`;
         });
-        
-        // Add progress card
+
+        // Progress + Timer
         html += `
-        
-        <div class="card progress-card">
-        
-        <h2>Workout Progress</h2>
-        
-        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Workout progress">
-        
-        <div
-        class="progress-fill"
-        style="width:0%">
-        
+        <div class="card progress-card" aria-label="Workout progress">
+          <h2>Workout Progress</h2>
+          <div class="progress-bar" role="progressbar" aria-label="Workout completion" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" style="width:0%"></div>
+          </div>
+          <p id="progressText" aria-live="polite">0 / 0 Exercises (0%)</p>
+          <div id="completeMessage" style="display:none;" role="alert">🎉 Workout Complete!</div>
         </div>
-        
-        </div>
-        
-        <p id="progressText" aria-live="polite">
-        
-        0 / 0 Exercises (0%)
-        
-        </p>
-        
-        <div id="completeMessage" style="display:none; margin-top:16px; padding:16px; background:#25c26e; border-radius:12px; text-align:center; font-weight:700; font-size:18px;">
-        
-        🎉 Workout Complete!
-        
-        </div>
-        
-        </div>
-        
-        <div class="card">
-        
-        <h2>Rest Timer</h2>
-        
-        <div class="timer-card">
-        
-        <div
-        id="timerDisplay"
-        class="timer-display">
-        
-        02:00
-        
-        </div>
-        
-        <div class="timer-buttons">
-        
-        <button
-class="primary-btn"
-data-action="start-rest">
 
-⏱ Start Rest
+        <div class="card rest-timer-card" aria-label="Rest timer">
+          <div class="rest-timer-heading">
+            <div>
+              <h2>Rest Timer</h2>
+              <p id="timerLabel" class="small">Rest Timer</p>
+            </div>
+            <span class="timer-status" aria-hidden="true">●</span>
+          </div>
+          <div id="timerDisplay" class="timer-display" aria-live="polite" aria-label="Timer display">02:00</div>
+          <div class="timer-adjust-row" role="group" aria-label="Adjust rest time">
+            <button class="secondary-btn" onclick="Timer.add(-15)" aria-label="Subtract 15 seconds">−15 sec</button>
+            <button class="secondary-btn" onclick="Timer.add(15)" aria-label="Add 15 seconds">+15 sec</button>
+          </div>
+          <div class="timer-buttons" role="group" aria-label="Timer controls">
+            <button id="timerStartBtn" class="primary-btn" onclick="Timer.resume()" aria-label="Start or resume timer">▶ Start Rest</button>
+            <button id="timerPauseBtn" class="secondary-btn" onclick="Timer.pause()" aria-label="Pause timer">⏸ Pause</button>
+            <button class="secondary-btn" onclick="Timer.reset()" aria-label="Reset timer">↺ Reset</button>
+            <button class="secondary-btn danger" onclick="Timer.skip()" aria-label="Skip rest timer">⏭ Skip</button>
+          </div>
+          <p class="timer-help">Rest is automatically selected from the exercise prescription. The timer keeps its time when you switch pages or the phone screen is locked.</p>
+        </div>
 
-</button>
-        
-        <button
-        class="secondary-btn"
-        data-action="pause-timer">
-        
-        ⏸ Pause
-        
-        </button>
-        
-        <button
-        class="secondary-btn"
-        data-action="reset-timer">
-        
-        ↺ Reset
-        
-        </button>
-        
-        </div>
-        
-        </div>
-        
         <!-- Exercise History Modal -->
         <div id="exerciseModal" class="modal" role="dialog" aria-modal="true" aria-label="Exercise history">
-        <div class="modal-content">
-        <span class="modal-close" data-action="close-modal" aria-label="Close">&times;</span>
-        <div id="modalBody"></div>
-        <div class="timer-buttons">
-
-<button class="primary-btn"
-data-action="resume-timer">
-
-▶ Resume
-
-</button>
-
-<button class="secondary-btn"
-data-action="pause-timer">
-
-⏸ Pause
-
-</button>
-
-<button class="secondary-btn"
-data-action="reset-timer">
-
-↺ Reset
-
-</button>
-
-<button class="secondary-btn"
-data-action="skip-timer">
-
-⏭ Skip
-
-</button>
-
-</div>
-        
-        
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="WorkoutPage.closeExerciseModal()" role="button" tabindex="0" aria-label="Close modal">&times;</span>
+            <div id="modalBody"></div>
+          </div>
         </div>
-        
-        `;
-        
+
+        <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+          <button onclick="App.showHome()" aria-label="Home">🏠<br>Home</button>
+          <button class="active" aria-label="Workout" aria-current="page">💪<br>Workout</button>
+          <button onclick="App.showProgress()" aria-label="Progress">📈<br>Progress</button>
+          <button onclick="App.showSettings()" aria-label="Settings">⚙<br>Settings</button>
+        </nav>`;
+
         document.getElementById("app").innerHTML = html;
         this.updateWorkoutProgress(day);
-        this._cacheDOMElements();
+        if (typeof Timer !== "undefined") Timer.update();
     },
-    
+
     /**
      * Complete exercise and save to logbook
-     * @param {string} day - Workout day
-     * @param {string} exerciseName - Exercise name
-     * @param {string} targetReps - Target rep range
-     * @param {number} rir - Reps in reserve
-     * @param {number} index - Exercise index
-     * @param {string} muscle - Muscle group
      */
     completeExercise(day, exerciseName, targetReps, rir, index, muscle) {
-        const weightInput = this._weightInputs ? this._weightInputs[index] : null;
-        const repsInput = this._repsInputs ? this._repsInputs[index] : null;
-        const notesInput = this._notesInputs ? this._notesInputs[index] : null;
-        
-        const weight = parseFloat(weightInput.value);
-        const reps = parseInt(repsInput.value);
-        const notes = notesInput.value;
-        
+        const weightInput = document.querySelectorAll('.weight-input');
+        const repsInput = document.querySelectorAll('.reps-input');
+        const notesInput = document.querySelectorAll('.notes-input');
+
+        if (!weightInput[index] || !repsInput[index]) return;
+
+        const weight = parseFloat(weightInput[index].value);
+        const reps = parseInt(repsInput[index].value);
+        const notes = notesInput[index] ? notesInput[index].value : '';
+
         if (!weight || !reps) {
-            showToast('Please enter weight and reps');
+            this.showToast('Please enter weight and reps', 'warning');
             return;
         }
-        
-        // Save to logbook
+
         const logEntry = {
             date: ExerciseLogbook.getTodayKey(),
             day: day,
@@ -325,170 +302,178 @@ data-action="skip-timer">
             completed: true,
             timestamp: Math.floor(Date.now() / 1000)
         };
-        
+
         ExerciseLogbook.saveExerciseLog(logEntry);
-        
+
         // Check for PRs
         const prStatus = ExerciseLogbook.checkNewPR(logEntry);
-        if (prStatus.isWeightPR || prStatus.isRepPR) {
-            let prMessage = '🏆 New PR!';
-            if (prStatus.isWeightPR) prMessage += ' • Weight PR!';
-            if (prStatus.isRepPR) prMessage += ' • Rep PR!';
-            showToast(prMessage);
+        const isPR = prStatus.isWeightPR || prStatus.isRepPR;
+
+        if (isPR) {
+            let msg = '🏆 New PR!';
+            if (prStatus.isWeightPR && prStatus.isRepPR) {
+                msg = `🏆 New PR! ${weight} kg × ${reps} reps`;
+            } else if (prStatus.isWeightPR) {
+                msg = `🏆 Weight PR! ${weight} kg on ${exerciseName}`;
+            } else if (prStatus.isRepPR) {
+                msg = `🏆 Rep PR! ${reps} reps at ${weight} kg`;
+            }
+            this.showToast(msg, 'pr');
+            this.confetti();
+        } else {
+            this.showToast('✅ Exercise saved!', 'success');
         }
-        
+
+        // Haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate(isPR ? [50, 100, 50] : 50);
+        }
+
         // Mark as completed
-        if (this._exerciseChecks && this._exerciseChecks[index]) {
-            this._exerciseChecks[index].checked = true;
+        const checkboxes = document.querySelectorAll('.exercise-check');
+        if (checkboxes[index]) {
+            checkboxes[index].checked = true;
         }
         this.handleExerciseCheck(day, index, true);
-        
-        showToast('✅ Exercise saved!');
+
+        // Prepare the prescribed rest without starting it unexpectedly.
+        // The exercise card also has a dedicated Start Rest button.
+        const exercise = appData.workouts[day]?.exercises?.[index];
+        if (exercise && exercise.rest && typeof Timer !== "undefined") {
+            const restSeconds = this.parseRestToSeconds(exercise.rest);
+            if (restSeconds > 0 && !Timer.interval) {
+                Timer.setDuration(restSeconds, `Rest: ${exercise.rest}`);
+            }
+        }
     },
-    
+
+    /**
+     * Apply the recommended progressive-overload target to an exercise.
+     */
+    useProgression(index, weight, reps) {
+        const weights = document.querySelectorAll('.weight-input');
+        const repsInputs = document.querySelectorAll('.reps-input');
+        if (!weights[index] || !repsInputs[index]) return;
+        weights[index].value = weight;
+        repsInputs[index].value = reps;
+        weights[index].focus();
+        this.showToast(`🎯 Target set: ${weight} kg × ${reps} reps`, 'success');
+    },
+
+    /**
+     * Filter exercise cards by name
+     * @param {string} query
+     */
+    filterExercises(query) {
+        const q = query.trim().toLowerCase();
+        const cards = document.querySelectorAll('.exercise-card');
+        let visible = 0;
+        cards.forEach(card => {
+            const name = card.querySelector('h2')?.textContent.toLowerCase() || '';
+            const show = !q || name.includes(q);
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        // Show/hide progress + timer cards when filtering
+        const progressCard = document.querySelector('.progress-card');
+        if (progressCard) progressCard.style.display = q ? 'none' : '';
+    },
+
     /**
      * Show exercise history modal
-     * @param {string} day - Workout day
-     * @param {string} exerciseName - Exercise name
-     * @param {number} index - Exercise index
      */
     showExerciseModal(day, exerciseName, index) {
         const history = ExerciseLogbook.getExerciseHistory(day, exerciseName);
         const modal = document.getElementById('exerciseModal');
         const modalBody = document.getElementById('modalBody');
-        
-        let html = `<h3>${exerciseName}</h3><div class="exercise-history-list">`;
-        
+
+        if (!modal || !modalBody) return;
+
+        let html = `<h3>${exerciseName}</h3><div class="exercise-history-list" role="list" aria-label="Exercise history">`;
+
         if (history.length === 0) {
             html += '<p>No previous workouts for this exercise</p>';
         } else {
             history.forEach(log => {
-                const dateObj = new Date(log.date);
-                const dateStr = dateObj.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+                const dateStr = new Date(log.date).toLocaleDateString('en-GB', {day:'numeric', month:'short'});
                 html += `
-                <div class="history-log-item">
-                <p class="history-date">${dateStr}</p>
-                <p class="history-performance">${log.weight} kg × ${log.reps}</p>
-                ${log.notes ? `<p class="history-note">"${log.notes}"</p>` : ''}
-                </div>
-                `;
+                <div class="history-log-item" role="listitem">
+                  <span class="history-date">${dateStr}</span>
+                  <span class="history-performance">${log.weight} kg × ${log.reps}</span>
+                  ${log.notes ? `<span class="history-note">"${log.notes}"</span>` : ''}
+                </div>`;
             });
         }
-        
+
         html += '</div>';
         modalBody.innerHTML = html;
         modal.style.display = 'block';
-        
-        // Focus trap: move focus to modal and save trigger element
-        WorkoutPage._lastFocusedElement = document.activeElement;
-        const firstBtn = modal.querySelector('button, [href], [tabindex]:not([tabindex="-1"])');
-        if (firstBtn) {
-            setTimeout(() => firstBtn.focus(), 50);
-        }
+        modal.focus();
     },
-    
+
     /**
      * Close exercise modal
      */
     closeExerciseModal() {
         const modal = document.getElementById('exerciseModal');
-        if (modal) {
-            modal.style.display = 'none';
-            // Return focus to the element that triggered the modal
-            if (WorkoutPage._lastFocusedElement) {
-                WorkoutPage._lastFocusedElement.focus({ preventScroll: true });
-                WorkoutPage._lastFocusedElement = null;
-            }
-        }
+        if (modal) modal.style.display = 'none';
     },
-    
+
     /**
      * Handle exercise checkbox change
      */
-handleExerciseCheck(day, exerciseIndex, isChecked) {
-
-    WorkoutStorage.saveExerciseCompletion(day, exerciseIndex, isChecked);
-
-    const exerciseCard = this._exerciseCards ? this._exerciseCards[exerciseIndex] : null;
-
-    // Get the current workout
-    const workout = appData.workouts[day];
-
-    if (exerciseCard) {
-
-        if (isChecked) {
-
-            exerciseCard.classList.add("completed");
-            
-            // Store this exercise's rest period for the manual Start Rest button
-            this.lastRestPeriod = workout.exercises[exerciseIndex].rest;
-
-            // Start timer using this exercise's rest period
-            Timer.start(workout.exercises[exerciseIndex].rest);
-
-        } else {
-
-            exerciseCard.classList.remove("completed");
-
+    handleExerciseCheck(day, exerciseIndex, isChecked) {
+        WorkoutStorage.saveExerciseCompletion(day, exerciseIndex, isChecked);
+        const cards = document.querySelectorAll('.exercise-card');
+        if (cards[exerciseIndex]) {
+            if (isChecked) {
+                cards[exerciseIndex].classList.add('completed');
+            } else {
+                cards[exerciseIndex].classList.remove('completed');
+            }
         }
-
-    }
-
-    this.updateWorkoutProgress(day);
-
-},
-    
-    /**
-     * Cache DOM element references for performance
-     * Called after each render to avoid repeated querySelector calls
-     */
-    _cacheDOMElements() {
-        this._progressFill = document.querySelector(".progress-fill");
-        this._progressText = document.getElementById("progressText");
-        this._completeMessage = document.getElementById("completeMessage");
-        this._exerciseCards = document.querySelectorAll(".exercise-card");
-        this._weightInputs = document.querySelectorAll(".weight-input");
-        this._repsInputs = document.querySelectorAll(".reps-input");
-        this._notesInputs = document.querySelectorAll(".notes-input");
-        this._exerciseChecks = document.querySelectorAll(".exercise-check");
+        this.updateWorkoutProgress(day);
     },
-    
+
     /**
      * Update workout progress display
      */
     updateWorkoutProgress(day) {
         const workout = appData.workouts[day];
+        if (!workout) return;
+
         const stats = WorkoutStorage.getProgressStats(day, workout.exercises.length);
-        
-        if (this._progressFill) {
-            this._progressFill.style.width = stats.percentage + "%";
+
+        const fill = document.querySelector(".progress-fill");
+        if (fill) {
+            fill.style.width = stats.percentage + "%";
         }
-        
+
         const progressBar = document.querySelector(".progress-bar");
         if (progressBar) {
             progressBar.setAttribute("aria-valuenow", stats.percentage);
         }
-        
-        if (this._progressText) {
-            this._progressText.textContent = `${stats.completed} / ${stats.total} Exercises (${stats.percentage}%)`;
+
+        const text = document.getElementById("progressText");
+        if (text) {
+            text.textContent = `${stats.completed} / ${stats.total} Exercises (${stats.percentage}%)`;
         }
-        
-        if (this._completeMessage) {
+
+        const completeMessage = document.getElementById("completeMessage");
+        if (completeMessage) {
             if (stats.isComplete) {
-                this._completeMessage.style.display = "block";
-                if (stats.completed === stats.total && !this.historySavedToday) {
+                completeMessage.style.display = "block";
+                if (!this.historySavedToday) {
                     this.historySavedToday = true;
                     WorkoutStorage.saveWorkoutHistory(day, stats.total);
+                    this.showToast('🎉 Workout Complete! Saved to history.', 'success');
                 }
             } else {
-                this._completeMessage.style.display = "none";
+                completeMessage.style.display = "none";
                 this.historySavedToday = false;
             }
         }
-    },
-    
-    historySavedToday: false,
-    _lastFocusedElement: null
+    }
 };
 
 // Close modal when clicking outside
@@ -499,23 +484,15 @@ window.addEventListener('click', (event) => {
     }
 });
 
-// Tab trap for the exercise modal
-document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Tab') return;
-    const modal = document.getElementById('exerciseModal');
-    if (!modal || modal.style.display !== 'block') return;
-    
-    const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    if (focusable.length === 0) return;
-    
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    
-    if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
+// Keyboard: close modal on Escape
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('exerciseModal');
+        if (modal && modal.style.display === 'block') {
+            modal.style.display = 'none';
+        }
     }
 });
+
+// Export to window
+window.WorkoutPage = WorkoutPage;

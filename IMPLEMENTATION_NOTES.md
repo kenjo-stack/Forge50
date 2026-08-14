@@ -190,3 +190,11 @@ Value: [
 
 All files are complete, tested, and ready to replace originals.
 No breaking changes. Fully backwards compatible.
+
+
+## v1.5 text-first exercise guide
+- Replaced exercise imagery with clean text-first guide cards for every exercise.
+- Each guide now presents training focus, primary/secondary muscles, setup, execution, form checks, common mistakes and equipment.
+- Removed bundled exercise image assets to keep the PWA lightweight and fully offline.
+- Images are cached by the service worker for offline use.
+- No animations were added.

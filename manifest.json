@@ -1,12 +1,14 @@
 {
-  "name": "FORGE50",
+  "name": "FORGE50 — Upper Body Hypertrophy Specialist",
   "short_name": "FORGE50",
-  "description": "Upper Body Hypertrophy Specialist",
+  "description": "Upper body hypertrophy workout tracker. Log weights, track progress, set personal records, and build muscle with structured programs.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#11151c",
+  "background_color": "#101317",
   "theme_color": "#ff7a00",
   "orientation": "portrait",
+  "categories": ["fitness", "health", "lifestyle", "sports"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "assets/icon-192.png",
@@ -19,6 +21,15 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "FORGE50 workout tracker"
     }
   ]
 }

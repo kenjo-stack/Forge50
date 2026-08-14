@@ -19,7 +19,11 @@ const ExerciseLogbook = {
      * @returns {string} Today's date
      */
     getTodayKey() {
-        return WorkoutStorage.getTodayKey();
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     },
     
     /**
@@ -173,6 +177,46 @@ const ExerciseLogbook = {
         localStorage.setItem(this.PR_KEY, JSON.stringify(records));
     },
     
+    /**
+     * Get a double-progression recommendation for the next session.
+     * If the previous session reached the top of the target rep range,
+     * increase load and return to the bottom of the range. Otherwise,
+     * keep the load and add one rep.
+     */
+    getProgressionRecommendation(day, exerciseName, targetReps) {
+        const last = this.getLastExercise(day, exerciseName);
+        if (!last) {
+            return {
+                hasData: false,
+                weight: null,
+                reps: null,
+                action: 'start',
+                reason: 'Log your first session to unlock progression guidance.'
+            };
+        }
+
+        const parts = String(targetReps || '').match(/(\d+)\s*(?:-|–|to)\s*(\d+)/i);
+        const minReps = parts ? Number(parts[1]) : Number(last.reps);
+        const maxReps = parts ? Number(parts[2]) : Number(last.reps);
+        const reachedTop = Number(last.reps) >= maxReps;
+
+        const increment = last.weight < 10 ? 1.25 : last.weight < 20 ? 2.5 : 5;
+        const suggestedWeight = reachedTop ? Number((last.weight + increment).toFixed(2)) : Number(last.weight);
+        const suggestedReps = reachedTop ? minReps : Math.min(Number(last.reps) + 1, maxReps);
+
+        return {
+            hasData: true,
+            weight: suggestedWeight,
+            reps: suggestedReps,
+            lastWeight: last.weight,
+            lastReps: last.reps,
+            action: reachedTop ? 'increase-weight' : 'add-rep',
+            reason: reachedTop
+                ? `You reached ${maxReps} reps. Increase load and build reps again.`
+                : `Keep ${last.weight} kg and aim for ${suggestedReps} reps.`
+        };
+    },
+
     /**
      * Get suggested weight for progressive overload
      * @param {string} day - Workout day

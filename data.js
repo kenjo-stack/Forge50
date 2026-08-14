@@ -1,5 +1,5 @@
 // ==========================================
-// ⚒ FORGE50 v0.5
+// ⚒ FORGE50 v0.8 — Updated Training Program
 // Workout Database
 // ==========================================
 
@@ -23,21 +23,21 @@ weeklyVolume:{
 
 chest:16,
 
-back:18,
+back:22,
 
-shoulders:12,
+sideDelts:15,
 
-triceps:18,
+rearDelts:6,
+
+triceps:20,
 
 biceps:14,
 
-posteriorChain:4,
-
-quads:6,
-
 hamstrings:3,
 
-abs:12
+quads:5,
+
+abs:3
 
 },
 
@@ -45,12 +45,10 @@ workouts:{
 
 sunday:{
 
-title:"Sunday",
+title:"Sunday — Chest + Triceps + Abs",
 
 focus:[
 "Chest",
-"Side Delts",
-"Rear Delts",
 "Triceps",
 "Abs"
 ],
@@ -67,81 +65,72 @@ notes:"Primary upper chest movement."
 },
 
 {
-name:"Machine Chest Press",
-sets:3,
-reps:"8-10",
-rir:2,
-rest:"2 min",
-notes:"Heavy machine press."
-},
-
-{
 name:"High-to-Low Cable Fly",
 sets:3,
 reps:"12-15",
 rir:1,
 rest:"90 sec",
-notes:"Stretch and squeeze."
+notes:"Lower and mid chest emphasis."
 },
 
 {
-name:"Cable Lateral Raise",
+name:"Low-to-High Cable Fly",
 sets:3,
 reps:"12-15",
-rir:1,
-rest:"60 sec",
-notes:"Side delts."
-},
-
-{
-name:"Reverse Pec Deck",
-sets:3,
-reps:"12-15",
-rir:1,
-rest:"60 sec",
-notes:"Rear delts."
-},
-
-{
-name:"Overhead Cable Triceps Extension",
-sets:3,
-reps:"10-12",
 rir:1,
 rest:"90 sec",
-notes:"Long head."
+notes:"Upper chest and clavicular fibres."
 },
 
 {
-name:"Rope Pushdown",
+name:"Machine Lower Chest Press",
 sets:3,
-reps:"12-15",
-rir:1,
-rest:"60 sec",
-notes:"Lateral & medial heads."
+reps:"8-12",
+rir:2,
+rest:"2 min",
+notes:"Lower chest pressing movement."
 },
 
 {
-name:"Single-Arm Cable Pushdown",
+name:"Close-Grip Barbell Bench Press",
 sets:3,
-reps:"12-15",
-rir:1,
-rest:"60 sec",
-notes:"Finish each arm independently."
+reps:"6-10",
+rir:2,
+rest:"2-3 min",
+notes:"Heavy triceps compound with chest contribution."
 },
 
 {
-name:"Hanging Knee Raise",
+name:"Skull Crushers",
+sets:3,
+reps:"8-12",
+rir:1,
+rest:"90 sec",
+notes:"Triceps extension with strong long-head loading."
+},
+
+{
+name:"Rope Triceps Pushdown",
 sets:3,
 reps:"10-15",
 rir:1,
 rest:"60 sec",
-notes:"Lower abs."
+notes:"Lateral and medial triceps heads."
+},
+
+{
+name:"Reverse-Grip Cable Triceps Pushdown",
+sets:2,
+reps:"12-15",
+rir:1,
+rest:"60 sec",
+notes:"Additional medial-head emphasis."
 },
 
 {
 name:"Cable Crunch",
 sets:3,
-reps:"12-15",
+reps:"12-20",
 rir:1,
 rest:"60 sec",
 notes:"Upper abs."
@@ -153,7 +142,7 @@ notes:"Upper abs."
 
 tuesday:{
 
-title:"Tuesday",
+title:"Tuesday — Back + Biceps + Posterior Chain",
 
 focus:[
 "Posterior Chain",
@@ -161,9 +150,11 @@ focus:[
 "Biceps"
 ],
 
-exercises:[{
+exercises:[
+
+{
 name:"Romanian Deadlift",
-sets:4,
+sets:3,
 reps:"6-10",
 rir:2,
 rest:"3 min",
@@ -171,18 +162,18 @@ notes:"Primary posterior chain movement."
 },
 
 {
-name:"Pull-up / Wide-Grip Lat Pulldown",
+name:"Lat Pulldown",
 sets:4,
-reps:"6-10",
+reps:"8-12",
 rir:2,
-rest:"2-3 min",
-notes:"Primary width movement."
+rest:"2 min",
+notes:"Lat width and vertical pulling strength."
 },
 
 {
-name:"Chest Supported Row",
+name:"Chest-Supported Row",
 sets:4,
-reps:"8-10",
+reps:"8-12",
 rir:2,
 rest:"2 min",
 notes:"Upper back thickness."
@@ -198,135 +189,117 @@ notes:"Mid-back contraction."
 },
 
 {
-name:"Straight Arm Pulldown",
+name:"EZ-Bar Curl",
 sets:3,
-reps:"12-15",
+reps:"8-12",
 rir:1,
-rest:"60 sec",
-notes:"Lat isolation."
+rest:"90 sec",
+notes:"Primary overall biceps movement."
 },
 
 {
 name:"Incline Dumbbell Curl",
-sets:4,
-reps:"8-12",
-rir:1,
-rest:"90 sec",
-notes:"Long head emphasis."
-},
-
-{
-name:"Hammer Curl",
-sets:3,
-reps:"10-12",
-rir:1,
-rest:"60 sec",
-notes:"Brachialis and brachioradialis emphasis for upper arm thickness."
-},
-
-{
-name:"Bayesian Cable Curl",
 sets:3,
 reps:"10-15",
 rir:1,
 rest:"60 sec",
-notes:"Peak contraction."
+notes:"Long-head emphasis."
+},
+
+{
+name:"Preacher Curl",
+sets:3,
+reps:"10-15",
+rir:1,
+rest:"60 sec",
+notes:"Strict biceps work with shortened shoulder position."
 }
 
 ]
 
 },
 
-wednesday:{
+thursday:{
 
-title:"Wednesday / Thursday",
+title:"Thursday — Shoulders + Triceps",
 
 focus:[
 "Shoulders",
-"Chest",
-"Triceps",
-"Abs"
+"Triceps"
 ],
 
-exercises:[{
-name:"Seated Dumbbell Shoulder Press",
+exercises:[
+
+{
+name:"Dumbbell Shoulder Press",
 sets:4,
 reps:"6-10",
 rir:2,
 rest:"2-3 min",
-notes:"Primary shoulder movement."
+notes:"Primary shoulder compound."
 },
 
 {
 name:"Dumbbell Lateral Raise",
 sets:3,
-reps:"12-15",
+reps:"12-20",
 rir:1,
 rest:"60 sec",
-notes:"Side delts."
+notes:"Medial delts."
 },
 
 {
-name:"Face Pull",
+name:"Reverse Pec Deck",
+sets:3,
+reps:"12-20",
+rir:1,
+rest:"60 sec",
+notes:"Rear delts."
+},
+
+{
+name:"Seated Machine Front Raise",
 sets:2,
-reps:"12-15",
+reps:"10-15",
 rir:1,
 rest:"60 sec",
-notes:"Rear delts and rotator cuff."
+notes:"Anterior delts."
 },
 
 {
-name:"Incline Machine Press",
+name:"Machine Lateral Raise",
 sets:3,
-reps:"8-12",
-rir:2,
-rest:"2 min",
-notes:"Upper chest."
-},
-
-{
-name:"Pec Deck Fly",
-sets:3,
-reps:"12-15",
+reps:"12-20",
 rir:1,
 rest:"60 sec",
-notes:"Chest isolation."
+notes:"Additional medial-delt volume."
 },
 
 {
-name:"Close-Grip Smith Machine Press",
+name:"Overhead Cable Triceps Extension",
 sets:3,
-reps:"8-10",
-rir:2,
-rest:"2 min",
-notes:"Heavy triceps compound."
-},
-
-{
-name:"Cable Overhead Triceps Extension",
-sets:3,
-reps:"10-12",
-rir:1,
-rest:"90 sec",
-notes:"Long head emphasis."
-},
-
-{
-name:"Ab Wheel Rollout",
-sets:3,
-reps:"8-12",
+reps:"10-15",
 rir:1,
 rest:"60 sec",
-notes:"Core stability."
+notes:"Long-head emphasis."
 },
 
 {
-name:"Cable Wood Chop",
+name:"Rope Triceps Pushdown",
 sets:3,
-reps:"12-15 / side",
+reps:"10-15",
 rir:1,
 rest:"60 sec",
-notes:"Obliques."
+notes:"Lateral and medial triceps heads."
+},
+
+{
+name:"Triceps Extension Machine",
+sets:3,
+reps:"10-15",
+rir:1,
+rest:"60 sec",
+notes:"Controlled triceps isolation."
 }
 
 ]
@@ -335,75 +308,113 @@ notes:"Obliques."
 
 friday:{
 
-title:"Friday",
+title:"Friday — Back + Biceps + Lower Body",
 
 focus:[
 "Back",
 "Biceps",
-"Legs"
+"Lower Body"
 ],
 
-exercises:[{
-name:"Wide-Grip Lat Pulldown",
-sets:4,
-reps:"10-12",
+exercises:[
+
+{
+name:"High Row Machine / Assisted Pull-Up",
+sets:3,
+reps:"6-10",
 rir:2,
-rest:"2 min",
-notes:"Primary lat width movement."
+rest:"2-3 min",
+notes:"Upper-back thickness and lat width."
 },
 
 {
-name:"One-Arm Dumbbell Row",
-sets:4,
-reps:"8-10",
+name:"Chest-Supported Row",
+sets:3,
+reps:"8-12",
 rir:2,
 rest:"2 min",
-notes:"Back thickness."
+notes:"Upper back thickness."
 },
 
 {
-name:"Preacher Curl",
-sets:4,
+name:"Single-Arm Cable Row",
+sets:3,
+reps:"10-15",
+rir:1,
+rest:"90 sec",
+notes:"Unilateral back and lat work."
+},
+
+{
+name:"High Face Pull",
+sets:3,
+reps:"12-20",
+rir:1,
+rest:"60 sec",
+notes:"Rear delts, upper back and external rotators."
+},
+
+{
+name:"EZ-Bar Curl",
+sets:3,
 reps:"8-12",
 rir:1,
 rest:"90 sec",
-notes:"Primary biceps movement."
+notes:"Overall biceps loading."
+},
+
+{
+name:"Cable Curl",
+sets:3,
+reps:"10-15",
+rir:1,
+rest:"60 sec",
+notes:"Constant-tension biceps work."
 },
 
 {
 name:"Hammer Curl",
-sets:3,
-reps:"10-12",
+sets:2,
+reps:"10-15",
 rir:1,
 rest:"60 sec",
-notes:"Brachialis and brachioradialis."
+notes:"Brachialis, brachioradialis and biceps."
 },
 
 {
 name:"Leg Press",
 sets:3,
-reps:"10-12",
+reps:"10-15",
 rir:2,
 rest:"2 min",
-notes:"Primary quad movement."
+notes:"Quad-focused lower-body work."
 },
 
 {
-name:"Leg Curl",
+name:"Seated Leg Curl",
 sets:3,
-reps:"12-15",
+reps:"10-15",
 rir:1,
 rest:"90 sec",
-notes:"Hamstrings."
+notes:"Hamstring work."
 },
 
 {
 name:"Leg Extension",
-sets:3,
+sets:2,
 reps:"12-15",
 rir:1,
-rest:"90 sec",
-notes:"Quad isolation."
+rest:"60 sec",
+notes:"Direct quadriceps isolation."
+},
+
+{
+name:"Machine Calf Raise",
+sets:3,
+reps:"10-15",
+rir:1,
+rest:"60 sec",
+notes:"Calf development."
 }
 
 ]

@@ -1,5 +1,5 @@
 // ==========================================
-// ⚒ FORGE50 v0.5
+// ⚒ FORGE50 v0.8
 // Core Application
 // ==========================================
 
@@ -7,261 +7,220 @@ const App = {
 
     currentPage: "home",
     currentWorkout: "sunday",
-    _eventsInitialized: false,
-    _deferredPrompt: null,
-    isInstallable: false,
+    _deferredInstall: null,
 
     init() {
 
+        // Register service worker with update detection
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./sw.js");
+            navigator.serviceWorker.register("./sw.js").then(reg => {
+                reg.addEventListener("updatefound", () => {
+                    const newSW = reg.installing;
+                    newSW.addEventListener("statechange", () => {
+                        if (newSW.state === "installed" && navigator.serviceWorker.controller) {
+                            App.showUpdateNotification(reg);
+                        }
+                    });
+                });
+            }).catch(() => {
+                // SW registration failed — app still works without it
+            });
 
-            // Listen for SW update notifications
-            navigator.serviceWorker.addEventListener("message", (event) => {
-                if (event.data && event.data.type === "SW_UPDATE_AVAILABLE") {
-                    showToast("Forge50 updated! Refresh for the latest version.");
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener("controllerchange", () => {
+                if (!refreshing) {
+                    refreshing = true;
+                    window.location.reload();
                 }
             });
         }
 
-        // Global error handler
-        window.onerror = (msg, url, line, col, error) => {
-            console.error(`Forge50 Error: ${msg} at ${url}:${line}:${col}`, error);
-            showToast("Something went wrong. Please try again.");
-            return false;
-        };
+        // Install prompt
+        window.addEventListener("beforeinstallprompt", (e) => {
+            e.preventDefault();
+            App._deferredInstall = e;
+            App.showInstallBanner();
+        });
 
-        window.addEventListener("unhandledrejection", (event) => {
-            console.error("Forge50 Unhandled Promise:", event.reason);
-            showToast("Something went wrong. Please try again.");
+        // Offline detection
+        window.addEventListener("online", () => {
+            App.hideOfflineBanner();
+        });
+        window.addEventListener("offline", () => {
+            App.showOfflineBanner();
         });
 
         this.showHome();
-        this.initPageEvents();
-        this.initKeyboardEvents();
-        this.initInstallPrompt();
-
     },
 
     /**
-     * Set up global event delegation on #app
+     * Clean up resources when leaving a page
      */
-    initPageEvents() {
-        if (this._eventsInitialized) return;
-        this._eventsInitialized = true;
+    cleanupPage() {
+        // Do not stop the rest timer when navigating between app pages.
+        // Timer uses wall-clock time and sessionStorage so it remains accurate
+        // while the user changes pages or the phone is backgrounded/locked.
+        const toast = document.getElementById("forgeToast");
+        if (toast) toast.remove();
+    },
 
-        const app = document.getElementById("app");
+    /**
+     * Show install banner when PWA install is available
+     */
+    showInstallBanner() {
+        if (document.getElementById("forgeInstallBanner")) return;
 
-        app.addEventListener("click", (e) => {
-            const el = e.target.closest("[data-action]");
-            if (!el) return;
+        const banner = document.createElement("div");
+        banner.id = "forgeInstallBanner";
+        banner.className = "install-banner";
+        banner.setAttribute("role", "banner");
+        banner.innerHTML = `
+          <span>📲 Install FORGE50 for the best experience</span>
+          <button onclick="App.installApp()" aria-label="Install app">Install</button>
+          <button onclick="this.parentElement.remove()" aria-label="Dismiss" style="background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px 8px;">✕</button>
+        `;
+        document.body.appendChild(banner);
+    },
 
-            const action = el.dataset.action;
-            const d = el.dataset;
-
-            switch (action) {
-                case "nav":
-                    App.showPage(d.page);
-                    break;
-                case "install-app":
-                    App.promptInstall();
-                    break;
-                case "load-workout":
-                    WorkoutPage.load(d.day);
-                    break;
-                case "complete-exercise":
-                    WorkoutPage.completeExercise(
-                        d.day, d.exercise, d.reps, d.rir,
-                        parseInt(d.index), d.muscle
-                    );
-                    break;
-                case "exercise-history":
-                    WorkoutPage.showExerciseModal(d.day, d.exercise, parseInt(d.index));
-                    break;
-                case "close-modal":
-                    WorkoutPage.closeExerciseModal();
-                    break;
-                case "start-rest":
-                    Timer.start(WorkoutPage.lastRestPeriod);
-                    break;
-                case "pause-timer":
-                    Timer.pause();
-                    break;
-                case "reset-timer":
-                    Timer.reset();
-                    break;
-                case "resume-timer":
-                    Timer.resume();
-                    break;
-                case "skip-timer":
-                    Timer.skip();
-                    break;
-                case "export-data":
-                    SettingsPage.exportData();
-                    break;
-                case "clear-history":
-                    SettingsPage.clearHistory();
-                    break;
+    /**
+     * Trigger PWA install
+     */
+    installApp() {
+        if (!App._deferredInstall) return;
+        App._deferredInstall.prompt();
+        App._deferredInstall.userChoice.then(choice => {
+            if (choice.outcome === "accepted") {
+                const banner = document.getElementById("forgeInstallBanner");
+                if (banner) banner.remove();
             }
-        });
-
-        app.addEventListener("change", (e) => {
-            const el = e.target.closest("[data-action]");
-            if (!el) return;
-
-            const action = el.dataset.action;
-
-            if (action === "exercise-check") {
-                WorkoutPage.handleExerciseCheck(
-                    el.dataset.day, parseInt(el.dataset.index), el.checked
-                );
-            }
+            App._deferredInstall = null;
         });
     },
 
     /**
-     * Set up global keyboard shortcuts
+     * Show offline indicator
      */
-    initKeyboardEvents() {
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                const modal = document.getElementById("exerciseModal");
-                if (modal && modal.style.display === "block") {
-                    WorkoutPage.closeExerciseModal();
-                    e.preventDefault();
-                }
-            }
-        });
+    showOfflineBanner() {
+        if (document.getElementById("forgeOfflineBanner")) return;
+
+        const banner = document.createElement("div");
+        banner.id = "forgeOfflineBanner";
+        banner.className = "offline-banner";
+        banner.setAttribute("role", "alert");
+        banner.setAttribute("aria-live", "assertive");
+        banner.innerHTML = `<span>📡 You're offline — data saved locally</span>`;
+        document.body.appendChild(banner);
     },
 
     /**
-     * Set up PWA install prompt handling
+     * Hide offline indicator
      */
-    initInstallPrompt() {
-        window.addEventListener("beforeinstallprompt", (e) => {
-            e.preventDefault();
-            App._deferredPrompt = e;
-            App.isInstallable = true;
-        });
-
-        window.addEventListener("appinstalled", () => {
-            App._deferredPrompt = null;
-            App.isInstallable = false;
-        });
+    hideOfflineBanner() {
+        const banner = document.getElementById("forgeOfflineBanner");
+        if (banner) banner.remove();
     },
 
     /**
-     * Show the deferred install prompt
+     * Show update available notification
      */
-    async promptInstall() {
-        if (!this._deferredPrompt) return;
-        this._deferredPrompt.prompt();
-        const result = await this._deferredPrompt.userChoice;
-        this._deferredPrompt = null;
-        this.isInstallable = false;
+    showUpdateNotification(reg) {
+        const existing = document.getElementById("forgeUpdateBanner");
+        if (existing) return;
+
+        const banner = document.createElement("div");
+        banner.id = "forgeUpdateBanner";
+        banner.style.cssText = [
+            "position:fixed;top:20px;left:50%;transform:translateX(-50%)",
+            "background:#1b2028;color:#fff;padding:14px 20px;border-radius:14px",
+            "font-weight:600;font-size:14px;z-index:500",
+            "box-shadow:0 8px 32px rgba(0,0,0,0.6)",
+            "border:1px solid rgba(255,122,0,0.2)",
+            "display:flex;align-items:center;gap:14px",
+            "max-width:90%;animation:slideUp 0.3s ease"
+        ].join(";");
+        banner.innerHTML = [
+            '<span>⚡ New version available</span>',
+            '<button style="background:#ff7a00;border:none;color:#fff;',
+            'padding:8px 18px;border-radius:10px;font-weight:700;',
+            'font-size:13px;cursor:pointer;" onclick="App.applyUpdate()" aria-label="Update app">Update</button>'
+        ].join("");
+        document.body.appendChild(banner);
+
+        App._updateReg = reg;
+    },
+
+    applyUpdate() {
+        if (App._updateReg && App._updateReg.waiting) {
+            App._updateReg.waiting.postMessage("SKIP_WAITING");
+        }
+        const banner = document.getElementById("forgeUpdateBanner");
+        if (banner) banner.remove();
     },
 
     /**
-     * Focus the first heading in the app container after page render
+     * Safely render a page with error boundary
      */
-    focusFirstHeading() {
-        requestAnimationFrame(() => {
+    renderPage(pageName, renderFn) {
+        this.cleanupPage();
+        try {
+            renderFn();
+        } catch (err) {
+            console.error("Error rendering " + pageName + ":", err);
             const app = document.getElementById("app");
-            const heading = app.querySelector("h1, h2, [tabindex='-1']");
-            if (heading) {
-                heading.setAttribute("tabindex", "-1");
-                heading.focus({ preventScroll: true });
+            if (app) {
+                app.innerHTML = [
+                    '<div class="card" style="text-align:center;padding:40px 24px;" role="alert">',
+                    '  <p style="font-size:40px;margin-bottom:16px;" aria-hidden="true">⚠️</p>',
+                    '  <h2>Something went wrong</h2>',
+                    '  <p>Could not load ' + pageName + ' page. Please try again.</p>',
+                    '  <button class="primary-btn" onclick="App.showHome()" style="margin-top:20px;">Back to Home</button>',
+                    '  <p style="font-size:12px;color:var(--muted);margin-top:20px;">' + (err.message || 'Unknown error') + '</p>',
+                    '</div>',
+                    '<nav class="bottom-nav" role="navigation" aria-label="Main navigation">',
+                    '  <button onclick="App.showHome()" aria-label="Home">🏠<br>Home</button>',
+                    '  <button onclick="App.showWorkout()" aria-label="Workout">💪<br>Workout</button>',
+                    '  <button onclick="App.showProgress()" aria-label="Progress">📈<br>Progress</button>',
+                    '  <button onclick="App.showSettings()" aria-label="Settings">⚙<br>Settings</button>',
+                    '</nav>'
+                ].join("\n");
             }
-        });
-    },
-
-    /**
-     * Navigate to a page by id
-     */
-    showPage(pageId) {
-        switch (pageId) {
-            case "home": this.showHome(); break;
-            case "workout": this.showWorkout(); break;
-            case "progress": this.showProgress(); break;
-            case "settings": this.showSettings(); break;
         }
     },
 
     showHome() {
-        this.currentPage = "home";
-        if (typeof HomePage !== "undefined") {
-            try {
-                HomePage.render();
-            } catch (e) {
-                console.error("Failed to render home page:", e);
-                showToast("Failed to load page. Please try again.");
-            }
-            this.focusFirstHeading();
-        }
+        this.renderPage("home", () => {
+            HomePage.render();
+        });
     },
 
-    showWorkout(day = this.currentWorkout) {
-        this.currentPage = "workout";
+    showWorkout(day) {
+        day = day || this.currentWorkout;
         this.currentWorkout = day;
-        if (typeof WorkoutPage !== "undefined") {
-            try {
-                WorkoutPage.load(day);
-            } catch (e) {
-                console.error("Failed to render workout page:", e);
-                showToast("Failed to load page. Please try again.");
-            }
-            this.focusFirstHeading();
-        }
+        this.renderPage("workout", () => {
+            WorkoutPage.load(day);
+        });
     },
 
     showProgress() {
-        this.currentPage = "progress";
-        if (typeof ProgressPage !== "undefined") {
-            try {
-                ProgressPage.render();
-            } catch (e) {
-                console.error("Failed to render progress page:", e);
-                showToast("Failed to load page. Please try again.");
-            }
-            this.focusFirstHeading();
-        }
+        this.renderPage("progress", () => {
+            ProgressPage.render();
+        });
     },
 
     showSettings() {
-        this.currentPage = "settings";
-        if (typeof SettingsPage !== "undefined") {
-            try {
-                SettingsPage.render();
-            } catch (e) {
-                console.error("Failed to render settings page:", e);
-                showToast("Failed to load page. Please try again.");
-            }
-            this.focusFirstHeading();
-        }
-    },
-
-    /**
-     * Render shared bottom navigation with active page highlight
-     */
-    renderBottomNav(activePage) {
-        const pages = [
-            { id: "home", label: "Home", icon: "\u{1F3E0}" },
-            { id: "workout", label: "Workout", icon: "\u{1F4AA}" },
-            { id: "progress", label: "Progress", icon: "\u{1F4C8}" },
-            { id: "settings", label: "Settings", icon: "\u2699" }
-        ];
-
-        return `
-        <nav class="bottom-nav" aria-label="Main navigation">
-        ${pages.map(p => `
-        <button class="${activePage === p.id ? 'active' : ''}" data-action="nav" data-page="${p.id}" aria-current="${activePage === p.id ? 'page' : 'false'}">
-        ${p.icon}<br>${p.label}
-        </button>
-        `).join('')}
-        </nav>
-        `;
+        this.renderPage("settings", () => {
+            SettingsPage.render();
+        });
     }
 
+};
+
+// Backwards compatibility
+const Router = {
+    showHome() { App.showHome(); },
+    showWorkout(day) { App.showWorkout(day); },
+    showProgress() { App.showProgress(); },
+    showSettings() { App.showSettings(); }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
