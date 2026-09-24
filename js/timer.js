@@ -63,7 +63,6 @@ const Timer = {
             if (!this.endTime) return;
             this.remaining = Math.max(0, Math.ceil((this.endTime - Date.now()) / 1000));
             this.update();
-            this.saveState();
             if (this.remaining <= 0) this.finish();
         }, 250);
     },
