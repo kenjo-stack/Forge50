@@ -1,228 +1,182 @@
-// ==========================================
-// ⚒ FORGE50 v0.8
-// Core Application
-// ==========================================
-
-const App = {
-
-    currentPage: "home",
-    currentWorkout: "sunday",
-    _deferredInstall: null,
-
-    init() {
-
-        // Register service worker with update detection
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("./sw.js").then(reg => {
-                reg.addEventListener("updatefound", () => {
-                    const newSW = reg.installing;
-                    newSW.addEventListener("statechange", () => {
-                        if (newSW.state === "installed" && navigator.serviceWorker.controller) {
-                            App.showUpdateNotification(reg);
-                        }
-                    });
-                });
-            }).catch(() => {
-                // SW registration failed — app still works without it
-            });
-
-            let refreshing = false;
-            navigator.serviceWorker.addEventListener("controllerchange", () => {
-                if (!refreshing) {
-                    refreshing = true;
-                    window.location.reload();
-                }
-            });
-        }
-
-        // Install prompt
-        window.addEventListener("beforeinstallprompt", (e) => {
-            e.preventDefault();
-            App._deferredInstall = e;
-            App.showInstallBanner();
-        });
-
-        // Offline detection
-        window.addEventListener("online", () => {
-            App.hideOfflineBanner();
-        });
-        window.addEventListener("offline", () => {
-            App.showOfflineBanner();
-        });
-
-        this.showHome();
-    },
-
-    /**
-     * Clean up resources when leaving a page
-     */
-    cleanupPage() {
-        // Do not stop the rest timer when navigating between app pages.
-        // Timer uses wall-clock time and sessionStorage so it remains accurate
-        // while the user changes pages or the phone is backgrounded/locked.
-        const toast = document.getElementById("forgeToast");
-        if (toast) toast.remove();
-    },
-
-    /**
-     * Show install banner when PWA install is available
-     */
-    showInstallBanner() {
-        if (document.getElementById("forgeInstallBanner")) return;
-
-        const banner = document.createElement("div");
-        banner.id = "forgeInstallBanner";
-        banner.className = "install-banner";
-        banner.setAttribute("role", "banner");
-        banner.innerHTML = `
-          <span>📲 Install FORGE50 for the best experience</span>
-          <button onclick="App.installApp()" aria-label="Install app">Install</button>
-          <button onclick="this.parentElement.remove()" aria-label="Dismiss" style="background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px 8px;">✕</button>
-        `;
-        document.body.appendChild(banner);
-    },
-
-    /**
-     * Trigger PWA install
-     */
-    installApp() {
-        if (!App._deferredInstall) return;
-        App._deferredInstall.prompt();
-        App._deferredInstall.userChoice.then(choice => {
-            if (choice.outcome === "accepted") {
-                const banner = document.getElementById("forgeInstallBanner");
-                if (banner) banner.remove();
-            }
-            App._deferredInstall = null;
-        });
-    },
-
-    /**
-     * Show offline indicator
-     */
-    showOfflineBanner() {
-        if (document.getElementById("forgeOfflineBanner")) return;
-
-        const banner = document.createElement("div");
-        banner.id = "forgeOfflineBanner";
-        banner.className = "offline-banner";
-        banner.setAttribute("role", "alert");
-        banner.setAttribute("aria-live", "assertive");
-        banner.innerHTML = `<span>📡 You're offline — data saved locally</span>`;
-        document.body.appendChild(banner);
-    },
-
-    /**
-     * Hide offline indicator
-     */
-    hideOfflineBanner() {
-        const banner = document.getElementById("forgeOfflineBanner");
-        if (banner) banner.remove();
-    },
-
-    /**
-     * Show update available notification
-     */
-    showUpdateNotification(reg) {
-        const existing = document.getElementById("forgeUpdateBanner");
-        if (existing) return;
-
-        const banner = document.createElement("div");
-        banner.id = "forgeUpdateBanner";
-        banner.style.cssText = [
-            "position:fixed;top:20px;left:50%;transform:translateX(-50%)",
-            "background:#1b2028;color:#fff;padding:14px 20px;border-radius:14px",
-            "font-weight:600;font-size:14px;z-index:500",
-            "box-shadow:0 8px 32px rgba(0,0,0,0.6)",
-            "border:1px solid rgba(255,122,0,0.2)",
-            "display:flex;align-items:center;gap:14px",
-            "max-width:90%;animation:slideUp 0.3s ease"
-        ].join(";");
-        banner.innerHTML = [
-            '<span>⚡ New version available</span>',
-            '<button style="background:#ff7a00;border:none;color:#fff;',
-            'padding:8px 18px;border-radius:10px;font-weight:700;',
-            'font-size:13px;cursor:pointer;" onclick="App.applyUpdate()" aria-label="Update app">Update</button>'
-        ].join("");
-        document.body.appendChild(banner);
-
-        App._updateReg = reg;
-    },
-
-    applyUpdate() {
-        if (App._updateReg && App._updateReg.waiting) {
-            App._updateReg.waiting.postMessage("SKIP_WAITING");
-        }
-        const banner = document.getElementById("forgeUpdateBanner");
-        if (banner) banner.remove();
-    },
-
-    /**
-     * Safely render a page with error boundary
-     */
-    renderPage(pageName, renderFn) {
-        this.cleanupPage();
-        try {
-            renderFn();
-        } catch (err) {
-            console.error("Error rendering " + pageName + ":", err);
-            const app = document.getElementById("app");
-            if (app) {
-                app.innerHTML = [
-                    '<div class="card" style="text-align:center;padding:40px 24px;" role="alert">',
-                    '  <p style="font-size:40px;margin-bottom:16px;" aria-hidden="true">⚠️</p>',
-                    '  <h2>Something went wrong</h2>',
-                    '  <p>Could not load ' + pageName + ' page. Please try again.</p>',
-                    '  <button class="primary-btn" onclick="App.showHome()" style="margin-top:20px;">Back to Home</button>',
-                    '  <p style="font-size:12px;color:var(--muted);margin-top:20px;">' + (err.message || 'Unknown error') + '</p>',
-                    '</div>',
-                    '<nav class="bottom-nav" role="navigation" aria-label="Main navigation">',
-                    '  <button onclick="App.showHome()" aria-label="Home">🏠<br>Home</button>',
-                    '  <button onclick="App.showWorkout()" aria-label="Workout">💪<br>Workout</button>',
-                    '  <button onclick="App.showProgress()" aria-label="Progress">📈<br>Progress</button>',
-                    '  <button onclick="App.showSettings()" aria-label="Settings">⚙<br>Settings</button>',
-                    '</nav>'
-                ].join("\n");
-            }
-        }
-    },
-
-    showHome() {
-        this.renderPage("home", () => {
-            HomePage.render();
-        });
-    },
-
-    showWorkout(day) {
-        day = day || this.currentWorkout;
-        this.currentWorkout = day;
-        this.renderPage("workout", () => {
-            WorkoutPage.load(day);
-        });
-    },
-
-    showProgress() {
-        this.renderPage("progress", () => {
-            ProgressPage.render();
-        });
-    },
-
-    showSettings() {
-        this.renderPage("settings", () => {
-            SettingsPage.render();
-        });
-    }
-
+/* FORGE50 v2.0 interface. User text is escaped; actions use delegated events. */
+'use strict';
+const App={
+ page:'home',activeId:null,month:null,selectedDate:null,range:7,editingTemplate:'chest',waitingWorker:null,
+ esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));},
+ pretty(d){return Store.validDate(d)?Store.date(d).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}):'—';},
+ button(label,action,attrs='',cls='secondary-btn'){return `<button type="button" class="${cls}" data-action="${action}" ${attrs}>${label}</button>`;},
+ nav(){return `<nav class="bottom-nav" aria-label="Main navigation">${[['home','⌂','Home'],['workout','◈','Workout'],['progress','▥','Progress'],['settings','⚙','Settings']].map(([id,icon,name])=>`<button type="button" data-action="nav" data-page="${id}" ${this.page===id?'class="active" aria-current="page"':''}><span aria-hidden="true">${icon}</span><br>${name}</button>`).join('')}</nav>`;},
+ header(title,subtitle){return `<header class="page-header"><div><p class="eyebrow">FORGE50 <span>2.0</span></p><h1>${title}</h1><p class="muted">${subtitle}</p></div></header>`;},
+ async init(){
+  document.addEventListener('click',e=>{const button=e.target.closest('[data-action]');if(button){this.run(()=>this.action(button.dataset.action,button));}});
+  document.addEventListener('input',e=>this.run(()=>this.input(e.target)));
+  document.addEventListener('change',e=>this.run(()=>this.changed(e.target)));
+  document.addEventListener('submit',e=>{if(e.target.matches('[data-form]')){e.preventDefault();this.run(()=>this.submit(e.target));}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){ExerciseGuides.close();this.closeDialog();}});
+  window.addEventListener('online',()=>this.connection());window.addEventListener('offline',()=>this.connection());
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();this.installPrompt=e;this.render();});
+  window.addEventListener('beforeunload',e=>{if(this.unsaved){e.preventDefault();e.returnValue='';}});
+  try{Store.init();this.month=Store.today().slice(0,7);this.render();}catch(e){this.recovery(e.message);}
+  this.connection();this.registerWorker();
+ },
+ run(fn){try{const r=fn();if(r?.catch)r.catch(e=>this.toast(e.message,'error'));}catch(e){this.toast(e.message,'error');}},
+ toast(message,type='success'){const t=document.getElementById('toast');t.textContent=message;t.className=`toast visible ${type}`;clearTimeout(this.toastTimeout);this.toastTimeout=setTimeout(()=>t.classList.remove('visible'),5500);},
+ connection(){document.getElementById('connection').textContent=navigator.onLine?'':'Offline · changes save on this device';},
+ show(page){this.page=page;this.selectedDate=null;this.render();window.scrollTo(0,0);},
+ render(){if(!Store.state)return;const html=this.page==='home'?this.home():this.page==='workout'?this.workout():this.page==='progress'?this.progress():this.settings();document.getElementById('app').innerHTML=html+this.nav();Timer.update();},
+ home(){
+  const {cycle,templates,sessions}=Store.state,t=templates[cycle.next],rest=Store.today()<cycle.nextDate,stats=Store.stats(7);
+  const drafts=sessions.filter(s=>s.status==='draft');const last=sessions.filter(s=>s.templateId===cycle.next&&s.status==='completed'&&!s.legacy).sort((a,b)=>b.date.localeCompare(a.date))[0];
+  return this.header('Your training, your rhythm.',this.esc(Store.state.profile.name)+' · Strength and home cycling')+`
+  <section class="card next-card"><div class="row"><span class="pill">${rest?'DAY OFF WEIGHTS':'READY WHEN YOU ARE'}</span><span class="muted">${this.pretty(Store.today())}</span></div>
+  <p class="eyebrow space">NEXT IN YOUR ROTATION</p><h2 class="big-title">${this.esc(t.title)}</h2><p class="muted">${rest?'Planned '+this.pretty(cycle.nextDate):'Planned today'} · ${t.exercises.length} exercises${last?' · Last done '+this.pretty(last.date):''}</p>
+  ${this.button(rest?'Train this session today':'Start workout','start',`data-template="${cycle.next}"`,'primary-btn')}
+  <div class="row wrap">${this.button('Log cycling','activity','data-type="cycling"')}${this.button('Log day off','activity','data-type="rest"')}${this.button('Add a day off','extra-rest')}</div>
+  <details class="space"><summary>Change next workout or date</summary><form data-form="schedule" class="form-grid space"><label>Next workout<select name="next">${['chest','back','shoulders'].map(id=>`<option value="${id}" ${cycle.next===id?'selected':''}>${this.esc(templates[id].title)}</option>`).join('')}</select></label><label>Planned date<input type="date" name="date" required value="${cycle.nextDate}" min="${Store.today()}"></label><button class="secondary-btn" type="submit">Save plan</button></form></details></section>
+  ${drafts.length?`<section class="card"><h2>Pick up where you left off</h2>${drafts.map(s=>`<div class="session-line"><div><strong>${this.esc(s.title)}</strong><p class="muted">${this.pretty(s.date)} · ${this.count(s).done} sets logged</p></div>${this.button('Resume','open-session',`data-id="${s.id}"`)}</div>`).join('')}</section>`:''}
+  <section class="card"><h2>Your rotation</h2><div class="rotation">${['chest','back','shoulders'].map((id,i)=>`<div class="rotation-item ${cycle.next===id?'is-next':''}"><span class="number">${i+1}</span><strong>${this.esc(templates[id].title)}</strong><small>Then a day off weights / cycling</small></div>`).join('')}</div><div class="session-line"><div><strong>Legs when you choose</strong><p class="muted">Keeps your place in the upper-body rotation.</p></div>${this.button('Start legs','start','data-template="legs"')}</div></section>
+  <section class="card"><h2>Last 7 days</h2><div class="metric-grid"><div><strong>${stats.lifting}</strong><span>Strength sessions</span></div><div><strong>${stats.cycling}<small> min</small></strong><span>Home cycling</span></div><div><strong>${stats.sets}</strong><span>Working sets</span></div></div><p class="small">Days off belong in your plan. Your progress follows completed sessions.</p></section>
+  ${this.installPrompt?`<section class="card"><h2>Keep Forge50 on your home screen</h2>${this.button('Install app','install')}</section>`:''}`;
+ },
+ count(s){return {done:s.exercises?.reduce((n,e)=>n+e.sets.filter(x=>x.done).length,0)||0,total:s.exercises?.reduce((n,e)=>n+e.sets.length,0)||0};},
+ workout(){
+  const s=Store.session(this.activeId);if(!s)return this.header('Choose your session','Workouts follow your rotation, on any date.')+Object.values(Store.state.templates).map(t=>`<section class="card"><h2>${this.esc(t.title)}</h2><p class="muted">${t.exercises.length} exercises · ${t.exercises.reduce((n,e)=>n+e.sets,0)} planned sets</p>${this.button('Start workout','start',`data-template="${t.id}"`,'primary-btn')}</section>`).join('');
+  if(s.legacy)return this.legacy(s);
+  if(s.type!=='lifting')return this.activityDetail(s);
+  const count=this.count(s),finished=s.status==='completed';
+  return this.header(this.esc(s.title),finished?'Completed session · edits save automatically':'Session in progress · inputs save automatically')+`
+  <section class="card"><div class="form-grid"><label>Session date<input type="date" data-session-date="${s.id}" value="${s.date}" max="${Store.today()}" required></label><div><span class="muted">Progress</span><p class="space"><strong id="set-count">${count.done} / ${count.total}</strong> sets logged</p></div></div>
+  <label class="space">Session notes<textarea maxlength="5000" data-session-notes="${s.id}" placeholder="Energy, recovery, or anything to remember">${this.esc(s.notes)}</textarea></label>
+  <div class="row wrap">${this.button('All workouts','choose')}${this.button('Delete session','delete-session',`data-id="${s.id}"`,'text-btn danger-text')}</div></section>
+  ${s.exercises.map(e=>this.exerciseCard(s,e)).join('')}
+  <section class="card timer-card"><div class="row"><h2 id="timerLabel">Rest timer</h2><div id="timerDisplay" class="compact-timer">02:00</div></div><div class="row wrap">${this.button('Start / resume','timer-resume')}${this.button('Pause','timer-pause')}${this.button('−15 sec','timer-add','data-seconds="-15"')}${this.button('+15 sec','timer-add','data-seconds="15"')}${this.button('Reset','timer-reset')}</div><p class="small">Time catches up when you return to the app. Phone settings may silence alerts while locked.</p></section>
+  <section class="card">${finished?`<h2>Session saved</h2><p class="muted">You can edit your sets and date above. This does not advance your rotation again.</p>${this.button('Back to home','nav','data-page="home"','primary-btn')}`:`<h2>Finish when you’re done</h2><p class="muted">A shorter session still counts. Unlogged sets will stay unlogged.</p>${this.button('Finish workout','finish',`data-id="${s.id}"`,'primary-btn')}`}</section>`;
+ },
+ exerciseCard(s,e){
+  const last=Store.last(e.id,e.weightMode,s.id),recommend=Store.recommend(e,s.id);const guide=Object.keys(ExerciseGuides.guides).includes(e.name);const mode=e.weightMode==='per-dumbbell'?'kg per dumbbell':e.weightMode==='bodyweight'?'added kg (0 = bodyweight)':'kg total / machine setting';
+  return `<section class="card exercise-card ${e.skipped?'skipped':''}" data-exercise="${e.id}"><div class="row"><h2>${this.esc(e.name)}</h2>${guide?this.button('Guide','guide',`data-name="${this.esc(e.name)}"`,'small-btn'):''}</div><p class="muted">${this.esc(e.muscle)} · ${this.esc(e.reps)} reps · target RIR ${e.rir} · ${Timer.format(e.restSeconds)} rest</p>
+  ${last?`<p class="last-line">Last session · ${this.pretty(last.date)}: ${last.exercise.sets.filter(x=>x.done).map(x=>`${x.weight} kg × ${x.reps}`).join(' / ')}</p>`:'<p class="last-line">Log your first sets to start tracking this exercise.</p>'}
+  ${recommend?`<div class="suggestion"><p>${this.esc(recommend.reason)}</p>${this.button('Use targets for empty sets','use-targets',`data-exercise="${e.id}"`,'small-btn')}</div>`:''}
+  <p class="small">Weight: ${mode}. RIR = reps you could still do.</p>
+  <div class="set-grid set-head" aria-hidden="true"><span>Set</span><span>Weight</span><span>Reps</span><span>RIR</span><span>Log</span></div>
+  ${e.sets.map((set,i)=>`<div class="set-grid ${set.done?'set-done':''}" data-set="${set.id}"><span class="set-number">${i+1}</span><input aria-label="${this.esc(e.name)} set ${i+1} weight" type="number" min="0" max="1000" step="0.25" inputmode="decimal" data-set-field="weight" value="${set.weight??''}" ${e.skipped?'disabled':''}><input aria-label="${this.esc(e.name)} set ${i+1} reps" type="number" min="1" max="200" step="1" inputmode="numeric" data-set-field="reps" value="${set.reps??''}" ${e.skipped?'disabled':''}><input aria-label="${this.esc(e.name)} set ${i+1} actual RIR" type="number" min="0" max="10" step="0.5" inputmode="decimal" data-set-field="rir" value="${set.rir??''}" placeholder="—" ${e.skipped?'disabled':''}>${this.button(set.done?'✓':'Log','log-set',`data-set="${set.id}" data-exercise="${e.id}" aria-label="${set.done?'Undo':'Log'} ${this.esc(e.name)} set ${i+1}" aria-pressed="${set.done}" ${e.skipped?'disabled':''}`,'set-button')}</div>`).join('')}
+  <div class="row wrap space">${this.button('+ Set','add-set',`data-exercise="${e.id}"`,'small-btn')}${this.button('Remove last unlogged set','remove-set',`data-exercise="${e.id}"`,'small-btn')}${this.button('Rest · '+Timer.format(e.restSeconds),'rest',`data-seconds="${e.restSeconds}" data-name="${this.esc(e.name)}"`,'small-btn')}${this.button(e.skipped?'Include exercise':'Skip remaining sets','skip-exercise',`data-exercise="${e.id}"`,'small-btn')}</div>
+  <label class="space">Exercise notes<textarea maxlength="3000" data-exercise-notes="${e.id}" placeholder="Technique or equipment notes">${this.esc(e.notes)}</textarea></label></section>`;
+ },
+ legacy(s){return this.header(this.esc(s.title),'Imported history · original summaries preserved')+`<section class="card"><p>${this.pretty(s.date)}</p><p class="small">Version 1.5 recorded one weight/reps summary per exercise, not individual sets. These entries are excluded from new working-set totals and progression suggestions.</p>${s.exercises.map(e=>`<div class="session-line"><div><strong>${this.esc(e.name)}</strong><p>${e.sets.map(x=>`${x.weight} kg × ${x.reps}`).join(' / ')}</p><p class="small">${this.esc(e.notes)}</p></div></div>`).join('')||'<p class="space">Completion record only; no exercise values were recorded.</p>'}<p class="small">${s.legacyChecked?.length||0} exercises marked complete in the old progress record.</p>${this.button('Back to progress','nav','data-page="progress"')}</section>`;},
+ activityDetail(s){return this.header(this.esc(s.title),this.pretty(s.date))+`<section class="card">${s.type==='cycling'?`<p class="big-title">${s.minutes} min</p><p>${this.esc(s.effort)} effort</p>`:'<p>Day off weights recorded.</p>'}<p class="space">${this.esc(s.notes)}</p>${this.button('Edit activity','edit-activity',`data-id="${s.id}"`)}${this.button('Delete activity','delete-session',`data-id="${s.id}"`,'text-btn danger-text')}${this.button('Back to progress','nav','data-page="progress"')}</section>`;},
+ progress(){
+  const stats=Store.stats(this.range),history=Store.state.sessions.filter(s=>!this.selectedDate||s.date===this.selectedDate).sort((a,b)=>b.date.localeCompare(a.date));
+  const best={};for(const s of Store.state.sessions)if(s.type==='lifting'&&!s.legacy)for(const e of s.exercises){const pr=Store.best(e.id,e.weightMode);if(pr)best[e.id+e.weightMode]={...pr,name:e.name,mode:e.weightMode};}
+  return this.header('See your progress','Sessions, working sets and time on the bike.')+`<section class="card"><div class="row"><h2>Last ${this.range} days</h2><select aria-label="Progress period" id="progressRange"><option value="7" ${this.range===7?'selected':''}>7 days</option><option value="28" ${this.range===28?'selected':''}>28 days</option></select></div><div class="metric-grid"><div><strong>${stats.lifting}</strong><span>Strength sessions</span></div><div><strong>${stats.cycling}<small> min</small></strong><span>Cycling</span></div><div><strong>${stats.sets}</strong><span>Working sets</span></div></div><p class="small">Recorded load volume: ${Math.round(stats.volume).toLocaleString()} kg × reps. Dumbbell sets count both dumbbells; bodyweight itself is excluded.</p></section>
+  ${this.calendar()}
+  <section class="card"><h2>Working sets by primary muscle</h2>${Object.entries(stats.muscles).map(([muscle,n])=>`<div class="bar-row"><span>${this.esc(muscle)}</span><div class="bar-track"><div style="width:${n/Math.max(...Object.values(stats.muscles))*100}%"></div></div><strong>${n}</strong></div>`).join('')||'<p class="muted">Complete and finish a workout to see your working sets here.</p>'}<p class="small">Each set counts toward one primary muscle. Secondary muscle involvement is not added.</p></section>
+  <section class="card"><h2>Best logged sets</h2>${Object.values(best).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,12).map(pr=>`<div class="session-line"><div><strong>${this.esc(pr.name)}</strong><p class="small">${this.pretty(pr.date)} · ${pr.mode==='per-dumbbell'?'per dumbbell':pr.mode==='bodyweight'?'added weight':'total / machine'}</p></div><strong>${pr.weight} kg × ${pr.reps}</strong></div>`).join('')||'<p class="muted">Your records will appear as you log sets.</p>'}</section>
+  <section class="card"><div class="row"><h2>${this.selectedDate?this.pretty(this.selectedDate):'Session history'}</h2>${this.selectedDate?this.button('Show all','clear-date','','small-btn'):''}</div>${history.slice(0,100).map(s=>`<button class="history-button" data-action="open-session" data-id="${s.id}"><span><strong>${this.esc(s.title)}</strong><small>${this.pretty(s.date)} · ${s.legacy?'Imported':s.status==='draft'?'In progress':s.partial?'Shortened session':'Completed'}</small></span><span>${s.type==='cycling'?s.minutes+' min':s.type==='lifting'&&!s.legacy?this.count(s).done+' sets':'›'}</span></button>`).join('')||'<p class="muted">No sessions for this date.</p>'}</section>`;
+ },
+ calendar(){
+  const first=Store.date(this.month+'-01'),year=first.getFullYear(),month=first.getMonth(),days=new Date(year,month+1,0).getDate();const offset=(first.getDay()+6)%7;
+  const events={};for(const s of Store.state.sessions){(events[s.date]??=[]).push(s.type==='lifting'?'strength':s.type);}
+  let cells=Array.from({length:offset},()=>'<div></div>').join('');
+  for(let n=1;n<=days;n++){const d=this.month+'-'+String(n).padStart(2,'0'),types=[...new Set(events[d]||[])];const planned=d===Store.state.cycle.nextDate;
+    cells+=`<button class="calendar-day ${d===Store.today()?'today':''} ${this.selectedDate===d?'selected':''}" data-action="calendar-date" data-date="${d}" aria-label="${this.pretty(d)}${types.length?', '+types.join(', '):''}${planned?', next workout planned':''}"><span>${n}</span><span class="dots">${types.map(t=>`<i class="dot ${t}"></i>`).join('')}${planned?'<i class="dot planned"></i>':''}</span></button>`;}
+  return `<section class="card"><div class="row"><h2>${first.toLocaleDateString('en-GB',{month:'long',year:'numeric'})}</h2><div class="row">${this.button('‹','month','data-delta="-1" aria-label="Previous month"','small-btn')}${this.button('›','month','data-delta="1" aria-label="Next month"','small-btn')}</div></div><div class="calendar-v2">${['M','T','W','T','F','S','S'].map(x=>`<span class="weekday">${x}</span>`).join('')}${cells}</div><div class="legend"><span><i class="dot strength"></i>Strength</span><span><i class="dot cycling"></i>Cycling</span><span><i class="dot rest"></i>Day off</span><span><i class="dot planned"></i>Next planned</span></div></section>`;
+ },
+ settings(){return this.header('Make it yours','Routines, profile and backups.')+`
+  <section class="card"><h2>Profile</h2><form data-form="profile"><label>Name<input name="name" required maxlength="60" value="${this.esc(Store.state.profile.name)}"></label><button type="submit" class="secondary-btn">Save profile</button></form></section>
+  <section class="card"><h2>Edit your routines</h2><p class="muted">Changes apply to new sessions. Past and unfinished sessions keep their original exercises.</p><select id="templateSelect" aria-label="Choose routine to edit" class="space">${Object.values(Store.state.templates).map(t=>`<option value="${t.id}" ${this.editingTemplate===t.id?'selected':''}>${this.esc(t.title)}</option>`).join('')}</select>${this.templateEditor()}</section>
+  <section class="card"><h2>Back up and restore</h2><p class="muted">Your training data lives in this browser. Export a backup to move devices or protect your records.</p>${this.button('Export all data','export','','primary-btn')}<label class="file-label">Restore a Forge50 backup<input type="file" id="importFile" accept=".json,application/json"></label><p class="small">Supports v2 backups and v1.5 full or exercise-log exports. You’ll see a preview before restoring.</p>${localStorage.getItem(Store.RECOVERY_KEY)?this.button('Undo last restore','undo-restore'):''}${Store.state.legacy?'<p class="small">Your original imported data is included inside every full backup.</p>':''}</section>
+  <section class="card"><h2>App updates</h2><p>FORGE50 2.0.0 · Rotating routine</p><p class="small">Works offline after the first successful load. Finish or save your session before applying an update.</p>${this.button('Check for update','check-update')}</section>`;},
+ templateEditor(){
+  const t=Store.state.templates[this.editingTemplate];return `<div class="template-list">${t.exercises.map((e,i)=>`<details class="template-item"><summary>${i+1}. ${this.esc(e.name)} <span class="muted">${e.sets} × ${this.esc(e.reps)}</span></summary><form data-form="exercise-settings" data-exercise="${e.id}" class="space"><div class="form-grid"><label>Working sets<input name="sets" type="number" min="1" max="12" required value="${e.sets}"></label><label>Rep range<input name="reps" required pattern="[0-9]+-[0-9]+" value="${this.esc(e.reps)}" placeholder="8-12"></label><label>Target RIR<input name="rir" type="number" min="0" max="10" step="0.5" required value="${e.rir}"></label><label>Rest (seconds)<input name="rest" type="number" min="5" max="900" required value="${e.restSeconds}"></label><label>Weight increment (kg)<input name="increment" type="number" min="0.25" max="50" step="0.25" required value="${e.increment}"></label><label>Weight means<select name="mode"><option value="total" ${e.weightMode==='total'?'selected':''}>Total / machine setting</option><option value="per-dumbbell" ${e.weightMode==='per-dumbbell'?'selected':''}>Per dumbbell (pair)</option><option value="bodyweight" ${e.weightMode==='bodyweight'?'selected':''}>Added weight / bodyweight</option></select></label></div><button class="secondary-btn" type="submit">Save exercise</button></form><div class="row wrap">${this.button('↑ Move up','move-exercise',`data-exercise="${e.id}" data-direction="-1"`,'small-btn')}${this.button('↓ Move down','move-exercise',`data-exercise="${e.id}" data-direction="1"`,'small-btn')}${this.button('Remove','remove-exercise',`data-exercise="${e.id}"`,'small-btn danger-text')}</div></details>`).join('')}</div>
+  <form data-form="add-exercise" class="space"><label>Add an exercise<select name="exercise">${Object.values(ForgeDefaults.catalog).filter(e=>!t.exercises.some(x=>x.id===e.id)).map(e=>`<option value="${e.id}">${this.esc(e.name)}</option>`).join('')}</select></label><button class="secondary-btn" type="submit">Add exercise</button></form>
+  <details class="space"><summary>Add your own exercise</summary><form data-form="custom-exercise" class="space"><label>Exercise name<input name="name" required maxlength="100"></label><label>Primary muscle<select name="muscle">${['Chest','Back','Shoulders','Triceps','Biceps','Abs','Quads','Hamstrings','Glutes','Calves','Other'].map(x=>`<option>${x}</option>`).join('')}</select></label><button class="secondary-btn" type="submit">Create exercise</button></form></details>`;
+ },
+ input(el){
+  if(el.dataset.setField){const row=el.closest('[data-set]'),card=el.closest('[data-exercise]'),field=el.dataset.setField;const value=el.value===''?null:Number(el.value);if(!el.validity.valid){this.unsaved=true;return;}
+    const s=Store.session(this.activeId),set=s.exercises.find(e=>e.id===card.dataset.exercise).sets.find(x=>x.id===row.dataset.set);
+    const next={...set,[field]:value};if(next.weight===null||next.reps===null)next.done=false;
+    Store.saveSet(s.id,card.dataset.exercise,row.dataset.set,next);this.unsaved=!!document.querySelector('[data-set-field]:invalid');this.refreshSet(row,next,s);
+  }else if(el.dataset.sessionNotes){Store.patchSession(el.dataset.sessionNotes,s=>s.notes=el.value);}
+  else if(el.dataset.exerciseNotes){Store.patchSession(this.activeId,s=>s.exercises.find(e=>e.id===el.dataset.exerciseNotes).notes=el.value);}
+ },
+ refreshSet(row,set,s){row.classList.toggle('set-done',set.done);const b=row.querySelector('[data-action="log-set"]');b.textContent=set.done?'✓':'Log';b.setAttribute('aria-pressed',String(set.done));const c=this.count(Store.session(s.id));document.getElementById('set-count').textContent=`${c.done} / ${c.total}`;},
+ changed(el){
+  if(el.dataset.sessionDate){if(!Store.validDate(el.value)||el.value>Store.today()){this.render();throw new Error('Choose today or an earlier date.');}Store.patchSession(el.dataset.sessionDate,s=>s.date=el.value);this.toast('Session date updated. Your next planned date is unchanged.');}
+  else if(el.id==='progressRange'){this.range=Number(el.value);this.render();}
+  else if(el.id==='templateSelect'){this.editingTemplate=el.value;this.render();}
+  else if(el.id==='importFile'&&el.files[0])return this.previewImport(el.files[0]);
+ },
+ submit(form){
+  const f=new FormData(form),get=n=>String(f.get(n)||'');
+  if(form.dataset.form==='schedule'){const date=get('date');if(!Store.validDate(date)||date<Store.today())throw new Error('Choose today or a future date.');Store.change(s=>s.cycle={next:get('next'),nextDate:date});this.render();this.toast('Plan updated.');}
+  else if(form.dataset.form==='profile'){Store.change(s=>s.profile.name=get('name').trim());this.toast('Profile saved.');}
+  else if(form.dataset.form==='exercise-settings'){
+    Store.change(s=>{const e=s.templates[this.editingTemplate].exercises.find(e=>e.id===form.dataset.exercise);Object.assign(e,{sets:Number(get('sets')),reps:get('reps').trim(),rir:Number(get('rir')),restSeconds:Number(get('rest')),increment:Number(get('increment')),weightMode:get('mode')});});this.render();this.toast('Exercise updated for future sessions.');
+  }else if(form.dataset.form==='add-exercise'){const e=ForgeDefaults.catalog[get('exercise')];if(!e)throw new Error('Choose an exercise.');Store.change(s=>s.templates[this.editingTemplate].exercises.push({...Store.copy(e),weightMode:/Dumbbell/.test(e.name)?'per-dumbbell':'total'}));this.render();}
+  else if(form.dataset.form==='custom-exercise'){const name=get('name').trim();if(!name)throw new Error('Enter an exercise name.');Store.change(s=>s.templates[this.editingTemplate].exercises.push({id:'custom-'+Store.id(),name,muscle:get('muscle'),sets:3,reps:'8-12',rir:2,restSeconds:90,increment:1,weightMode:'total'}));this.render();}
+  else if(form.dataset.form==='activity'){
+    const type=form.dataset.type,date=get('date'),minutes=Number(get('minutes')),effort=get('effort'),notes=get('notes');
+    if(!Store.validDate(date)||date>Store.today())throw new Error('Choose today or an earlier date.');
+    if(form.dataset.id){Store.patchSession(form.dataset.id,s=>Object.assign(s,{date,minutes:type==='cycling'?minutes:0,effort:type==='cycling'?effort:'easy',notes}));}
+    else Store.activity(type,date,minutes,effort,notes);
+    this.closeDialog();this.render();this.toast('Activity saved. Your upper-body rotation is unchanged.');
+  }
+ },
+ async action(action,el){
+  const d=el.dataset,s=Store.session(this.activeId);
+  if(document.querySelector('[data-set-field]:invalid')&&!['export','rest','guide','log-set'].includes(action)&&!action.startsWith('timer-')){document.querySelector('[data-set-field]:invalid').reportValidity();throw new Error('Correct the invalid set value first.');}
+  if(action==='nav'){this.show(d.page);}
+  else if(action==='start'){this.activeId=Store.start(d.template);this.show('workout');}
+  else if(action==='choose'){this.activeId=null;this.show('workout');}
+  else if(action==='open-session'){this.activeId=d.id;this.show('workout');}
+  else if(action==='extra-rest'){Store.change(s=>s.cycle.nextDate=Store.addDays([s.cycle.nextDate,Store.today()].sort().pop(),1));this.render();this.toast('Next workout moved back one day.');}
+  else if(action==='activity')this.activityForm(d.type);
+  else if(action==='edit-activity')this.activityForm(Store.session(d.id).type,Store.session(d.id));
+  else if(action==='guide'){ExerciseGuides.open(d.name);}
+  else if(action==='rest'){Timer.start(Number(d.seconds),'Rest · '+d.name);this.toast('Rest timer started: '+Timer.format(Number(d.seconds)));}
+  else if(action==='timer-resume')Timer.resume();else if(action==='timer-pause')Timer.pause();else if(action==='timer-reset')Timer.reset();else if(action==='timer-add')Timer.add(Number(d.seconds));
+  else if(action==='log-set'){
+    const e=s.exercises.find(x=>x.id===d.exercise),set=e.sets.find(x=>x.id===d.set),row=el.closest('.set-grid');
+    if(!set.done){const inputs=[...row.querySelectorAll('input')];if(inputs.some(x=>!x.validity.valid)||set.weight===null||set.reps===null)throw new Error('Enter a valid weight (0 is allowed) and whole-number reps.');}
+    const isPR=Store.saveSet(s.id,e.id,set.id,{...set,done:!set.done});this.unsaved=false;this.refreshSet(row,{...set,done:!set.done},s);this.toast(set.done?'Set marked unlogged.':isPR?'New best set! Saved.':'Set logged.');
+  }else if(action==='add-set'){Store.patchSession(s.id,s=>{const e=s.exercises.find(x=>x.id===d.exercise);if(e.sets.length>=20)throw new Error('Maximum 20 sets per exercise in a session.');e.sets.push({id:Store.id(),weight:e.weightMode==='bodyweight'?0:null,reps:null,rir:null,done:false});});this.render();}
+  else if(action==='remove-set'){Store.patchSession(s.id,s=>{const e=s.exercises.find(x=>x.id===d.exercise);if(e.sets.length<=1)throw new Error('Keep at least one set.');const idx=e.sets.map(x=>!x.done).lastIndexOf(true);if(idx<0)throw new Error('Undo a logged set before removing it.');e.sets.splice(idx,1);});this.render();}
+  else if(action==='skip-exercise'){Store.patchSession(s.id,s=>{const e=s.exercises.find(x=>x.id===d.exercise);e.skipped=!e.skipped;});this.render();}
+  else if(action==='use-targets'){const e=s.exercises.find(x=>x.id===d.exercise),r=Store.recommend(e,s.id);if(r)Store.patchSession(s.id,s=>s.exercises.find(x=>x.id===d.exercise).sets.forEach((set,i)=>{if(!set.done&&set.weight===null&&set.reps===null){const target=r.sets[i]||r.sets[r.sets.length-1];Object.assign(set,target);}}));this.render();}
+  else if(action==='finish'){
+    if(this.unsaved)throw new Error('Correct the invalid set value before finishing.');
+    if(!this.count(s).done)throw new Error('Log at least one completed set first.');
+    const incomplete=s.exercises.some(e=>e.skipped||e.sets.some(x=>!x.done));if(incomplete&&!confirm('Finish this shortened workout? Your logged sets will be saved, and the rotation will advance.'))return;
+    Store.finish(s.id);Timer.pause();this.render();this.toast('Workout saved. Your next session is ready on Home.');
+  }else if(action==='delete-session'){
+    if(!confirm('Delete this session and its sets? Your planned rotation will stay as it is.'))return;Store.change(s=>s.sessions=s.sessions.filter(x=>x.id!==d.id));this.activeId=null;this.show('progress');
+  }else if(action==='month'){const date=Store.date(this.month+'-01');date.setMonth(date.getMonth()+Number(d.delta));this.month=Store.localDate(date).slice(0,7);this.render();}
+  else if(action==='calendar-date'){this.selectedDate=d.date;this.render();}
+  else if(action==='clear-date'){this.selectedDate=null;this.render();}
+  else if(action==='move-exercise'){Store.change(s=>{const a=s.templates[this.editingTemplate].exercises,i=a.findIndex(e=>e.id===d.exercise),j=i+Number(d.direction);if(j>=0&&j<a.length)[a[i],a[j]]=[a[j],a[i]];});this.render();}
+  else if(action==='remove-exercise'){if(!confirm('Remove this exercise from future sessions?'))return;Store.change(s=>{const t=s.templates[this.editingTemplate];if(t.exercises.length===1)throw new Error('Keep at least one exercise in a routine.');t.exercises=t.exercises.filter(e=>e.id!==d.exercise);});this.render();}
+  else if(action==='export')this.download(Store.backup(),`Forge50-backup-${Store.today()}.json`);
+  else if(action==='close-dialog')this.closeDialog();
+  else if(action==='restore'){Store.restore(this.pendingRestore);this.pendingRestore=null;this.activeId=null;this.closeDialog();this.show('home');this.toast('Backup restored.');}
+  else if(action==='undo-restore'){const previous=JSON.parse(localStorage.getItem(Store.RECOVERY_KEY));Store.validate(previous);if(!confirm('Restore the data from before your last import? Export current changes first if you want to keep them.'))return;Store.restore(previous);this.activeId=null;this.show('home');this.toast('Previous data restored.');}
+  else if(action==='export-raw'){const raw={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('forge50-'))raw[k]=localStorage.getItem(k);}this.download({recovery:true,raw},`Forge50-recovery-${Store.today()}.json`);}
+  else if(action==='check-update'){const reg=await navigator.serviceWorker?.getRegistration();if(reg){await reg.update();this.toast(reg.waiting?'An update is available above.':'Update check complete.');}else this.toast('Updates are available when the app is served over HTTPS or localhost.');}
+  else if(action==='apply-update'){if(this.waitingWorker){if(this.unsaved)throw new Error('Correct the invalid input before updating.');this.waitingWorker.postMessage('SKIP_WAITING');}}
+  else if(action==='install'&&this.installPrompt){await this.installPrompt.prompt();this.installPrompt=null;this.render();}
+ },
+ activityForm(type,entry=null){this.dialog(`<h2>${entry?'Edit':'Log'} ${type==='cycling'?'home cycling':'a day off weights'}</h2><form data-form="activity" data-type="${type}" ${entry?`data-id="${entry.id}"`:''}><label>Date<input type="date" name="date" required value="${entry?.date||Store.today()}" max="${Store.today()}"></label>${type==='cycling'?`<div class="form-grid"><label>Minutes<input type="number" name="minutes" required min="1" max="1440" step="1" value="${entry?.minutes||30}"></label><label>Effort<select name="effort">${['easy','moderate','hard'].map(x=>`<option value="${x}" ${entry?.effort===x?'selected':''}>${x[0].toUpperCase()+x.slice(1)}</option>`).join('')}</select></label></div>`:''}<label>Notes<textarea name="notes" maxlength="5000">${this.esc(entry?.notes||'')}</textarea></label><button type="submit" class="primary-btn">Save activity</button></form>`);},
+ dialog(html){this.dialogFocus=document.activeElement;const d=document.getElementById('dialog');d.innerHTML=`<div class="dialog-heading">${this.button('×','close-dialog','aria-label="Close dialog"','small-btn')}</div>${html}`;d.showModal();},
+ closeDialog(){document.getElementById('dialog').close();this.dialogFocus?.focus?.();},
+ async previewImport(file){if(file.size>20*1024*1024)throw new Error('Choose a backup smaller than 20 MB.');let data;try{data=JSON.parse(await file.text());}catch{throw new Error('That file is not valid JSON.');}const s=Store.readBackup(data);this.pendingRestore=s;this.dialog(`<h2>Restore preview</h2><p class="space">${s.sessions.length} sessions · ${this.esc(s.profile.name)} · ${s.legacy?'Includes imported v1.5 history':'Forge50 v2'}</p><p class="space">Restoring replaces the data in this browser. A recovery copy of the current v2 data will be kept.</p>${Store.state?this.button('Export current data first','export'):''}${this.button('Restore this backup','restore','','primary-btn')}`);},
+ download(obj,name){const url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);},
+ recovery(message){document.getElementById('app').innerHTML=this.header('Let’s recover your data','Your saved records have not been deleted.')+`<section class="card"><p>${this.esc(message)}</p>${this.button('Export recovery copy','export-raw')}<label class="file-label">Restore a valid Forge50 backup<input id="importFile" type="file" accept=".json,application/json"></label></section>`;},
+ async registerWorker(){
+  if(!('serviceWorker' in navigator)||!/^https?:$/.test(location.protocol))return;
+  try{const reg=await navigator.serviceWorker.register('./sw.js');const show=()=>{if(reg.waiting){this.waitingWorker=reg.waiting;document.getElementById('update-banner').innerHTML=`<span>Update ready · your inputs are saved</span>${this.button('Update now','apply-update','','small-btn')}`;}};show();reg.addEventListener('updatefound',()=>{const worker=reg.installing;worker?.addEventListener('statechange',show);});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!refreshing){refreshing=true;location.reload();}});}catch{/* The app remains usable without offline caching. */}
+ }
 };
-
-// Backwards compatibility
-const Router = {
-    showHome() { App.showHome(); },
-    showWorkout(day) { App.showWorkout(day); },
-    showProgress() { App.showProgress(); },
-    showSettings() { App.showSettings(); }
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-    App.init();
-});
+// The retained timer sends status here.
+window.WorkoutPage={showToast:(message,type)=>App.toast(message,type)};
+window.App=App;
+document.addEventListener('DOMContentLoaded',()=>App.init());
