@@ -1,91 +1,62 @@
-/* Anatomical overlays for every exercise in the default catalog. Coordinates
-   refer to the paired 1122 × 1402 front/back reference illustrations. */
+/* Muscle illustrations grouped by shared anatomy. */
 (() => {
-  const regions = {
-    front: {
-      upperChest:[[450,270,95,40,-12],[672,270,95,40,12]],
-      chest:[[450,305,103,75,-13],[672,305,103,75,13]],
-      lowerChest:[[453,335,100,44,-12],[669,335,100,44,12]],
-      frontDelts:[[368,284,46,73,-29],[754,284,46,73,29]],
-      sideDelts:[[342,291,34,76,-18],[780,291,34,76,18]],
-      biceps:[[341,412,42,77,-16],[781,412,42,77,16]],
-      brachialis:[[323,431,21,52,-15],[799,431,21,52,15]],
-      forearms:[[295,543,43,90,-16],[827,543,43,90,16]],
-      abs:[[560,462,88,117,0]],
-      obliques:[[457,477,32,88,-7],[665,477,32,88,7]],
-      quads:[[444,794,75,151,-7],[678,794,75,151,7]],
-      adductors:[[507,776,24,91,-14],[615,776,24,91,14]],
-      calves:[[445,1092,45,112,-5],[677,1092,45,112,5]],
-    },
-    back: {
-      lats:[[449,461,89,151,-16],[673,461,89,151,16]],
-      teres:[[424,360,47,43,-17],[698,360,47,43,17]],
-      midBack:[[503,343,76,101,-14],[619,343,76,101,14]],
-      upperTraps:[[530,261,91,92,-22],[592,261,91,92,22]],
-      lowerTraps:[[561,412,75,89,0]],
-      rearDelts:[[361,312,55,65,-28],[761,312,55,65,28]],
-      sideDelts:[[340,294,35,68,-23],[782,294,35,68,23]],
-      triceps:[[344,416,45,89,-16],[778,416,45,89,16]],
-      tricepsLong:[[363,409,28,80,-16],[759,409,28,80,16]],
-      tricepsMedial:[[327,446,24,48,-16],[795,446,24,48,16]],
-      forearms:[[300,548,46,90,-16],[822,548,46,90,16]],
-      erectors:[[534,566,23,118,0],[588,566,23,118,0]],
-      glutes:[[477,723,67,91,-12],[645,723,67,91,12]],
-      hamstrings:[[454,888,58,142,-6],[668,888,58,142,6]],
-      calves:[[448,1103,43,117,-5],[674,1103,43,117,5]],
-    }
-  };
-  // Orange: primary work; blue: assisting muscles; purple: training emphasis.
   const maps = {
-    'incline-dumbbell-press':['front','upperChest','frontDelts,triceps','upperChest'],
-    'high-to-low-cable-fly':['front','lowerChest','frontDelts','lowerChest'],
-    'low-to-high-cable-fly':['front','upperChest','frontDelts','upperChest'],
-    'machine-lower-chest-press':['front','lowerChest','frontDelts,triceps','lowerChest'],
-    'close-grip-barbell-bench-press':['back','triceps','chest,frontDelts','triceps'],
-    'skull-crushers':['back','tricepsLong,triceps','forearms','tricepsLong'],
-    'rope-triceps-pushdown':['back','triceps,tricepsMedial','forearms','triceps'],
-    'reverse-grip-cable-triceps-pushdown':['back','tricepsMedial','triceps,forearms','tricepsMedial'],
-    'cable-crunch':['front','abs','obliques','abs'],
-    'romanian-deadlift':['back','hamstrings,glutes','erectors,adductors','hamstrings'],
-    'lat-pulldown':['back','lats','biceps,teres,rearDelts,midBack','lats'],
-    'chest-supported-row':['back','midBack,upperTraps','lats,rearDelts,biceps','midBack'],
-    'seated-cable-row':['back','midBack','lats,rearDelts,biceps','midBack'],
-    'ez-bar-curl':['front','biceps','brachialis,forearms','biceps'],
-    'incline-dumbbell-curl':['front','biceps','brachialis,forearms','biceps'],
-    'preacher-curl':['front','biceps','brachialis,forearms','biceps'],
-    'dumbbell-shoulder-press':['front','frontDelts','sideDelts,triceps','frontDelts'],
-    'dumbbell-lateral-raise':['front','sideDelts','frontDelts,upperTraps','sideDelts'],
-    'reverse-pec-deck':['back','rearDelts','midBack,lowerTraps','rearDelts'],
-    'seated-machine-front-raise':['front','frontDelts','upperChest','frontDelts'],
-    'machine-lateral-raise':['front','sideDelts','upperTraps','sideDelts'],
-    'overhead-cable-triceps-extension':['back','tricepsLong','triceps','tricepsLong'],
-    'triceps-extension-machine':['back','triceps','','triceps'],
-    'high-row-machine-assisted-pull-up':['back','lats,midBack','biceps,rearDelts,teres','lats'],
-    'single-arm-cable-row':['back','lats,midBack','rearDelts,biceps,obliques','lats'],
-    'high-face-pull':['back','rearDelts','midBack,lowerTraps','rearDelts'],
-    'cable-curl':['front','biceps','brachialis,forearms','biceps'],
-    'hammer-curl':['front','brachialis,biceps','forearms','brachialis'],
-    'leg-press':['front','quads','glutes,hamstrings,adductors','quads'],
-    'seated-leg-curl':['back','hamstrings','calves','hamstrings'],
-    'leg-extension':['front','quads','','quads'],
-    'machine-calf-raise':['back','calves','','calves'],
+    'incline-dumbbell-press':'upper-chest',
+    'high-to-low-cable-fly':'lower-chest',
+    'low-to-high-cable-fly':'upper-chest',
+    'machine-lower-chest-press':'lower-chest',
+    'close-grip-barbell-bench-press':'triceps',
+    'skull-crushers':'triceps',
+    'rope-triceps-pushdown':'triceps',
+    'reverse-grip-cable-triceps-pushdown':'triceps',
+    'cable-crunch':'abs',
+    'romanian-deadlift':'posterior-chain',
+    'lat-pulldown':'lats',
+    'chest-supported-row':'mid-back',
+    'seated-cable-row':'mid-back',
+    'ez-bar-curl':'biceps',
+    'incline-dumbbell-curl':'biceps',
+    'preacher-curl':'biceps',
+    'dumbbell-shoulder-press':'front-delts',
+    'dumbbell-lateral-raise':'side-delts',
+    'reverse-pec-deck':'rear-delts',
+    'seated-machine-front-raise':'front-delts',
+    'machine-lateral-raise':'side-delts',
+    'overhead-cable-triceps-extension':'triceps',
+    'triceps-extension-machine':'triceps',
+    'high-row-machine-assisted-pull-up':'lats',
+    'single-arm-cable-row':'lats',
+    'high-face-pull':'rear-delts',
+    'cable-curl':'biceps',
+    'hammer-curl':'brachialis',
+    'leg-press':'quads',
+    'seated-leg-curl':'hamstrings',
+    'leg-extension':'quads',
+    'machine-calf-raise':'calves'
   };
-  const names = list => list ? list.split(',') : [];
-  function marks(keys, side, kind) {
-    return keys.flatMap(key => (regions[side][key] || []).map(([cx,cy,rx,ry,angle]) =>
-      `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${angle} ${cx} ${cy})" class="muscle-mark ${kind}"/>`)).join('');
-  }
-  function figure(side, primary, secondary, focus) {
-    const secondaryOnly = secondary.filter(key => !primary.includes(key));
-    return `<svg class="muscle-figure" viewBox="0 0 1122 1402" role="img" aria-label="${side} anatomy; orange primary, blue secondary, purple training focus" xmlns="http://www.w3.org/2000/svg"><image href="assets/muscle-guides/${side}.webp" width="1122" height="1402"/>${marks(secondaryOnly,side,'secondary')}${marks(primary,side,'primary')}${marks(focus,side,'focus')}</svg>`;
-  }
+  const arrows={
+    'upper-chest':['M 550 460 Q 490 410 395 400','M 572 460 Q 632 410 727 400'],
+    'lower-chest':['M 550 670 Q 455 675 350 625','M 572 670 Q 667 675 772 625'],
+    triceps:['M 365 720 Q 320 660 275 575','M 757 720 Q 802 660 847 575'],
+    abs:['M 545 1030 L 545 805','M 590 1030 L 590 805'],
+    'posterior-chain':['M 420 570 L 400 700','M 700 570 L 720 700'],
+    lats:['M 400 680 Q 345 665 285 650','M 722 680 Q 777 665 837 650'],
+    'mid-back':['M 320 515 Q 400 470 475 470','M 802 515 Q 722 470 647 470'],
+    biceps:['M 245 650 L 265 520','M 877 650 L 857 520'],
+    'front-delts':['M 240 650 L 260 520','M 882 650 L 862 520'],
+    'side-delts':['M 240 700 L 150 590','M 882 700 L 972 590'],
+    'rear-delts':['M 230 605 L 250 480','M 892 605 L 872 480'],
+    quads:['M 345 690 L 345 515','M 777 690 L 777 515'],
+    hamstrings:['M 385 470 L 385 595','M 737 470 L 737 595'],
+    calves:['M 355 740 L 355 535','M 767 740 L 767 535'],
+    brachialis:['M 210 735 L 225 565','M 912 735 L 897 565']
+  };
   function render(id) {
-    const row = maps[id];
-    if (!row) return '';
-    const [main, a, b, c] = row, primary=names(a), secondary=names(b), focus=names(c);
-    const other = main==='front'?'back':'front';
-    const hasOther = [...primary,...secondary].some(key => !!regions[other][key]);
-    return `<div class="muscle-diagram" aria-label="Muscle diagram for exercise"><div class="muscle-diagram-figures"><div class="muscle-main">${figure(main,primary,secondary,focus)}<span>${main.toUpperCase()}</span></div>${hasOther?`<div class="muscle-other">${figure(other,primary,secondary,focus)}<span>${other.toUpperCase()}</span></div>`:''}</div><div class="muscle-legend"><span><i class="muscle-key primary"></i>Primary</span><span><i class="muscle-key secondary"></i>Secondary</span><span><i class="muscle-key focus"></i>Training focus</span></div><p>Highlighted areas are an approximate anatomy guide. The purple outline marks the emphasized area.</p></div>`;
+    const group=maps[id];
+    if (!group) return '';
+    const src='assets/muscle-guides/'+group+'.webp';
+    const paths=arrows[group].map(d=>'<path d="'+d+'"/>').join('');
+    return '<figure class="muscle-diagram"><div class="muscle-art"><img src="'+src+'" alt="Anatomy illustration showing primary muscles in orange, secondary muscles in blue, and training focus in purple" loading="lazy" width="1122" height="1402"><svg class="muscle-arrows" viewBox="0 0 1122 1402" aria-hidden="true"><defs><marker id="muscle-arrowhead" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 Z" fill="#cc83f5"/></marker></defs>'+paths+'</svg></div><figcaption><span><i class="muscle-key primary"></i>Primary</span><span><i class="muscle-key secondary"></i>Secondary</span><span><i class="muscle-key focus"></i>Training focus</span></figcaption></figure>';
   }
   window.MuscleDiagrams={render,maps};
 })();
