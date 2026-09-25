@@ -11,7 +11,7 @@ const Store = {
   addDays(d,n) { const dt=this.date(d);dt.setDate(dt.getDate()+n);return this.localDate(dt); },
   id() { return crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`; },
   copy(x) { return JSON.parse(JSON.stringify(x)); },
-  fresh() { return {schema:2,version:'2.2.0',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},preferences:{preferredRestSeconds:120,includeLegs:false},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
+  fresh() { return {schema:2,version:'2.3.0',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},preferences:{preferredRestSeconds:120,includeLegs:false},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
   legacyInput() {
     const keys={history:'forge50-workoutHistory',currentProgress:'forge50-workoutProgress',exerciseLogs:'forge50-exerciseLogbook',personalRecords:'forge50-personalRecords'};
     const data={}; let found=false;
@@ -84,7 +84,7 @@ const Store = {
     for(const p of Object.values(data.currentProgress||{}))if(p&&p.workout&&p.date){const s=get(p.date,p.workout);s.legacyChecked=Array.isArray(p.completed)?p.completed:[];}
     state.sessions=[...grouped.values()];return state;
   },
-  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.2.0',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
+  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.3.0',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
   readBackup(data) {
     let s;if(data?.format==='forge50-backup'&&data.schema===2)s=this.copy(data.state);else if(data?.schema===2&&data.sessions)s=this.copy(data);else s=this.migrate(data);
     this.validate(s);return s;
