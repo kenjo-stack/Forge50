@@ -11,7 +11,7 @@ const Store = {
   addDays(d,n) { const dt=this.date(d);dt.setDate(dt.getDate()+n);return this.localDate(dt); },
   id() { return crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`; },
   copy(x) { return JSON.parse(JSON.stringify(x)); },
-  fresh() { return {schema:2,version:'2.0.0',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
+  fresh() { return {schema:2,version:'2.2.0',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},preferences:{preferredRestSeconds:120,includeLegs:false},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
   legacyInput() {
     const keys={history:'forge50-workoutHistory',currentProgress:'forge50-workoutProgress',exerciseLogs:'forge50-exerciseLogbook',personalRecords:'forge50-personalRecords'};
     const data={}; let found=false;
@@ -33,9 +33,11 @@ const Store = {
   validate(s) {
     const fail=()=>{throw new Error('This backup has invalid or unsupported workout data. Your existing data has not been replaced.');};
     if(!s||s.schema!==2||!s.profile||!s.templates||!s.cycle||!Array.isArray(s.sessions))fail();
-    if(!['chest','back','shoulders'].includes(s.cycle.next)||!this.validDate(s.cycle.nextDate))fail();
     const number=(n,min,max)=>typeof n==='number'&&Number.isFinite(n)&&n>=min&&n<=max;
     const text=(x,max=1000)=>typeof x==='string'&&x.length<=max;
+    if(s.preferences!==undefined&&(!s.preferences||!number(s.preferences.preferredRestSeconds,15,900)||typeof s.preferences.includeLegs!=='boolean'))fail();
+    const includeLegs=s.preferences?.includeLegs===true;
+    if(!['chest','back','shoulders',...(includeLegs?['legs']:[])].includes(s.cycle.next)||!this.validDate(s.cycle.nextDate))fail();
     const ids=new Set();
     const safeId=x=>typeof x==='string'&&/^[a-zA-Z0-9_-]{1,180}$/.test(x);
     if(!text(s.profile.name,60)||Object.keys(s.templates).sort().join(',')!=='back,chest,legs,shoulders')fail();
@@ -82,7 +84,7 @@ const Store = {
     for(const p of Object.values(data.currentProgress||{}))if(p&&p.workout&&p.date){const s=get(p.date,p.workout);s.legacyChecked=Array.isArray(p.completed)?p.completed:[];}
     state.sessions=[...grouped.values()];return state;
   },
-  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.1.0',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
+  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.2.0',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
   readBackup(data) {
     let s;if(data?.format==='forge50-backup'&&data.schema===2)s=this.copy(data.state);else if(data?.schema===2&&data.sessions)s=this.copy(data);else s=this.migrate(data);
     this.validate(s);return s;
@@ -111,7 +113,7 @@ const Store = {
       if(!s.exercises.some(e=>e.sets.some(x=>x.done)))throw new Error('Log at least one completed set before finishing.');
       s.status='completed';s.finishedAt=new Date().toISOString();s.duration=Math.max(0,Math.round((Date.now()-new Date(s.startedAt))/60000));
       s.partial=s.exercises.some(e=>e.skipped||e.sets.some(x=>!x.done));
-      const cycle=['chest','back','shoulders'];if(cycle.includes(s.templateId))state.cycle.next=cycle[(cycle.indexOf(s.templateId)+1)%3];
+      const cycle=state.preferences?.includeLegs?['chest','back','shoulders','legs']:['chest','back','shoulders'];if(cycle.includes(s.templateId))state.cycle.next=cycle[(cycle.indexOf(s.templateId)+1)%cycle.length];
       // Legs preserve the upper-body sequence, while still allowing a day off weights.
       state.cycle.nextDate=[state.cycle.nextDate,this.addDays(s.date,2),this.today()].sort().pop();
     });
