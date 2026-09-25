@@ -210,6 +210,7 @@ const Timer = {
         const label = document.getElementById("timerLabel");
         const startButton = document.getElementById("timerStartBtn");
         const pauseButton = document.getElementById("timerPauseBtn");
+        const guidedToggle = document.getElementById("guidedTimerToggle");
 
         if (display) {
             display.textContent = this.format(this.remaining);
@@ -219,6 +220,7 @@ const Timer = {
         if (label) label.textContent = this.activeLabel || "Rest Timer";
         if (startButton) startButton.textContent = this.interval ? "⏱ Running" : "▶ Start Rest";
         if (pauseButton) pauseButton.disabled = !this.interval;
+        if (guidedToggle) guidedToggle.textContent = this.interval ? "Pause rest" : "Start rest";
     }
 
 };
