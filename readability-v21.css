@@ -1,0 +1,23 @@
+/* Forge50 v2.1 readability and guide navigation. No remote assets required. */
+html{font-size:18px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{line-height:1.55}
+.muted,.text-muted,.subtext,.helper-text,small,.small,.caption{color:#c3ccd9!important}
+button,input,select,textarea{font-size:max(16px,1em)}
+button{min-height:44px}
+/* Increase previously tiny labels without inflating large headings or timers. */
+
+.forge50-guide-panel{width:min(720px,calc(100vw - 16px));padding:22px;line-height:1.6}
+.forge50-guide-section p{font-size:17px;color:#e0e6ef;line-height:1.65}
+.forge50-guide-section h3{font-size:16px}
+.forge50-guide-muscles span{font-size:14px;color:#c3ccd9}
+.forge50-guide-muscles strong,.forge50-guide-checks li{font-size:17px}
+.forge50-guide-focus{font-size:17px}
+.forge50-guide-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0}
+.forge50-guide-tabs button{border:1px solid #596577;border-radius:10px;padding:10px 5px;min-height:48px;background:#252d39;color:#f1f5fa;font-size:16px;font-weight:700}
+.forge50-guide-tabs button[aria-selected="true"]{background:#443066;border-color:#c4a6ff;color:#fff}
+[data-guide-panel][hidden]{display:none!important}
+.forge50-guide-note{font-size:16px;color:#cbd5e1;line-height:1.6;margin-top:12px}
+.forge50-guide-alternatives{list-style:none;padding:0;display:grid;gap:8px}
+.forge50-guide-alternatives li{padding:12px;border:1px solid #485466;border-radius:10px;font-size:17px}
+.forge50-guide-alternatives span{display:block;color:#c3ccd9;font-size:15px}
+@media(max-width:560px){.forge50-guide-panel{padding:16px}.guide-btn{font-size:16px}.exercise-header h2{font-size:20px}}

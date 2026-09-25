@@ -82,7 +82,7 @@ const Store = {
     for(const p of Object.values(data.currentProgress||{}))if(p&&p.workout&&p.date){const s=get(p.date,p.workout);s.legacyChecked=Array.isArray(p.completed)?p.completed:[];}
     state.sessions=[...grouped.values()];return state;
   },
-  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.0.0',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
+  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.1.0',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
   readBackup(data) {
     let s;if(data?.format==='forge50-backup'&&data.schema===2)s=this.copy(data.state);else if(data?.schema===2&&data.sessions)s=this.copy(data);else s=this.migrate(data);
     this.validate(s);return s;
