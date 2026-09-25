@@ -14,6 +14,15 @@
 .forge50-guide-muscles>div{background:#202632;border:1px solid #303847;border-radius:12px;padding:13px}
 .forge50-guide-muscles span{display:block;color:#8e98a8;font-size:14px;font-weight:800;letter-spacing:1px;margin-bottom:5px}
 .forge50-guide-muscles strong{font-size:16px;line-height:1.35}
+.muscle-diagram{margin:12px 0;padding:10px;border:1px solid #394152;background:#0d121b;border-radius:16px;text-align:center}
+.muscle-art{position:relative;max-width:460px;margin:auto}
+.muscle-art img{display:block;width:100%;height:auto;border-radius:9px}
+.muscle-arrows{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.muscle-arrows>path{fill:none;stroke:#cc83f5;stroke-width:7;stroke-linecap:round;marker-end:url(#muscle-arrowhead);filter:drop-shadow(0 0 4px #a25acc)}
+.muscle-diagram figcaption{display:flex;justify-content:center;flex-wrap:wrap;gap:7px 15px;margin:11px 0 5px;color:#e8e9ee;font-size:13px;font-weight:700}
+.muscle-diagram figcaption span{display:flex;align-items:center;gap:6px}
+.muscle-key{display:inline-block;width:15px;height:15px;border-radius:50%}
+.muscle-key.primary{background:#ff8d18}.muscle-key.secondary{background:#23a8ed}.muscle-key.focus{border:3px dashed #d99afa}
 .forge50-guide-section{background:#1b2029;border:1px solid #2b323f;border-radius:14px;padding:14px;margin:10px 0}
 .forge50-guide-section h3{margin:0 0 7px;font-size:16px;letter-spacing:.7px;color:#fff}
 .forge50-guide-section p{margin:0;color:#c6ccd6;line-height:1.58;font-size:16px}
