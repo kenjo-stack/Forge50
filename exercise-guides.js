@@ -310,68 +310,50 @@ const ExerciseGuides = {
     document.body.appendChild(el);
   },
 
-  get(name) {
-    return this.guides[name] || {
-      focus:"Exercise technique",
-      primary:"Target muscle group from the workout programme",
-      secondary:"Supporting muscles",
-      setup:"Set the equipment to a comfortable position, brace your body and establish a stable starting position.",
-      perform:"Move through the prescribed range with controlled tempo and keep the target muscles under tension.",
-      cues:["Controlled movement","Stable body position","Full comfortable range","Stop if technique breaks down"],
-      mistakes:"Using momentum, excessive load, poor setup, or reducing the useful range of motion.",
-      equipment:"Use the equipment specified on the workout card."
+  resolve(idOrName) {
+    const catalog = window.ForgeDefaults?.catalog || {};
+    const entry = catalog[idOrName] || Object.values(catalog).find(e => e.name === idOrName);
+    const name = entry?.name || idOrName;
+    return {id:entry?.id || idOrName, name, guide:this.guides[name]};
+  },
+  get(idOrName) {
+    return this.resolve(idOrName).guide || {
+      focus:"Exercise technique",primary:"See your workout card for the target muscle",secondary:"Supporting muscles vary",
+      setup:"Set the equipment comfortably and establish a stable position.",
+      perform:"Move through a comfortable range with controlled tempo.",
+      cues:["Control the movement","Keep a stable position","Stop if you feel sharp pain"],
+      mistakes:"Rushing, using momentum or a load you cannot control.",equipment:"See workout card."
     };
   },
-
-  openByName(encoded) { this.ensureModal(); this.open(decodeURIComponent(encoded)); },
-
-  open(name) {
+  openByName(encoded) { this.open(decodeURIComponent(encoded)); },
+  open(idOrName) {
     this.ensureModal();
-    const g = this.get(name);
-    const safe = v => this.escape(v);
-    const checks = g.cues.map(c => `<li>✓ ${safe(c)}</li>`).join("");
-    const body = document.getElementById("forge50GuideBody");
-    body.innerHTML = `
-      <div class="forge50-guide-title">
-        <span class="forge50-guide-kicker">FORGE50 EXERCISE GUIDE</span>
-        <h2>${safe(name)}</h2>
-        <p class="forge50-guide-focus">${safe(g.focus)}</p>
-      </div>
-
-      <div class="forge50-guide-muscles">
-        <div><span>PRIMARY MUSCLES</span><strong>${safe(g.primary)}</strong></div>
-        <div><span>SECONDARY MUSCLES</span><strong>${safe(g.secondary)}</strong></div>
-      </div>
-
-      <section class="forge50-guide-section">
-        <h3>SETUP</h3>
-        <p>${safe(g.setup)}</p>
-      </section>
-
-      <section class="forge50-guide-section guide-perform">
-        <h3>HOW TO PERFORM</h3>
-        <p>${safe(g.perform)}</p>
-      </section>
-
-      <section class="forge50-guide-section">
-        <h3>FORM CHECK</h3>
-        <ul class="forge50-guide-checks">${checks}</ul>
-      </section>
-
-      <section class="forge50-guide-section guide-mistakes">
-        <h3>COMMON MISTAKES</h3>
-        <p>${safe(g.mistakes)}</p>
-      </section>
-
-      <section class="forge50-guide-section guide-equipment">
-        <h3>EQUIPMENT</h3>
-        <p>${safe(g.equipment)}</p>
-      </section>
-    `;
-    document.getElementById("forge50GuideModal").classList.add("open");
-    document.body.classList.add("forge50-guide-open");
+    const {id,name,guide} = this.resolve(idOrName), g=guide || this.get(idOrName);
+    this.current={id,name};
+    const safe=v=>this.escape(v);
+    const catalog=Object.values(window.ForgeDefaults?.catalog||{});
+    const current=catalog.find(e=>e.id===id);
+    const alternatives=catalog.filter(e=>e.id!==id && current && e.muscle===current.muscle).slice(0,4);
+    const last=current && window.Store?.last?.(id,current.weightMode);
+    const recommend=!!last;
+    const previous=last?.exercise?.sets?.filter(x=>x.done).map(x=>`${safe(x.weight)} kg × ${safe(x.reps)} reps`).join(' · ');
+    const sections={
+      technique:`<section class="forge50-guide-section"><h3>SETUP</h3><p>${safe(g.setup)}</p></section><section class="forge50-guide-section guide-perform"><h3>HOW TO PERFORM</h3><p>${safe(g.perform)}</p></section><section class="forge50-guide-section"><h3>FORM CHECK</h3><ul class="forge50-guide-checks">${g.cues.map(c=>`<li>✓ ${safe(c)}</li>`).join('')}</ul></section><section class="forge50-guide-section guide-mistakes"><h3>COMMON MISTAKES</h3><p>${safe(g.mistakes)}</p></section><section class="forge50-guide-section"><h3>EQUIPMENT</h3><p>${safe(g.equipment)}</p></section>`,
+      muscles:`<div class="forge50-guide-muscles"><div><span>PRIMARY MUSCLES</span><strong>${safe(g.primary)}</strong></div><div><span>SECONDARY MUSCLES</span><strong>${safe(g.secondary)}</strong></div></div><section class="forge50-guide-section"><h3>TRAINING FOCUS</h3><p>${safe(g.focus)}</p></section>`,
+      progress:`<section class="forge50-guide-section"><h3>LAST COMPLETED SESSION</h3><p>${previous||'No completed sets recorded yet.'}</p></section><section class="forge50-guide-section"><h3>NEXT SESSION</h3><p>${current?`Target: ${safe(current.sets)} sets × ${safe(current.reps)} reps. ${recommend?'Check the workout card for your calculated weight suggestion.':'Start with a weight you can control and record each set.'}`:'Open this exercise in a workout to view its targets.'}</p></section><p class="forge50-guide-note">Progression is guidance, not an automatic weight increase. Your saved workout history stays unchanged.</p>`,
+      alternatives:`<section class="forge50-guide-section"><h3>SIMILAR MUSCLE GROUP</h3>${alternatives.length?`<ul class="forge50-guide-alternatives">${alternatives.map(e=>`<li>${safe(e.name)} <span>${safe(e.muscle)}</span></li>`).join('')}</ul>`:'<p>No catalog alternatives are available for this exercise.</p>'}<p class="forge50-guide-note">These exercises train a similar muscle group but may not be equivalent. Changing your routine is done in Settings; this list does not modify your workout.</p></section>`
+    };
+    const body=document.getElementById('forge50GuideBody');
+    body.innerHTML=`<div class="forge50-guide-title"><span class="forge50-guide-kicker">FORGE50 EXERCISE GUIDE</span><h2>${safe(name)}</h2><p class="forge50-guide-focus">${safe(g.focus)}</p></div><div class="forge50-guide-tabs" role="tablist" aria-label="Guide sections">${[['technique','Technique'],['muscles','Muscles'],['progress','Progress'],['alternatives','Alternatives']].map(([key,label])=>`<button type="button" role="tab" data-guide-tab="${key}" aria-selected="${key==='technique'}">${label}</button>`).join('')}</div>${Object.entries(sections).map(([key,html])=>`<div data-guide-panel="${key}" role="tabpanel" ${key==='technique'?'':'hidden'}>${html}</div>`).join('')}`;
+    body.querySelectorAll('[data-guide-tab]').forEach(button=>button.addEventListener('click',()=>{
+      const key=button.dataset.guideTab;
+      body.querySelectorAll('[data-guide-tab]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));
+      body.querySelectorAll('[data-guide-panel]').forEach(panel=>panel.hidden=panel.dataset.guidePanel!==key);
+    }));
+    document.getElementById('forge50GuideModal').classList.add('open');
+    document.body.classList.add('forge50-guide-open');
+    document.querySelector('.forge50-guide-close')?.focus();
   },
-
   close() {
     const el = document.getElementById("forge50GuideModal");
     if (el) el.classList.remove("open");
