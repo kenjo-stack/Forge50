@@ -14,6 +14,21 @@
 .forge50-guide-muscles>div{background:#202632;border:1px solid #303847;border-radius:12px;padding:13px}
 .forge50-guide-muscles span{display:block;color:#8e98a8;font-size:14px;font-weight:800;letter-spacing:1px;margin-bottom:5px}
 .forge50-guide-muscles strong{font-size:16px;line-height:1.35}
+.muscle-diagram{margin:12px 0;padding:10px;border:1px solid #394152;background:#0d121b;border-radius:16px;text-align:center}
+.muscle-diagram-figures{display:flex;justify-content:center;align-items:center;gap:8px;max-height:425px;overflow:hidden}
+.muscle-diagram-figures>div{position:relative;min-width:0;height:min(56vw,395px);max-height:395px}
+.muscle-diagram-figures .muscle-main{flex:0 1 auto}
+.muscle-diagram-figures .muscle-other{flex:0 1 auto;height:min(43vw,295px)}
+.muscle-figure{display:block;width:auto;height:100%;max-width:100%;border-radius:9px}
+.muscle-diagram-figures>div>span{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);background:#101722da;padding:3px 9px;border-radius:9px;color:#e7e9ed;font-size:11px;font-weight:800;letter-spacing:1px}
+.muscle-mark.primary{fill:#ff8d18;fill-opacity:.52;stroke:#ffae45;stroke-width:3;mix-blend-mode:screen}
+.muscle-mark.secondary{fill:#23a8ed;fill-opacity:.58;stroke:#60c9ff;stroke-width:3;mix-blend-mode:screen}
+.muscle-mark.focus{fill:none;stroke:#e0a0ff;stroke-width:9;stroke-dasharray:18 11;filter:drop-shadow(0 0 5px #9f57ec)}
+.muscle-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:7px 15px;margin:11px 0 5px;color:#e8e9ee;font-size:13px;font-weight:700}
+.muscle-legend span{display:flex;align-items:center;gap:6px}
+.muscle-key{display:inline-block;width:15px;height:15px;border-radius:50%}
+.muscle-key.primary{background:#ff8d18}.muscle-key.secondary{background:#23a8ed}.muscle-key.focus{border:3px dashed #d99afa}
+.muscle-diagram p{margin:4px 0 0;color:#aeb6c5;font-size:12px;line-height:1.4}
 .forge50-guide-section{background:#1b2029;border:1px solid #2b323f;border-radius:14px;padding:14px;margin:10px 0}
 .forge50-guide-section h3{margin:0 0 7px;font-size:16px;letter-spacing:.7px;color:#fff}
 .forge50-guide-section p{margin:0;color:#c6ccd6;line-height:1.58;font-size:16px}
