@@ -49,6 +49,12 @@ body.forge50-guide-open{overflow:hidden}
 .anatomy-credit{padding:7px 12px 12px;color:#a9b6ca;font-size:12px}.anatomy-credit summary{min-height:24px;cursor:pointer}.anatomy-credit p{line-height:1.5}.anatomy-credit a{color:#c5acff}
 .anatomy-illustration .muscle-diagram{border:0;margin:0}
 .anatomy-viewer [hidden]{display:none!important}
+.anatomy-history{border-top:1px solid #455068;background:#151b28;padding:16px;color:#e8edf6;line-height:1.5}
+.anatomy-history h3{font-size:19px;margin:0 0 3px;color:#f4e8ff}.anatomy-history h4{font-size:14px;margin:16px 0 5px;color:#cbb7eb}
+.anatomy-history p{margin:5px 0 12px}.anatomy-history .anatomy-role{color:#cfbbeb;font-size:14px}
+.anatomy-history ul{padding:0;margin:0;list-style:none}.anatomy-history li{padding:7px 0;border-bottom:1px solid #ffffff19;font-size:14px}
+.anatomy-history li small{margin-left:8px;color:#bbc9dc}.anatomy-history li span{display:block;color:#aebed3;margin-top:3px}
+.anatomy-history button{margin-top:14px;min-height:44px;border:1px solid #ab7dd8;background:#342747;color:#fff;border-radius:9px;padding:8px 12px;cursor:pointer;font-weight:600}
 .guide-btn{min-height:44px;border:1px solid #8b5cf6;background:#19152a;color:#d8c8ff;border-radius:11px;padding:9px 13px;font-weight:800;cursor:pointer;white-space:nowrap}
 .guide-btn:active{transform:scale(.98)}
 .exercise-header{display:flex;align-items:center;gap:10px}

@@ -1,4 +1,4 @@
-# FORGE50 2.0 — Your Training Rhythm
+# FORGE50 2.6 — Your Training Rhythm
 
 ## Start here
 
@@ -43,6 +43,7 @@ Old records remain labelled **Imported**. Version 1.5 stored exercise summaries,
 - Add/remove unlogged sets, skip remaining sets, and record notes.
 - **Finish workout** also supports shortened sessions. The rotation advances once.
 - Reopen a session from Progress to edit its date or sets. This does not advance the rotation again or reschedule the next session. Use Home to adjust the plan separately.
+- Guided workout shows the last completed sets, next targets and an exercise Guide. **Copy last set** fills the current weight and reps, leaving your actual effort empty until you train. **Fill empty sets with targets** does not overwrite entered sets.
 - Starting the same workout on the same date resumes its unfinished session. A completed session stays a separate record.
 
 ## Progression and rest
@@ -50,6 +51,10 @@ Old records remain labelled **Imported**. Version 1.5 stored exercise summaries,
 Suggestions use the previous completed session with the same exercise and weight convention. A load increase requires all prescribed sets to reach the top of the rep range and meet the recorded RIR target. The increment is configurable per exercise. Suggestions are optional targets; you choose the weight. Default increments are deliberately small and should be adjusted to your equipment.
 
 Rest ranges from the old app use their upper end (2–3 minutes = 3 minutes). Start rest with the exercise's Rest button. The timer keeps an end time and catches up after backgrounding; sound/vibration while locked depends on the browser and phone settings.
+
+Use **Keep screen awake** in the workout or Settings to prevent the screen dimming while a draft workout is visible. The app releases the request when you leave or finish the workout. Phone power settings may refuse the request; training data still saves normally.
+
+In the Guide’s **Muscles** tab, rotate or zoom the 3D anatomy and tap a muscle for its name, related exercises and your five most recent completed exercise entries. The **Show this exercise’s focus** button offers a quick way to explore the highlighted muscle. The data reflects completed logged sets, excluding drafts and imported summaries.
 
 ## Settings
 
