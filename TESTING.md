@@ -1,8 +1,8 @@
-# FORGE50 2.0 — Test notes
+# FORGE50 2.6 — Test notes
 
 ## Checks completed
 
-16 automated storage/data checks and 15 Chromium browser workflow checks passed.
+Automated storage, anatomy, and mobile-browser tests exercise both existing workouts and the new guided workout, screen-awake and muscle-history features.
 
 Data checks cover:
 - Multiple workouts and cycling on one date without overwriting progress.
@@ -48,6 +48,9 @@ Use sample data first if testing at a new URL.
 7. Change the next date on Home, then check the calendar.
 8. Export a backup and restore it. Check the preview before confirming.
 9. In Settings, change an exercise's sets/rest/increment. Start a new session to see the change; previous sessions should keep their original settings.
+10. In a guided workout, check the prior weight and reps, tap **Copy last set**, and confirm actual RIR remains empty. Fill suggested targets for untouched sets and open the Guide.
+11. Turn on **Keep screen awake** during a workout. Leave and return, finish, and check the display setting persists. Your phone may refuse screen wake in power-saving mode.
+12. In the Guide’s **Muscles** tab, tap an orange or blue 3D muscle. Confirm its name and related exercises. After finishing a session for one of them, check the recent entries show only its completed sets.
 
 ## Practical limits
 
@@ -62,3 +65,4 @@ Use sample data first if testing at a new URL.
 
 - `node tests/store.test.cjs` requires only Node.js.
 - `tests/browser.test.cjs` additionally needs Playwright and Chromium. Install Playwright separately with `npm install playwright` and `npx playwright install chromium` if you want to rerun it. Tests use a local HTTP server and isolated browser profiles; they do not use your real browser data.
+- `node tests/anatomy.test.cjs` checks the packed model and muscle history mapping. `tests/anatomy-browser.test.cjs` exercises all 32 guides offline under the GitHub Pages subpath, touch controls and WebGL fallback.

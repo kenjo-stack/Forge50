@@ -25,10 +25,20 @@ let browser;
  console.log('PASS all 32 exercises open a real 3D view offline under the GitHub Pages subpath');
  for(const id of ['lat-pulldown','leg-press','machine-calf-raise']){
   await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="muscles"]').click();await page.locator('[data-anatomy-state="ready"]').waitFor();
+  await page.waitForFunction(()=>document.querySelector('[data-anatomy-view][aria-pressed="true"]'));
   await page.locator('.anatomy-stage').screenshot({path:'/tmp/forge50-3d-'+id+'.png'});
  }
  await page.evaluate(()=>ExerciseGuides.open('lat-pulldown'));await page.locator('[data-guide-tab="muscles"]').click();await page.locator('[data-anatomy-state="ready"]').waitFor();
- const canvas=page.locator('.anatomy-stage canvas');await canvas.scrollIntoViewIfNeeded();const before=await canvas.screenshot();const box=await canvas.boundingBox();
+ await page.waitForFunction(()=>document.querySelector('[data-anatomy-view="back"][aria-pressed="true"]'));
+ const canvas=page.locator('.anatomy-stage canvas');await canvas.scrollIntoViewIfNeeded();
+ await page.evaluate(()=>{const id=Store.start('back'),e=Store.session(id).exercises.find(x=>x.id==='lat-pulldown');Store.saveSet(id,e.id,e.sets[0].id,{weight:40,reps:10,rir:2,done:true});Store.finish(id);});
+ await canvas.click({position:{x:142,y:212}});
+ assert.match(await page.locator('.anatomy-history h3').innerText(),/Latissimus Dorsi/);
+ assert.match(await page.locator('.anatomy-history').innerText(),/40 kg × 10/);
+ await page.locator('[data-anatomy-focus]').click();assert.match(await page.locator('.anatomy-history').innerText(),/Lat Pulldown/);
+ await page.locator('.forge50-guide-panel').screenshot({path:'/tmp/forge50-muscle-history-v26.png'});
+ console.log('PASS tapping a 3D muscle shows related exercises and completed training history');
+ await canvas.scrollIntoViewIfNeeded();const before=await canvas.screenshot();const box=await canvas.boundingBox();
  await page.mouse.move(box.x+80,box.y+130);await page.mouse.down();await page.mouse.move(box.x+190,box.y+140,{steps:8});await page.mouse.up();
  assert.notDeepEqual(await canvas.screenshot(),before);
  const cdp=await context.newCDPSession(page);const x=box.x+box.width/2,y=box.y+box.height/2;

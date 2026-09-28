@@ -75,5 +75,18 @@
     const primary=parts.filter(p=>matches(p,cfg.primary));
     return {...cfg,primary,secondary:parts.filter(p=>matches(p,cfg.secondary)&&!primary.includes(p)),focus:parts.filter(p=>matches(p,cfg.focus))};
   }
-  window.AnatomyMaps={regions,exercises,select};
+  function historyFor(part,state){
+    if(!part||part.bone)return null;
+    const related=Object.keys(exercises).flatMap(id=>{
+      const match=select(id,[part]);
+      const role=match.primary.length?'Primary':match.secondary.length?'Secondary':null;
+      return role?[{id,name:window.ForgeDefaults?.catalog?.[id]?.name||id,role}]:[];
+    });
+    const matches=new Set(related.map(x=>x.id));
+    const recent=(state?.sessions||[]).filter(s=>s.type==='lifting'&&s.status==='completed'&&!s.legacy)
+      .flatMap(s=>s.exercises.filter(e=>matches.has(e.id)&&e.sets.some(set=>set.done)).map(e=>({date:s.date,finishedAt:s.finishedAt||'',name:e.name,sets:e.sets.filter(set=>set.done).map(set=>({weight:set.weight,reps:set.reps}))})))
+      .sort((a,b)=>b.date.localeCompare(a.date)||b.finishedAt.localeCompare(a.finishedAt)).slice(0,5);
+    return {name:part.name.replace(/\b\w/g,c=>c.toUpperCase()),related,recent};
+  }
+  window.AnatomyMaps={regions,exercises,select,historyFor};
 })();

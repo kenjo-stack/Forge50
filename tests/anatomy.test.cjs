@@ -30,3 +30,15 @@ assert.ok(names('leg-extension','primary').every(n=>n.includes('vastus')||n.incl
 assert.ok(names('seated-leg-curl','primary').every(n=>/biceps femoris|semitendinosus|semimembranosus/.test(n)));
 assert.ok(names('machine-calf-raise','primary').every(n=>/gastrocnemius|soleus/.test(n)));
 console.log('PASS chest, back, shoulder, triceps, thigh and calf target identities');
+const lat=meta.parts.find(p=>p.name==='left latissimus dorsi');
+const sample={sessions:[
+ {date:'2026-09-15',finishedAt:'2026-09-15T12:00:00Z',type:'lifting',status:'completed',exercises:[{id:'lat-pulldown',name:'Lat pulldown',sets:[{done:true,weight:42,reps:10},{done:false,weight:null,reps:null}]},{id:'ez-bar-curl',name:'EZ-bar curl',sets:[{done:true,weight:20,reps:8}]}]},
+ {date:'2026-09-17',type:'lifting',status:'draft',exercises:[{id:'lat-pulldown',name:'Lat pulldown',sets:[{done:true,weight:55,reps:10}]}]},
+ {date:'2026-09-18',type:'cycling',status:'completed',exercises:[]}
+]};
+const history=maps.historyFor(lat,sample);
+assert.ok(history.related.some(x=>x.id==='lat-pulldown'&&x.role==='Primary'));
+assert.ok(history.related.some(x=>x.id==='seated-cable-row'&&x.role==='Secondary'));
+assert.equal(history.recent.length,1);assert.equal(history.recent[0].sets.length,1);assert.equal(history.recent[0].sets[0].weight,42);
+assert.equal(maps.historyFor(meta.parts.find(p=>p.bone),sample),null);
+console.log('PASS selected muscle history includes related exercises and completed sets only');
