@@ -327,6 +327,7 @@ const ExerciseGuides = {
   },
   openByName(encoded) { this.open(decodeURIComponent(encoded)); },
   open(idOrName) {
+    window.AnatomyViewer?.dispose();
     this.ensureModal();
     const {id,name,guide} = this.resolve(idOrName), g=guide || this.get(idOrName);
     this.current={id,name};
@@ -339,7 +340,7 @@ const ExerciseGuides = {
     const previous=last?.exercise?.sets?.filter(x=>x.done).map(x=>`${safe(x.weight)} kg × ${safe(x.reps)} reps`).join(' · ');
     const sections={
       technique:`<section class="forge50-guide-section"><h3>SETUP</h3><p>${safe(g.setup)}</p></section><section class="forge50-guide-section guide-perform"><h3>HOW TO PERFORM</h3><p>${safe(g.perform)}</p></section><section class="forge50-guide-section"><h3>FORM CHECK</h3><ul class="forge50-guide-checks">${g.cues.map(c=>`<li>✓ ${safe(c)}</li>`).join('')}</ul></section><section class="forge50-guide-section guide-mistakes"><h3>COMMON MISTAKES</h3><p>${safe(g.mistakes)}</p></section><section class="forge50-guide-section"><h3>EQUIPMENT</h3><p>${safe(g.equipment)}</p></section>`,
-      muscles:`<div class="forge50-guide-muscles"><div><span>PRIMARY MUSCLES</span><strong>${safe(g.primary)}</strong></div><div><span>SECONDARY MUSCLES</span><strong>${safe(g.secondary)}</strong></div></div><section class="forge50-guide-section"><h3>TRAINING FOCUS</h3><p>${safe(g.focus)}</p></section>`,
+      muscles:`${window.AnatomyViewer?.render(id)||window.MuscleDiagrams?.render(id)||''}<div class="forge50-guide-muscles"><div><span>PRIMARY MUSCLES</span><strong>${safe(g.primary)}</strong></div><div><span>SECONDARY MUSCLES</span><strong>${safe(g.secondary)}</strong></div></div><section class="forge50-guide-section"><h3>TRAINING FOCUS</h3><p>${safe(g.focus)}</p></section>`,
       progress:`<section class="forge50-guide-section"><h3>LAST COMPLETED SESSION</h3><p>${previous||'No completed sets recorded yet.'}</p></section><section class="forge50-guide-section"><h3>NEXT SESSION</h3><p>${current?`Target: ${safe(current.sets)} sets × ${safe(current.reps)} reps. ${recommend?'Check the workout card for your calculated weight suggestion.':'Start with a weight you can control and record each set.'}`:'Open this exercise in a workout to view its targets.'}</p></section><p class="forge50-guide-note">Progression is guidance, not an automatic weight increase. Your saved workout history stays unchanged.</p>`,
       alternatives:`<section class="forge50-guide-section"><h3>SIMILAR MUSCLE GROUP</h3>${alternatives.length?`<ul class="forge50-guide-alternatives">${alternatives.map(e=>`<li>${safe(e.name)} <span>${safe(e.muscle)}</span></li>`).join('')}</ul>`:'<p>No catalog alternatives are available for this exercise.</p>'}<p class="forge50-guide-note">These exercises train a similar muscle group but may not be equivalent. Changing your routine is done in Settings; this list does not modify your workout.</p></section>`
     };
@@ -349,12 +350,14 @@ const ExerciseGuides = {
       const key=button.dataset.guideTab;
       body.querySelectorAll('[data-guide-tab]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));
       body.querySelectorAll('[data-guide-panel]').forEach(panel=>panel.hidden=panel.dataset.guidePanel!==key);
+      if(key==='muscles')window.AnatomyViewer?.mount(body.querySelector('.anatomy-viewer'),id);
     }));
     document.getElementById('forge50GuideModal').classList.add('open');
     document.body.classList.add('forge50-guide-open');
     document.querySelector('.forge50-guide-close')?.focus();
   },
   close() {
+    window.AnatomyViewer?.dispose();
     const el = document.getElementById("forge50GuideModal");
     if (el) el.classList.remove("open");
     document.body.classList.remove("forge50-guide-open");
