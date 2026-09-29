@@ -6,6 +6,34 @@
 
 const ExerciseGuides = {
   guides: {
+    "Cable Chest Press": {
+      focus:"Chest pressing", primary:"Pectoralis major", secondary:"Triceps and front delts",
+      setup:"Set the handles around mid-chest height. Step into a stable stance and keep your shoulders comfortable.",
+      perform:"Press the handles forward in a controlled path, then return until you feel a comfortable chest stretch.",
+      cues:["Keep wrists aligned","Let elbows follow a comfortable path","Control the return"],
+      mistakes:"Rounding the shoulders forward, twisting the torso, or letting the cables pull you back suddenly.", equipment:"Cable machine + handles"
+    },
+    "Straight-Arm Cable Pulldown": {
+      focus:"Lat isolation", primary:"Latissimus dorsi", secondary:"Teres major, upper back and triceps stabilisers",
+      setup:"Set a cable high. Stand back slightly with a soft elbow bend and stable torso.",
+      perform:"Sweep the handle down toward the thighs while keeping the elbow angle mostly fixed, then return slowly.",
+      cues:["Lead with upper arms","Keep ribs stacked","Use a comfortable shoulder range"],
+      mistakes:"Turning the movement into an arm pushdown, swinging the torso, or shrugging.", equipment:"High cable + bar or rope"
+    },
+    "Cable Lateral Raise": {
+      focus:"Side delts", primary:"Lateral deltoid", secondary:"Upper trapezius",
+      setup:"Set a low cable and stand side-on. Hold the handle with a relaxed grip and a soft elbow.",
+      perform:"Raise the arm out to the side to a comfortable height and lower under control.",
+      cues:["Move smoothly","Keep neck relaxed","Use a comfortable range"],
+      mistakes:"Swinging, shrugging hard, or lifting through front shoulder pain.", equipment:"Low cable + single handle"
+    },
+    "Machine Ab Crunch": {
+      focus:"Abdominal flexion", primary:"Rectus abdominis", secondary:"Obliques",
+      setup:"Adjust the machine so its pivot and pads fit your torso comfortably. Start with light resistance.",
+      perform:"Curl the ribcage toward the pelvis, pause briefly, then return under control without yanking with the arms.",
+      cues:["Exhale as you curl","Keep hips stable","Control the return"],
+      mistakes:"Pulling with the arms, bouncing the stack, or using a range that strains the back.", equipment:"Ab crunch machine"
+    },
     "Incline Dumbbell Press": {
       focus:"Upper chest",
       primary:"Upper chest (clavicular pec fibres)", secondary:"Triceps, front delts",

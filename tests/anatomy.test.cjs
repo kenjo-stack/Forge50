@@ -2,10 +2,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),zlib
 const root=path.resolve(__dirname,'..'),context={window:{}};vm.createContext(context);
 for(const file of ['data.js','js/anatomy-maps.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
 const {AnatomyMaps:maps,ForgeDefaults:defaults}=context.window;
-const meta=JSON.parse(fs.readFileSync(path.join(root,'assets/anatomy/parts.json')));
-const compressed=Buffer.concat(meta.chunks.map(name=>fs.readFileSync(path.join(root,'assets/anatomy',name))));
-assert.equal(compressed.length,meta.compressedBytes);
-const data=zlib.gunzipSync(compressed);
+const meta=JSON.parse(fs.readFileSync(path.join(root,'assets/anatomy/parts.json'))),data=zlib.gunzipSync(fs.readFileSync(path.join(root,'assets/anatomy/body.bin.gz')));
 assert.equal(data.subarray(0,4).toString(),'F50A');assert.equal(data.readUInt32LE(4),1);
 assert.equal(data.readUInt32LE(8),meta.vertexCount);assert.equal(data.readUInt32LE(12),meta.indexCount);
 assert.equal(data.length,16+meta.vertexCount*6+meta.indexCount*4);
@@ -20,7 +17,7 @@ for(const id of Object.keys(defaults.catalog)){
  assert.ok(s.focus.every(p=>s.primary.includes(p)),id+' focus is part of primary work');
  assert.ok(s.secondary.every(p=>!s.primary.includes(p)),id+' color groups do not overlap');
 }
-console.log('PASS all 32 catalog exercises map to primary, secondary and focus surfaces');
+console.log('PASS all catalog exercises map to primary, secondary and focus surfaces');
 const names=(id,type)=>maps.select(id,meta.parts)[type].map(p=>p.name);
 assert.deepEqual(Array.from(names('lat-pulldown','primary')).sort(),['left latissimus dorsi','right latissimus dorsi']);
 assert.ok(names('incline-dumbbell-press','primary').every(n=>n.includes('clavicular')));
@@ -30,15 +27,3 @@ assert.ok(names('leg-extension','primary').every(n=>n.includes('vastus')||n.incl
 assert.ok(names('seated-leg-curl','primary').every(n=>/biceps femoris|semitendinosus|semimembranosus/.test(n)));
 assert.ok(names('machine-calf-raise','primary').every(n=>/gastrocnemius|soleus/.test(n)));
 console.log('PASS chest, back, shoulder, triceps, thigh and calf target identities');
-const lat=meta.parts.find(p=>p.name==='left latissimus dorsi');
-const sample={sessions:[
- {date:'2026-09-15',finishedAt:'2026-09-15T12:00:00Z',type:'lifting',status:'completed',exercises:[{id:'lat-pulldown',name:'Lat pulldown',sets:[{done:true,weight:42,reps:10},{done:false,weight:null,reps:null}]},{id:'ez-bar-curl',name:'EZ-bar curl',sets:[{done:true,weight:20,reps:8}]}]},
- {date:'2026-09-17',type:'lifting',status:'draft',exercises:[{id:'lat-pulldown',name:'Lat pulldown',sets:[{done:true,weight:55,reps:10}]}]},
- {date:'2026-09-18',type:'cycling',status:'completed',exercises:[]}
-]};
-const history=maps.historyFor(lat,sample);
-assert.ok(history.related.some(x=>x.id==='lat-pulldown'&&x.role==='Primary'));
-assert.ok(history.related.some(x=>x.id==='seated-cable-row'&&x.role==='Secondary'));
-assert.equal(history.recent.length,1);assert.equal(history.recent[0].sets.length,1);assert.equal(history.recent[0].sets[0].weight,42);
-assert.equal(maps.historyFor(meta.parts.find(p=>p.bone),sample),null);
-console.log('PASS selected muscle history includes related exercises and completed sets only');

@@ -8,6 +8,10 @@ window.ForgeDefaults = {
     "goal": "Upper Body Hypertrophy Specialization"
   },
   "catalog": {
+    "cable-chest-press": {"id": "cable-chest-press", "name": "Cable Chest Press", "sets": 3, "reps": "8-12", "rir": 2, "rest": "2 min", "notes": "Adjustable pressing path for chest.", "muscle": "Chest", "increment": 1, "weightMode": "total", "restSeconds": 120},
+    "straight-arm-pulldown": {"id": "straight-arm-pulldown", "name": "Straight-Arm Cable Pulldown", "sets": 3, "reps": "10-15", "rir": 2, "rest": "90 sec", "notes": "Lat work with minimal elbow flexion.", "muscle": "Back", "increment": 1, "weightMode": "total", "restSeconds": 90},
+    "cable-lateral-raise": {"id": "cable-lateral-raise", "name": "Cable Lateral Raise", "sets": 3, "reps": "12-20", "rir": 2, "rest": "90 sec", "notes": "Side deltoid isolation with adjustable cable height.", "muscle": "Shoulders", "increment": 0.5, "weightMode": "total", "restSeconds": 90},
+    "machine-ab-crunch": {"id": "machine-ab-crunch", "name": "Machine Ab Crunch", "sets": 3, "reps": "10-15", "rir": 2, "rest": "90 sec", "notes": "Adjustable resistance for the abdominals.", "muscle": "Abs", "increment": 1, "weightMode": "total", "restSeconds": 90},
     "incline-dumbbell-press": {
       "id": "incline-dumbbell-press",
       "name": "Incline Dumbbell Press",
