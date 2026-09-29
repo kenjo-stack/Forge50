@@ -9,3 +9,9 @@
 .guided-reference{margin:16px 0;padding:13px 15px;border:1px solid #ffffff20;border-radius:11px;background:#ffffff09}
 .guided-reference strong{display:block;font-size:15px}.guided-reference p{margin:7px 0 12px;color:var(--text-secondary);line-height:1.5}.guided-reference .small-btn{min-height:44px}
 .wake-setting{display:flex;align-items:center;gap:12px;margin:15px 0;min-height:44px;cursor:pointer}.wake-setting input[type="checkbox"]{width:23px;height:23px;min-height:23px;flex:none;margin:0}
+
+/* Set history in the full workout view */
+.set-reference{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 12px 28px;padding:7px 10px;border-left:2px solid var(--accent);color:var(--text-secondary);font-size:14px}
+.set-reference .small-btn{min-height:44px;min-width:58px;flex:none}
+.session-comparison{padding-left:23px;line-height:1.7}
+.session-comparison li{margin:5px 0}
