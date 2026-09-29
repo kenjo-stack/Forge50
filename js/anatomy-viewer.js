@@ -68,13 +68,13 @@ void main(){float id=floor(partId+.5);gl_FragColor=vec4(mod(id,256.)/255.,floor(
   function render(id){
     if(!AnatomyMaps.exercises[id])return window.MuscleDiagrams?.render(id)||'';
     return `<section class="anatomy-viewer" data-anatomy-id="${id}" aria-label="Interactive muscle guide">
-      <div class="anatomy-mode" role="group" aria-label="Muscle view"><button type="button" data-anatomy-mode="3d" aria-pressed="true">3D anatomy</button><button type="button" data-anatomy-mode="image" aria-pressed="false">Illustration</button></div>
+      <div class="anatomy-mode" role="group" aria-label="Muscle view"><button type="button" data-anatomy-mode="image" aria-pressed="true">Illustration</button><button type="button" data-anatomy-mode="3d" aria-pressed="false">3D anatomy</button></div>
       <p class="anatomy-message" role="status" hidden></p>
-      <div class="anatomy-live"><div class="anatomy-controls" role="group" aria-label="3D camera"><button type="button" data-anatomy-view="front">Front</button><button type="button" data-anatomy-view="back">Back</button><button type="button" data-anatomy-zoom="out" aria-label="Zoom out">−</button><button type="button" data-anatomy-zoom="in" aria-label="Zoom in">+</button><button type="button" data-anatomy-reset aria-label="Reset 3D view">Reset</button></div>
+      <div class="anatomy-live" hidden><div class="anatomy-controls" role="group" aria-label="3D camera"><button type="button" data-anatomy-view="front">Front</button><button type="button" data-anatomy-view="back">Back</button><button type="button" data-anatomy-zoom="out" aria-label="Zoom out">−</button><button type="button" data-anatomy-zoom="in" aria-label="Zoom in">+</button><button type="button" data-anatomy-reset aria-label="Reset 3D view">Reset</button></div>
       <div class="anatomy-stage"><canvas role="img" aria-label="Rotatable anatomy. Tap a muscle to see its name and training history; drag to rotate and pinch to zoom."></canvas><span class="anatomy-status" role="status">Loading 3D anatomy…</span></div>
       <div class="anatomy-legend"><span><i class="primary"></i>Primary</span><span><i class="secondary"></i>Secondary</span><span><i class="focus"></i>Training focus</span></div>
       <div class="anatomy-history" role="region" aria-live="polite" aria-label="Muscle training history"><p>Tap a muscle to see related exercises and your recent training.</p><button type="button" data-anatomy-focus>Show this exercise’s focus</button></div></div>
-      <div class="anatomy-illustration" hidden>${window.MuscleDiagrams?.render(id)||''}</div>
+      <div class="anatomy-illustration">${window.MuscleDiagrams?.render(id)||''}</div>
       <details class="anatomy-credit"><summary>3D model credits</summary><p>Adapted from <a href="https://github.com/JohanBellander/BodyExplorer" target="_blank" rel="noopener">BodyExplorer</a>: BodyParts3D © DBCLS (<a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank" rel="noopener">CC BY-SA 2.1 Japan</a>) and Z-Anatomy by Gauthier Kervyn (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>). Geometry simplified and colored for Forge50.</p></details>
     </section>`;
   }
@@ -94,7 +94,7 @@ void main(){float id=floor(partId+.5);gl_FragColor=vec4(mod(id,256.)/255.,floor(
 
   class Viewer {
     constructor(root,id){
-      this.root=root;this.id=id;this.dead=false;this.abort=new AbortController();this.mode='3d';this.pending=false;this.gl=null;this.buffers=[];this.shaders=[];this.pointers=new Map();this.pinch=0;this.raf=0;this.dragged=false;
+      this.root=root;this.id=id;this.dead=false;this.abort=new AbortController();this.mode='image';this.pending=false;this.gl=null;this.buffers=[];this.shaders=[];this.pointers=new Map();this.pinch=0;this.raf=0;this.dragged=false;
       this.listen(root,'click',e=>{
         const button=e.target.closest('button');if(!button)return;
         if(button.dataset.anatomyMode){this.setMode(button.dataset.anatomyMode);return;}
@@ -105,7 +105,6 @@ void main(){float id=floor(partId+.5);gl_FragColor=vec4(mod(id,256.)/255.,floor(
         else if(button.hasAttribute('data-anatomy-reset'))this.reset();
         this.requestDraw();
       });
-      this.start();
     }
     listen(el,event,fn,options={}){el.addEventListener(event,fn,{...options,signal:el===this.canvas&&this.canvasAbort?this.canvasAbort.signal:this.abort.signal});}
     setMode(mode){
