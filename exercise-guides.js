@@ -15,6 +15,15 @@ const ExerciseGuides = {
       mistakes:"Too much bench incline, flared elbows, bouncing the dumbbells, excessive arching, or shortening the bottom range.",
       equipment:"Incline bench + dumbbells"
     },
+    "Flat Dumbbell Press": {
+      focus:"Mid-chest pressing",
+      primary:"Pectoralis major", secondary:"Triceps and front delts",
+      setup:"Lie on a flat bench with feet planted and dumbbells above the chest. Set your shoulder blades comfortably against the bench.",
+      perform:"Lower the dumbbells under control to a comfortable depth, then press them up without banging them together.",
+      cues:["Keep wrists stacked over forearms","Let elbows follow a comfortable path","Control the lower position","Keep feet grounded"],
+      mistakes:"Dropping below a comfortable shoulder range, flaring elbows excessively, bouncing, or arching to lift more weight.",
+      equipment:"Flat bench + dumbbells"
+    },
     "High-to-Low Cable Fly": {
       focus:"Lower/mid chest",
       primary:"Lower/sterner chest fibres", secondary:"Front delts",

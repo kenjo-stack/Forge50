@@ -2,6 +2,7 @@
 (() => {
   const maps = {
     'incline-dumbbell-press':'upper-chest',
+    'flat-dumbbell-press':'lower-chest',
     'high-to-low-cable-fly':'lower-chest',
     'low-to-high-cable-fly':'upper-chest',
     'machine-lower-chest-press':'lower-chest',

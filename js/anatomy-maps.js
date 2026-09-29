@@ -35,6 +35,7 @@
   // [view, framing, primary regions, assisting regions, focus regions]
   const rows={
     'incline-dumbbell-press':['front','upper','upperChest','frontDelts,triceps','upperChest'],
+    'flat-dumbbell-press':['front','upper','chest','frontDelts,triceps','chest'],
     'high-to-low-cable-fly':['front','upper','lowerChest','frontDelts','lowerChest'],
     'low-to-high-cable-fly':['front','upper','upperChest','frontDelts','upperChest'],
     'machine-lower-chest-press':['front','upper','lowerChest','frontDelts,triceps','lowerChest'],
