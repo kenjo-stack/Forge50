@@ -213,6 +213,15 @@ const ExerciseGuides = {
       mistakes:"Poor seat setup, shoulder movement, bouncing the stack, or hard lockouts.",
       equipment:"Triceps extension machine"
     },
+    "High Row Machine": {
+      focus:"Upper back",
+      primary:"Rhomboids and middle trapezius", secondary:"Lats, rear delts, biceps",
+      setup:"Adjust the seat or chest pad so the high-row handles are easy to reach without rounding your back. Choose a grip that feels comfortable at your elbow.",
+      perform:"Pull the handles toward your upper ribs, guiding the elbows back. Pause briefly, then let your shoulder blades move forward under control.",
+      cues:["Keep chest supported","Move elbows without swinging","Let shoulder blades move naturally","Control the return"],
+      mistakes:"Shrugging, pulling with the lower back, forcing a painful grip, or jerking the handles.",
+      equipment:"High-row machine"
+    },
     "High Row Machine / Assisted Pull-Up": {
       focus:"Upper back + lat width",
       primary:"Lats and upper back", secondary:"Biceps, rear delts, teres major",
@@ -257,6 +266,15 @@ const ExerciseGuides = {
       cues:["Neutral wrist","Elbows stay close","No swinging","Control the negative"],
       mistakes:"Rotating into a standard curl, using hip drive, shrugging, or excessive weight.",
       equipment:"Dumbbells"
+    },
+    "Pallof Press": {
+      focus:"Core anti-rotation",
+      primary:"Obliques and abdominal wall", secondary:"Shoulders and hips as stabilisers",
+      setup:"Set a cable at chest height. Stand side-on to the stack, hold the handle with both hands at your chest, and step out until the cable gently pulls sideways.",
+      perform:"Brace your trunk and press your hands forward without letting the torso rotate. Return to the chest slowly. Complete the prescribed repetitions on each side.",
+      cues:["Ribs over pelvis","Keep hips and shoulders facing forward","Breathe normally","Use a comfortable grip"],
+      mistakes:"Rotating toward the stack, leaning away, locking the elbows painfully, or choosing more load than you can resist.",
+      equipment:"Cable machine + single handle"
     },
     "Leg Press": {
       focus:"Quads + lower body",
