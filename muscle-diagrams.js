@@ -2,6 +2,7 @@
 (() => {
   const maps = {
     'incline-dumbbell-press':'upper-chest',
+    'flat-dumbbell-press':'lower-chest',
     'high-to-low-cable-fly':'lower-chest',
     'low-to-high-cable-fly':'upper-chest',
     'machine-lower-chest-press':'lower-chest',
@@ -10,6 +11,7 @@
     'rope-triceps-pushdown':'triceps',
     'reverse-grip-cable-triceps-pushdown':'triceps',
     'cable-crunch':'abs',
+    'pallof-press':'abs',
     'romanian-deadlift':'posterior-chain',
     'lat-pulldown':'lats',
     'chest-supported-row':'mid-back',
@@ -25,6 +27,7 @@
     'overhead-cable-triceps-extension':'triceps',
     'triceps-extension-machine':'triceps',
     'high-row-machine-assisted-pull-up':'lats',
+    'high-row-machine':'mid-back',
     'single-arm-cable-row':'lats',
     'high-face-pull':'rear-delts',
     'cable-curl':'biceps',

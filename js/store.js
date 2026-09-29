@@ -11,7 +11,7 @@ const Store = {
   addDays(d,n) { const dt=this.date(d);dt.setDate(dt.getDate()+n);return this.localDate(dt); },
   id() { return crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`; },
   copy(x) { return JSON.parse(JSON.stringify(x)); },
-  fresh() { return {schema:2,version:'2.6.0',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},preferences:{preferredRestSeconds:120,includeLegs:false,keepAwake:false},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
+  fresh() { return {schema:2,version:'2.7.1',routinePlan:'upper-body-2026-09-expanded',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},preferences:{preferredRestSeconds:120,includeLegs:false,keepAwake:false},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
   legacyInput() {
     const keys={history:'forge50-workoutHistory',currentProgress:'forge50-workoutProgress',exerciseLogs:'forge50-exerciseLogbook',personalRecords:'forge50-personalRecords'};
     const data={}; let found=false;
@@ -30,9 +30,15 @@ const Store = {
     this.state=next;
   },
   change(fn) { const next=this.copy(this.state);const result=fn(next);this.commit(next);return result; },
+  applyRoutinePlan() {
+    this.change(state=>{
+      for(const key of ['chest','back','shoulders'])state.templates[key]=this.copy(ForgeDefaults.templates[key]);
+      state.routinePlan='upper-body-2026-09-expanded';state.version='2.7.1';
+    });
+  },
   validate(s) {
     const fail=()=>{throw new Error('This backup has invalid or unsupported workout data. Your existing data has not been replaced.');};
-    if(!s||s.schema!==2||!s.profile||!s.templates||!s.cycle||!Array.isArray(s.sessions))fail();
+    if(!s||s.schema!==2||!s.profile||!s.templates||!s.cycle||!Array.isArray(s.sessions)||s.routinePlan!==undefined&&!['upper-body-2026-09','upper-body-2026-09-expanded'].includes(s.routinePlan))fail();
     const number=(n,min,max)=>typeof n==='number'&&Number.isFinite(n)&&n>=min&&n<=max;
     const text=(x,max=1000)=>typeof x==='string'&&x.length<=max;
     if(s.preferences!==undefined&&(!s.preferences||!number(s.preferences.preferredRestSeconds,15,900)||typeof s.preferences.includeLegs!=='boolean'||s.preferences.keepAwake!==undefined&&typeof s.preferences.keepAwake!=='boolean'))fail();
@@ -44,7 +50,7 @@ const Store = {
     for(const key of ['chest','back','shoulders','legs']) {
       const t=s.templates[key];if(!t||t.id!==key||!text(t.title,100)||!Array.isArray(t.exercises)||t.exercises.length<1||t.exercises.length>40)fail();
       const exercises=new Set();
-      for(const e of t.exercises){if(!safeId(e.id)||exercises.has(e.id)||!text(e.name,120)||!text(e.muscle,60)||!Number.isInteger(e.sets)||!number(e.sets,1,12)||!/^\d{1,3}-\d{1,3}$/.test(e.reps)||!number(e.rir,0,10)||!number(e.restSeconds,5,900)||!number(e.increment,0.25,50)||!['total','per-dumbbell','bodyweight'].includes(e.weightMode))fail();const [lo,hi]=e.reps.split('-').map(Number);if(lo<1||hi<lo||hi>100)fail();exercises.add(e.id);}
+      for(const e of t.exercises){if(!safeId(e.id)||exercises.has(e.id)||!text(e.name,120)||!text(e.muscle,60)||!Number.isInteger(e.sets)||!number(e.sets,1,12)||!/^\d{1,3}-\d{1,3}$/.test(e.reps)||!number(e.rir,0,10)||!number(e.restSeconds,5,900)||!number(e.increment,0.25,50)||!['total','per-dumbbell','bodyweight'].includes(e.weightMode)||e.optional!==undefined&&typeof e.optional!=='boolean')fail();const [lo,hi]=e.reps.split('-').map(Number);if(lo<1||hi<lo||hi>100)fail();exercises.add(e.id);}
     }
     for(const session of s.sessions) {
       if(!session||!safeId(session.id)||ids.has(session.id)||!this.validDate(session.date)||!['lifting','cycling','rest'].includes(session.type)||!['draft','completed','archived'].includes(session.status)||!text(session.title,150))fail();ids.add(session.id);
@@ -55,7 +61,7 @@ const Store = {
         for(const e of session.exercises){if(!safeId(e.id)||!text(e.name,120)||!text(e.muscle,60)||!Array.isArray(e.sets)||e.sets.length>200)fail();
           const setIds=new Set();
           if(e.notes!=null&&!text(e.notes,10000))fail();
-          if(!session.legacy&&(!number(e.rir,0,10)||!number(e.restSeconds,5,900)||!number(e.increment,0.25,50)||!/^\d{1,3}-\d{1,3}$/.test(e.reps)||!['total','per-dumbbell','bodyweight'].includes(e.weightMode)))fail();
+          if(!session.legacy&&(!number(e.rir,0,10)||!number(e.restSeconds,5,900)||!number(e.increment,0.25,50)||!/^\d{1,3}-\d{1,3}$/.test(e.reps)||!['total','per-dumbbell','bodyweight'].includes(e.weightMode)||e.optional!==undefined&&typeof e.optional!=='boolean'))fail();
           for(const set of e.sets){if(!safeId(set.id)||setIds.has(set.id))fail();setIds.add(set.id);if(typeof set.done!=='boolean'||(set.weight!==null&&!number(set.weight,0,1000))||(set.reps!==null&&(!number(set.reps,1,200)||!Number.isInteger(set.reps)))||(set.rir!=null&&!number(set.rir,0,10))||set.done&&(set.weight===null||set.reps===null))fail();}
         }
       }
@@ -84,7 +90,7 @@ const Store = {
     for(const p of Object.values(data.currentProgress||{}))if(p&&p.workout&&p.date){const s=get(p.date,p.workout);s.legacyChecked=Array.isArray(p.completed)?p.completed:[];}
     state.sessions=[...grouped.values()];return state;
   },
-  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.6.0',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
+  backup() { return {format:'forge50-backup',schema:2,appVersion:'2.7.1',exportDate:new Date().toISOString(),state:this.copy(this.state)}; },
   readBackup(data) {
     let s;if(data?.format==='forge50-backup'&&data.schema===2)s=this.copy(data.state);else if(data?.schema===2&&data.sessions)s=this.copy(data);else s=this.migrate(data);
     this.validate(s);return s;
@@ -112,7 +118,7 @@ const Store = {
       if(s.status==='completed')return;
       if(!s.exercises.some(e=>e.sets.some(x=>x.done)))throw new Error('Log at least one completed set before finishing.');
       s.status='completed';s.finishedAt=new Date().toISOString();s.duration=Math.max(0,Math.round((Date.now()-new Date(s.startedAt))/60000));
-      s.partial=s.exercises.some(e=>e.skipped||e.sets.some(x=>!x.done));
+      s.partial=s.exercises.some(e=>!e.optional&&(e.skipped||e.sets.some(x=>!x.done)));
       const cycle=state.preferences?.includeLegs?['chest','back','shoulders','legs']:['chest','back','shoulders'];if(cycle.includes(s.templateId))state.cycle.next=cycle[(cycle.indexOf(s.templateId)+1)%cycle.length];
       // Legs preserve the upper-body sequence, while still allowing a day off weights.
       state.cycle.nextDate=[state.cycle.nextDate,this.addDays(s.date,2),this.today()].sort().pop();

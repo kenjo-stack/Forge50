@@ -1,4 +1,4 @@
-// FORGE50 v2.0 defaults. User changes are stored separately.
+// FORGE50 v2.7 defaults. User changes are stored separately.
 window.ForgeDefaults = {
   "profile": {
     "name": "Kenjo",
@@ -423,6 +423,45 @@ window.ForgeDefaults = {
       "increment": 1,
       "weightMode": "total",
       "restSeconds": 60
+    },
+    "high-row-machine": {
+      "id": "high-row-machine",
+      "name": "High Row Machine",
+      "sets": 3,
+      "reps": "10-15",
+      "rir": 2,
+      "rest": "2 min",
+      "notes": "Upper-back emphasis. Use a comfortable grip.",
+      "muscle": "Back",
+      "increment": 1,
+      "weightMode": "total",
+      "restSeconds": 120
+    },
+    "pallof-press": {
+      "id": "pallof-press",
+      "name": "Pallof Press",
+      "sets": 3,
+      "reps": "10-15",
+      "rir": 2,
+      "rest": "90 sec",
+      "notes": "Anti-rotation core work; perform the reps on each side.",
+      "muscle": "Abs",
+      "increment": 1,
+      "weightMode": "total",
+      "restSeconds": 90
+    },
+    "flat-dumbbell-press": {
+      "id": "flat-dumbbell-press",
+      "name": "Flat Dumbbell Press",
+      "sets": 3,
+      "reps": "8-12",
+      "rir": 2,
+      "rest": "150 sec",
+      "notes": "Mid-chest press. Use only a comfortable shoulder range.",
+      "muscle": "Chest",
+      "increment": 1,
+      "weightMode": "per-dumbbell",
+      "restSeconds": 150
     }
   },
   "templates": {
@@ -434,14 +473,40 @@ window.ForgeDefaults = {
           "id": "incline-dumbbell-press",
           "name": "Incline Dumbbell Press",
           "sets": 4,
-          "reps": "6-10",
+          "reps": "8-12",
           "rir": 2,
-          "rest": "2-3 min",
+          "rest": "180 sec",
           "notes": "Primary upper chest movement.",
           "muscle": "Chest",
           "increment": 1,
           "weightMode": "per-dumbbell",
           "restSeconds": 180
+        },
+        {
+          "id": "flat-dumbbell-press",
+          "name": "Flat Dumbbell Press",
+          "sets": 3,
+          "reps": "8-12",
+          "rir": 2,
+          "rest": "150 sec",
+          "notes": "Mid-chest press. Use only a comfortable shoulder range.",
+          "muscle": "Chest",
+          "increment": 1,
+          "weightMode": "per-dumbbell",
+          "restSeconds": 150
+        },
+        {
+          "id": "machine-lower-chest-press",
+          "name": "Machine Lower Chest Press",
+          "sets": 3,
+          "reps": "8-12",
+          "rir": 2,
+          "rest": "150 sec",
+          "notes": "Lower chest pressing movement.",
+          "muscle": "Chest",
+          "increment": 1,
+          "weightMode": "total",
+          "restSeconds": 150
         },
         {
           "id": "high-to-low-cable-fly",
@@ -459,7 +524,7 @@ window.ForgeDefaults = {
         {
           "id": "low-to-high-cable-fly",
           "name": "Low-to-High Cable Fly",
-          "sets": 3,
+          "sets": 2,
           "reps": "12-15",
           "rir": 1,
           "rest": "90 sec",
@@ -470,69 +535,45 @@ window.ForgeDefaults = {
           "restSeconds": 90
         },
         {
-          "id": "machine-lower-chest-press",
-          "name": "Machine Lower Chest Press",
+          "id": "rope-triceps-pushdown",
+          "name": "Rope Triceps Pushdown",
           "sets": 3,
-          "reps": "8-12",
-          "rir": 2,
-          "rest": "2 min",
-          "notes": "Lower chest pressing movement.",
-          "muscle": "Chest",
-          "increment": 1,
-          "weightMode": "total",
-          "restSeconds": 120
-        },
-        {
-          "id": "close-grip-barbell-bench-press",
-          "name": "Close-Grip Barbell Bench Press",
-          "sets": 3,
-          "reps": "6-10",
-          "rir": 2,
-          "rest": "2-3 min",
-          "notes": "Heavy triceps compound with chest contribution.",
-          "muscle": "Triceps",
-          "increment": 1,
-          "weightMode": "total",
-          "restSeconds": 180
-        },
-        {
-          "id": "skull-crushers",
-          "name": "Skull Crushers",
-          "sets": 3,
-          "reps": "8-12",
+          "reps": "10-15",
           "rir": 1,
           "rest": "90 sec",
-          "notes": "Triceps extension with strong long-head loading.",
+          "notes": "Lateral and medial triceps heads.",
           "muscle": "Triceps",
           "increment": 1,
           "weightMode": "total",
           "restSeconds": 90
         },
         {
-          "id": "rope-triceps-pushdown",
-          "name": "Rope Triceps Pushdown",
+          "id": "overhead-cable-triceps-extension",
+          "name": "Overhead Cable Triceps Extension",
           "sets": 3,
           "reps": "10-15",
-          "rir": 1,
-          "rest": "60 sec",
-          "notes": "Lateral and medial triceps heads.",
+          "rir": 2,
+          "rest": "90 sec",
+          "notes": "Long-head emphasis.",
           "muscle": "Triceps",
           "increment": 1,
           "weightMode": "total",
-          "restSeconds": 60
+          "restSeconds": 90,
+          "optional": true
         },
         {
-          "id": "reverse-grip-cable-triceps-pushdown",
-          "name": "Reverse-Grip Cable Triceps Pushdown",
+          "id": "triceps-extension-machine",
+          "name": "Triceps Extension Machine",
           "sets": 2,
-          "reps": "12-15",
-          "rir": 1,
-          "rest": "60 sec",
-          "notes": "Additional medial-head emphasis.",
+          "reps": "10-15",
+          "rir": 2,
+          "rest": "90 sec",
+          "notes": "Controlled triceps isolation.",
           "muscle": "Triceps",
           "increment": 1,
           "weightMode": "total",
-          "restSeconds": 60
+          "restSeconds": 90,
+          "optional": true
         }
       ]
     },
@@ -546,12 +587,12 @@ window.ForgeDefaults = {
           "sets": 4,
           "reps": "8-12",
           "rir": 2,
-          "rest": "2 min",
+          "rest": "150 sec",
           "notes": "Lat width and vertical pulling strength.",
           "muscle": "Back",
           "increment": 1,
           "weightMode": "total",
-          "restSeconds": 120
+          "restSeconds": 150
         },
         {
           "id": "chest-supported-row",
@@ -559,8 +600,21 @@ window.ForgeDefaults = {
           "sets": 3,
           "reps": "8-12",
           "rir": 2,
-          "rest": "2 min",
+          "rest": "150 sec",
           "notes": "Upper back thickness.",
+          "muscle": "Back",
+          "increment": 1,
+          "weightMode": "total",
+          "restSeconds": 150
+        },
+        {
+          "id": "high-row-machine",
+          "name": "High Row Machine",
+          "sets": 3,
+          "reps": "10-15",
+          "rir": 2,
+          "rest": "120 sec",
+          "notes": "Upper-back emphasis. Use a comfortable grip.",
           "muscle": "Back",
           "increment": 1,
           "weightMode": "total",
@@ -570,11 +624,38 @@ window.ForgeDefaults = {
           "id": "seated-cable-row",
           "name": "Seated Cable Row",
           "sets": 3,
-          "reps": "10-12",
-          "rir": 1,
-          "rest": "90 sec",
+          "reps": "10-15",
+          "rir": 2,
+          "rest": "120 sec",
           "notes": "Mid-back contraction.",
           "muscle": "Back",
+          "increment": 1,
+          "weightMode": "total",
+          "restSeconds": 120
+        },
+        {
+          "id": "single-arm-cable-row",
+          "name": "Single-Arm Cable Row",
+          "sets": 2,
+          "reps": "10-15",
+          "rir": 2,
+          "rest": "90 sec",
+          "notes": "Unilateral back and lat work.",
+          "muscle": "Back",
+          "increment": 1,
+          "weightMode": "total",
+          "restSeconds": 90,
+          "optional": true
+        },
+        {
+          "id": "cable-curl",
+          "name": "Cable Curl",
+          "sets": 3,
+          "reps": "10-15",
+          "rir": 2,
+          "rest": "90 sec",
+          "notes": "Constant-tension biceps work.",
+          "muscle": "Biceps",
           "increment": 1,
           "weightMode": "total",
           "restSeconds": 90
@@ -582,55 +663,44 @@ window.ForgeDefaults = {
         {
           "id": "ez-bar-curl",
           "name": "EZ-Bar Curl",
-          "sets": 3,
-          "reps": "8-12",
-          "rir": 1,
+          "sets": 2,
+          "reps": "10-15",
+          "rir": 2,
           "rest": "90 sec",
           "notes": "Overall biceps loading.",
           "muscle": "Biceps",
           "increment": 1,
           "weightMode": "total",
-          "restSeconds": 90
+          "restSeconds": 90,
+          "optional": true
         },
         {
           "id": "incline-dumbbell-curl",
           "name": "Incline Dumbbell Curl",
-          "sets": 3,
+          "sets": 2,
           "reps": "10-15",
-          "rir": 1,
-          "rest": "60 sec",
+          "rir": 2,
+          "rest": "90 sec",
           "notes": "Long-head emphasis.",
           "muscle": "Biceps",
           "increment": 1,
           "weightMode": "per-dumbbell",
-          "restSeconds": 60
-        },
-        {
-          "id": "preacher-curl",
-          "name": "Preacher Curl",
-          "sets": 3,
-          "reps": "10-15",
-          "rir": 1,
-          "rest": "60 sec",
-          "notes": "Strict biceps work with shortened shoulder position.",
-          "muscle": "Biceps",
-          "increment": 1,
-          "weightMode": "total",
-          "restSeconds": 60
+          "restSeconds": 90,
+          "optional": true
         }
       ]
     },
     "shoulders": {
       "id": "shoulders",
-      "title": "Shoulders + abs",
+      "title": "Shoulders + upper back + abs",
       "exercises": [
         {
           "id": "dumbbell-shoulder-press",
           "name": "Dumbbell Shoulder Press",
-          "sets": 4,
-          "reps": "6-10",
+          "sets": 3,
+          "reps": "8-12",
           "rir": 2,
-          "rest": "2-3 min",
+          "rest": "180 sec",
           "notes": "Primary shoulder compound.",
           "muscle": "Shoulders",
           "increment": 1,
@@ -638,17 +708,31 @@ window.ForgeDefaults = {
           "restSeconds": 180
         },
         {
-          "id": "dumbbell-lateral-raise",
-          "name": "Dumbbell Lateral Raise",
+          "id": "machine-lateral-raise",
+          "name": "Machine Lateral Raise",
           "sets": 3,
           "reps": "12-20",
           "rir": 1,
-          "rest": "60 sec",
+          "rest": "90 sec",
+          "notes": "Additional medial-delt volume.",
+          "muscle": "Shoulders",
+          "increment": 1,
+          "weightMode": "total",
+          "restSeconds": 90
+        },
+        {
+          "id": "dumbbell-lateral-raise",
+          "name": "Dumbbell Lateral Raise",
+          "sets": 2,
+          "reps": "12-20",
+          "rir": 1,
+          "rest": "90 sec",
           "notes": "Medial delts.",
           "muscle": "Shoulders",
           "increment": 1,
           "weightMode": "per-dumbbell",
-          "restSeconds": 60
+          "restSeconds": 90,
+          "optional": true
         },
         {
           "id": "reverse-pec-deck",
@@ -656,38 +740,39 @@ window.ForgeDefaults = {
           "sets": 3,
           "reps": "12-20",
           "rir": 1,
-          "rest": "60 sec",
+          "rest": "90 sec",
           "notes": "Rear delts.",
           "muscle": "Shoulders",
           "increment": 1,
           "weightMode": "total",
-          "restSeconds": 60
+          "restSeconds": 90
         },
         {
-          "id": "seated-machine-front-raise",
-          "name": "Seated Machine Front Raise",
-          "sets": 2,
-          "reps": "10-15",
-          "rir": 1,
-          "rest": "60 sec",
-          "notes": "Anterior delts.",
-          "muscle": "Shoulders",
-          "increment": 1,
-          "weightMode": "total",
-          "restSeconds": 60
-        },
-        {
-          "id": "machine-lateral-raise",
-          "name": "Machine Lateral Raise",
+          "id": "high-face-pull",
+          "name": "High Face Pull",
           "sets": 3,
           "reps": "12-20",
-          "rir": 1,
-          "rest": "60 sec",
-          "notes": "Additional medial-delt volume.",
+          "rir": 2,
+          "rest": "90 sec",
+          "notes": "Rear delts, upper back and external rotators.",
           "muscle": "Shoulders",
           "increment": 1,
           "weightMode": "total",
-          "restSeconds": 60
+          "restSeconds": 90,
+          "optional": true
+        },
+        {
+          "id": "high-row-machine",
+          "name": "High Row Machine",
+          "sets": 3,
+          "reps": "10-15",
+          "rir": 2,
+          "rest": "120 sec",
+          "notes": "Upper-back emphasis. Use a comfortable grip.",
+          "muscle": "Back",
+          "increment": 1,
+          "weightMode": "total",
+          "restSeconds": 120
         },
         {
           "id": "cable-crunch",
@@ -695,12 +780,25 @@ window.ForgeDefaults = {
           "sets": 3,
           "reps": "12-20",
           "rir": 1,
-          "rest": "60 sec",
+          "rest": "90 sec",
           "notes": "Upper abs.",
           "muscle": "Abs",
           "increment": 1,
           "weightMode": "total",
-          "restSeconds": 60
+          "restSeconds": 90
+        },
+        {
+          "id": "pallof-press",
+          "name": "Pallof Press",
+          "sets": 3,
+          "reps": "10-15",
+          "rir": 2,
+          "rest": "90 sec",
+          "notes": "Anti-rotation core work; perform the reps on each side.",
+          "muscle": "Abs",
+          "increment": 1,
+          "weightMode": "total",
+          "restSeconds": 90
         }
       ]
     },

@@ -35,6 +35,7 @@
   // [view, framing, primary regions, assisting regions, focus regions]
   const rows={
     'incline-dumbbell-press':['front','upper','upperChest','frontDelts,triceps','upperChest'],
+    'flat-dumbbell-press':['front','upper','chest','frontDelts,triceps','chest'],
     'high-to-low-cable-fly':['front','upper','lowerChest','frontDelts','lowerChest'],
     'low-to-high-cable-fly':['front','upper','upperChest','frontDelts','upperChest'],
     'machine-lower-chest-press':['front','upper','lowerChest','frontDelts,triceps','lowerChest'],
@@ -43,6 +44,7 @@
     'rope-triceps-pushdown':['back','upper','tricepsOuter','tricepsLong','tricepsOuter'],
     'reverse-grip-cable-triceps-pushdown':['back','upper','tricepsMedial','tricepsLateral,forearms','tricepsMedial'],
     'cable-crunch':['front','core','abs','obliques','abs'],
+    'pallof-press':['front','core','obliques,abs','sideDelts','obliques'],
     'romanian-deadlift':['back','lower','hamstrings,glutes','erectors,adductors','hamstrings,glutes'],
     'lat-pulldown':['back','upper','lats','biceps,teres,midBack,rearDelts','lats'],
     'chest-supported-row':['back','upper','midBack,upperTraps','lats,rearDelts,biceps','midBack'],
@@ -58,6 +60,7 @@
     'overhead-cable-triceps-extension':['back','upper','tricepsLong','tricepsOuter','tricepsLong'],
     'triceps-extension-machine':['back','upper','triceps','','triceps'],
     'high-row-machine-assisted-pull-up':['back','upper','lats,midBack','biceps,rearDelts,teres','lats,midBack'],
+    'high-row-machine':['back','upper','midBack','lats,rearDelts,biceps','midBack'],
     'single-arm-cable-row':['back','upper','lats,midBack','rearDelts,biceps,obliques','lats'],
     'high-face-pull':['back','upper','rearDelts','midBack,rotatorCuff','rearDelts'],
     'cable-curl':['front','upper','biceps','brachialis,forearms','biceps'],
