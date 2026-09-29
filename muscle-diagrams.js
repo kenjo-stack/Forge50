@@ -1,6 +1,10 @@
 /* Muscle illustrations grouped by shared anatomy. */
 (() => {
   const maps = {
+    'cable-chest-press':'lower-chest',
+    'straight-arm-pulldown':'lats',
+    'cable-lateral-raise':'side-delts',
+    'machine-ab-crunch':'abs',
     'incline-dumbbell-press':'upper-chest',
     'flat-dumbbell-press':'lower-chest',
     'high-to-low-cable-fly':'lower-chest',

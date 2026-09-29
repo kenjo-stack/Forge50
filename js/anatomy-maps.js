@@ -34,6 +34,10 @@
   };
   // [view, framing, primary regions, assisting regions, focus regions]
   const rows={
+    'cable-chest-press':['front','upper','chest','frontDelts,triceps','chest'],
+    'straight-arm-pulldown':['back','upper','lats','teres,midBack,triceps','lats'],
+    'cable-lateral-raise':['front','upper','sideDelts','upperTraps','sideDelts'],
+    'machine-ab-crunch':['front','core','abs','obliques','abs'],
     'incline-dumbbell-press':['front','upper','upperChest','frontDelts,triceps','upperChest'],
     'flat-dumbbell-press':['front','upper','chest','frontDelts,triceps','chest'],
     'high-to-low-cable-fly':['front','upper','lowerChest','frontDelts','lowerChest'],

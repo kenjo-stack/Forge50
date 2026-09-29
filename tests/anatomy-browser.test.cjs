@@ -22,7 +22,7 @@ let browser;
   assert.ok(Number(await page.locator('.anatomy-viewer').getAttribute('data-primary-count'))>0,id);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  }
- console.log('PASS all 32 exercises open a real 3D view offline under the GitHub Pages subpath');
+ console.log('PASS all catalog exercises open a real 3D view offline under the GitHub Pages subpath');
  for(const id of ['lat-pulldown','leg-press','machine-calf-raise']){
   await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="muscles"]').click();assert.equal(await page.locator('.anatomy-illustration').isVisible(),true);await page.locator('[data-anatomy-mode="3d"]').click();await page.locator('[data-anatomy-state="ready"]').waitFor();
   await page.locator('.anatomy-stage').screenshot({path:'/tmp/forge50-3d-'+id+'.png'});

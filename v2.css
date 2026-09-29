@@ -13,5 +13,13 @@
 /* Set history in the full workout view */
 .set-reference{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 12px 28px;padding:7px 10px;border-left:2px solid var(--accent);color:var(--text-secondary);font-size:14px}
 .set-reference .small-btn{min-height:44px;min-width:58px;flex:none}
+.muscle-stat{display:block;width:100%;margin-top:12px;padding:14px;border:1px solid #ffffff20;border-radius:12px;background:#11151b;color:var(--text);text-align:left;font:inherit;min-height:66px}
+.muscle-stat.active{border-color:var(--accent);background:#ff7a000d}
+.muscle-stat-label{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.muscle-stat-label span{color:var(--muted);font-size:14px}
+.muscle-stat .bar-track{display:block;height:8px;overflow:hidden}
+.muscle-stat .bar-track span{display:block;height:100%;border-radius:4px;background:var(--accent)}
+.muscle-detail{margin-top:18px;padding:14px;border:1px solid #ffffff22;border-radius:12px}
+.muscle-detail .session-line{align-items:baseline}
 .session-comparison{padding-left:23px;line-height:1.7}
 .session-comparison li{margin:5px 0}

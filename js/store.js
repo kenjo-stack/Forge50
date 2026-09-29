@@ -108,6 +108,28 @@ const Store = {
     this.change(state=>{state.sessions.push({id,type:'lifting',templateId,title:t.title,date,status:'draft',startedAt:new Date().toISOString(),notes:'',exercises:t.exercises.map(e=>({...this.copy(e),skipped:false,notes:'',sets:Array.from({length:e.sets},()=>({id:this.id(),weight:e.weightMode==='bodyweight'?0:null,reps:null,rir:null,done:false}))}))});});return id;
   },
   patchSession(id,fn){return this.change(state=>{const s=state.sessions.find(s=>s.id===id);if(!s)throw new Error('Session not found.');return fn(s,state);});},
+  swapOptions(sessionId,exerciseId){
+    const session=this.session(sessionId),old=session?.exercises.find(e=>e.id===exerciseId);
+    if(!session||session.type!=='lifting'||session.status!=='draft'||!old)return [];
+    const used=new Set(session.exercises.map(e=>e.id));
+    return Object.values(ForgeDefaults.catalog).filter(e=>e.muscle===old.muscle&&!used.has(e.id)).sort((a,b)=>a.name.localeCompare(b.name));
+  },
+  swapExercise(sessionId,exerciseId,replacementId){
+    const choice=this.swapOptions(sessionId,exerciseId).find(e=>e.id===replacementId);
+    if(!choice)throw new Error('Choose another available exercise for the same muscle group.');
+    return this.patchSession(sessionId,session=>{
+      if(session.status!=='draft')throw new Error('Completed sessions cannot be swapped.');
+      const index=session.exercises.findIndex(e=>e.id===exerciseId),old=session.exercises[index];
+      if(index<0)throw new Error('Exercise not found.');
+      const done=old.sets.filter(set=>set.done),remaining=old.sets.length-done.length;
+      if(done.length&&remaining===0)throw new Error('All sets are logged. Add another exercise to a future routine instead.');
+      const count=done.length?remaining:old.sets.length;
+      const mode=/Dumbbell/.test(choice.name)?'per-dumbbell':choice.weightMode;
+      const replacement={...this.copy(choice),weightMode:mode,optional:!!old.optional,skipped:false,notes:done.length?'Added after '+old.name+' ('+done.length+' sets logged).':old.notes||'',sets:Array.from({length:count},()=>({id:this.id(),weight:mode==='bodyweight'?0:null,reps:null,rir:null,done:false}))};
+      if(done.length){old.sets=done;old.skipped=false;session.exercises.splice(index+1,0,replacement);return index+1;}
+      session.exercises.splice(index,1,replacement);return index;
+    });
+  },
   saveSet(id,exerciseId,setId,values) {
     const prior=this.best(exerciseId,this.session(id)?.exercises.find(e=>e.id===exerciseId)?.weightMode);
     this.patchSession(id,s=>{const e=s.exercises.find(e=>e.id===exerciseId);if(!e)throw new Error('Exercise not found.');const set=e.sets.find(x=>x.id===setId);if(!set)throw new Error('Set not found.');Object.assign(set,values);});
@@ -142,6 +164,20 @@ const Store = {
     const muscles={},byDate={};let volume=0,sets=0;
     for(const s of sessions)if(s.type==='lifting'&&!s.legacy)for(const e of s.exercises)for(const set of e.sets)if(set.done){sets++;muscles[e.muscle]=(muscles[e.muscle]||0)+1;const v=set.weight*set.reps*(e.weightMode==='per-dumbbell'?2:1);volume+=v;byDate[s.date]=(byDate[s.date]||0)+v;}
     return {lifting:sessions.filter(s=>s.type==='lifting').length,cycling:sessions.filter(s=>s.type==='cycling').reduce((n,s)=>n+s.minutes,0),sets,volume,muscles,byDate};
+  },
+  muscleStats(days=7){
+    const currentStart=this.addDays(this.today(),1-days),previousStart=this.addDays(currentStart,-days);
+    const groups=Object.create(null);
+    for(const s of this.state.sessions){
+      if(s.type!=='lifting'||s.status!=='completed'||s.legacy||s.date<previousStart||s.date>this.today())continue;
+      for(const e of s.exercises){const count=e.sets.filter(set=>set.done).length;if(!count)continue;
+        const group=groups[e.muscle]??={muscle:e.muscle,sets:0,previous:0,lastDate:null,exercises:Object.create(null)};
+        if(s.date>=currentStart){group.sets+=count;group.lastDate=!group.lastDate||s.date>group.lastDate?s.date:group.lastDate;
+          const entry=group.exercises[e.id]??={id:e.id,name:e.name,sets:0};entry.sets+=count;
+        }else group.previous+=count;
+      }
+    }
+    return Object.values(groups).sort((a,b)=>b.sets-a.sets||a.muscle.localeCompare(b.muscle));
   }
 };
 window.Store=Store;
