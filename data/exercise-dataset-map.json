@@ -1,0 +1,287 @@
+{
+  "source": {
+    "repository": "hasaneyldrm/exercises-dataset",
+    "revision": "7455efae41b330c265e7cd4b78dfa848e7ce5ebd",
+    "recordCount": 1324,
+    "dataBlobSha": "3cbb77b678c40d7342897d38e4c61e9502f829a7"
+  },
+  "mappings": {
+    "cable-chest-press": {
+      "datasetIds": [
+        "2144"
+      ],
+      "match": "variant",
+      "note": "The dataset uses a seated cable press; Forge50 uses a standing stance.",
+      "equipmentOverride": "cable"
+    },
+    "straight-arm-pulldown": {
+      "datasetIds": [
+        "0238"
+      ],
+      "match": "exact",
+      "note": "Straight-arm cable pulldown."
+    },
+    "cable-lateral-raise": {
+      "datasetIds": [
+        "0192"
+      ],
+      "match": "exact",
+      "note": "Single-arm cable lateral raise."
+    },
+    "machine-ab-crunch": {
+      "datasetIds": [
+        "1452"
+      ],
+      "match": "exact",
+      "note": "Seated resistance-machine crunch."
+    },
+    "incline-dumbbell-press": {
+      "datasetIds": [
+        "0314"
+      ],
+      "match": "exact",
+      "note": "Incline dumbbell bench press."
+    },
+    "high-to-low-cable-fly": {
+      "datasetIds": [
+        "0158"
+      ],
+      "match": "related",
+      "note": "Dataset decline fly is bench-supported; retain Forge50 standing high-to-low technique."
+    },
+    "low-to-high-cable-fly": {
+      "datasetIds": [
+        "0179"
+      ],
+      "match": "variant",
+      "note": "Low cable fly; follow Forge50 upper-chest path."
+    },
+    "machine-lower-chest-press": {
+      "datasetIds": [
+        "1300"
+      ],
+      "match": "variant",
+      "note": "Decline machine press; exact machine setup can differ."
+    },
+    "close-grip-barbell-bench-press": {
+      "datasetIds": [
+        "0030"
+      ],
+      "match": "exact",
+      "note": "Close-grip barbell bench press."
+    },
+    "skull-crushers": {
+      "datasetIds": [
+        "0060"
+      ],
+      "match": "variant",
+      "note": "Dataset shows a barbell skull crusher; use your chosen bar."
+    },
+    "rope-triceps-pushdown": {
+      "datasetIds": [
+        "0200"
+      ],
+      "match": "exact",
+      "note": "Cable rope pushdown."
+    },
+    "reverse-grip-cable-triceps-pushdown": {
+      "datasetIds": [
+        "0207"
+      ],
+      "match": "exact",
+      "note": "Reverse-grip cable pushdown."
+    },
+    "cable-crunch": {
+      "datasetIds": [
+        "0175"
+      ],
+      "match": "exact",
+      "note": "Kneeling cable crunch."
+    },
+    "romanian-deadlift": {
+      "datasetIds": [
+        "0085"
+      ],
+      "match": "variant",
+      "note": "Barbell Romanian deadlift; dataset names glutes as target and hamstrings as secondary."
+    },
+    "lat-pulldown": {
+      "datasetIds": [
+        "0198"
+      ],
+      "match": "exact",
+      "note": "Cable lat pulldown."
+    },
+    "chest-supported-row": {
+      "datasetIds": [
+        "0606"
+      ],
+      "match": "variant",
+      "note": "Chest-supported lever T-bar row; machine/handle choice can differ."
+    },
+    "seated-cable-row": {
+      "datasetIds": [
+        "0239"
+      ],
+      "match": "exact",
+      "note": "Seated cable row with stable torso."
+    },
+    "ez-bar-curl": {
+      "datasetIds": [
+        "0447"
+      ],
+      "match": "exact",
+      "note": "EZ-bar curl."
+    },
+    "incline-dumbbell-curl": {
+      "datasetIds": [
+        "0315"
+      ],
+      "match": "exact",
+      "note": "Incline dumbbell biceps curl."
+    },
+    "preacher-curl": {
+      "datasetIds": [
+        "0070"
+      ],
+      "match": "variant",
+      "note": "Barbell preacher curl; Forge50 does not specify the implement."
+    },
+    "dumbbell-shoulder-press": {
+      "datasetIds": [
+        "0405"
+      ],
+      "match": "exact",
+      "note": "Seated dumbbell shoulder press."
+    },
+    "dumbbell-lateral-raise": {
+      "datasetIds": [
+        "0334"
+      ],
+      "match": "exact",
+      "note": "Dumbbell lateral raise."
+    },
+    "reverse-pec-deck": {
+      "datasetIds": [
+        "0602"
+      ],
+      "match": "exact",
+      "note": "Seated reverse fly machine."
+    },
+    "seated-machine-front-raise": {
+      "datasetIds": [
+        "0392"
+      ],
+      "match": "related",
+      "note": "No machine front-raise entry; this is a seated dumbbell reference, not the same equipment.",
+      "equipmentOverride": "leverage machine"
+    },
+    "machine-lateral-raise": {
+      "datasetIds": [
+        "0584"
+      ],
+      "match": "exact",
+      "note": "Lever lateral raise machine."
+    },
+    "overhead-cable-triceps-extension": {
+      "datasetIds": [
+        "0194"
+      ],
+      "match": "exact",
+      "note": "Overhead cable rope extension."
+    },
+    "triceps-extension-machine": {
+      "datasetIds": [
+        "0607"
+      ],
+      "match": "exact",
+      "note": "Lever triceps extension."
+    },
+    "high-row-machine-assisted-pull-up": {
+      "datasetIds": [
+        "0581",
+        "0017"
+      ],
+      "match": "multiple",
+      "note": "Legacy combined entry has two distinct movements; choose the appropriate reference."
+    },
+    "single-arm-cable-row": {
+      "datasetIds": [
+        "0214"
+      ],
+      "match": "variant",
+      "note": "Seated single-arm cable row; Forge50 also allows a standing stance."
+    },
+    "high-face-pull": {
+      "datasetIds": [
+        "0233"
+      ],
+      "match": "related",
+      "note": "Rope rear-delt row is a related reference; it does not describe the full face-pull external rotation."
+    },
+    "cable-curl": {
+      "datasetIds": [
+        "0868"
+      ],
+      "match": "exact",
+      "note": "Standing cable curl."
+    },
+    "hammer-curl": {
+      "datasetIds": [
+        "0313"
+      ],
+      "match": "exact",
+      "note": "Dumbbell hammer curl."
+    },
+    "leg-press": {
+      "datasetIds": [
+        "0739"
+      ],
+      "match": "variant",
+      "note": "45-degree sled leg press; dataset targets glutes with quads secondary."
+    },
+    "seated-leg-curl": {
+      "datasetIds": [
+        "0599"
+      ],
+      "match": "exact",
+      "note": "Seated lever leg curl."
+    },
+    "leg-extension": {
+      "datasetIds": [
+        "0585"
+      ],
+      "match": "exact",
+      "note": "Lever leg extension."
+    },
+    "machine-calf-raise": {
+      "datasetIds": [
+        "0605"
+      ],
+      "match": "variant",
+      "note": "Standing lever calf raise; machine position can differ."
+    },
+    "high-row-machine": {
+      "datasetIds": [
+        "0581"
+      ],
+      "match": "exact",
+      "note": "Lever high row."
+    },
+    "pallof-press": {
+      "datasetIds": [
+        "0979"
+      ],
+      "match": "related",
+      "note": "Dataset has a band Pallof press; Forge50 uses a cable.",
+      "equipmentOverride": "cable"
+    },
+    "flat-dumbbell-press": {
+      "datasetIds": [
+        "0289"
+      ],
+      "match": "exact",
+      "note": "Flat dumbbell bench press."
+    }
+  }
+}
