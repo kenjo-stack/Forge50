@@ -2,7 +2,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),zlib
 const root=path.resolve(__dirname,'..'),context={window:{}};vm.createContext(context);
 for(const file of ['data.js','js/anatomy-maps.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
 const {AnatomyMaps:maps,ForgeDefaults:defaults}=context.window;
-const meta=JSON.parse(fs.readFileSync(path.join(root,'assets/anatomy/parts.json'))),data=zlib.gunzipSync(fs.readFileSync(path.join(root,'assets/anatomy/body.bin.gz')));
+const meta=JSON.parse(fs.readFileSync(path.join(root,'assets/anatomy/parts.json'))),data=zlib.gunzipSync(Buffer.concat(meta.chunks.map(name=>fs.readFileSync(path.join(root,'assets/anatomy',name)))));
 assert.equal(data.subarray(0,4).toString(),'F50A');assert.equal(data.readUInt32LE(4),1);
 assert.equal(data.readUInt32LE(8),meta.vertexCount);assert.equal(data.readUInt32LE(12),meta.indexCount);
 assert.equal(data.length,16+meta.vertexCount*6+meta.indexCount*4);

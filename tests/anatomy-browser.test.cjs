@@ -37,7 +37,7 @@ let browser;
  await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x-55,y,id:1},{x:x+55,y,id:2}]});
  await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
  assert.notDeepEqual(await canvas.screenshot(),pinchBefore);
- await page.locator('[data-anatomy-reset]').click();await page.locator('[data-anatomy-view="front"]').click();assert.equal(await page.locator('[data-anatomy-view="front"]').getAttribute('aria-pressed'),'true');
+ await page.locator('[data-anatomy-reset]').click();await page.locator('[data-anatomy-view="front"]').click();await page.waitForFunction(()=>document.querySelector('[data-anatomy-view="front"]')?.getAttribute('aria-pressed')==='true');
  console.log('PASS drag rotation, two-finger zoom and camera buttons change the rendered model');
  await page.locator('[data-anatomy-mode="image"]').click();assert.equal(await page.locator('.anatomy-illustration').isVisible(),true);await page.locator('[data-anatomy-mode="3d"]').click();assert.equal(await canvas.isVisible(),true);
  await page.evaluate(()=>document.querySelector('.anatomy-stage canvas').getContext('webgl').getExtension('WEBGL_lose_context').loseContext());
