@@ -1,6 +1,6 @@
-# FORGE50 2.9.1 — Original Exercise Demos
+# FORGE50 2.9.2 — Muscle Illustrations and GIF Demos
 
-This release uses the pre-dataset v2.9 app and adds 39 original animated GIF demonstrations. Open **Guide → Demo → Play demo**. Technique remains the first section, and Muscles still opens illustrations before optional 3D anatomy. Your exercise IDs, routines and saved training data use the same v2.9 format. See `docs/ORIGINAL-EXERCISE-DEMOS.md` for the release base and integration details.
+This release uses the pre-dataset v2.9 app with 39 original animated GIF demonstrations. Open **Guide → Demo → Play demo**. Technique remains the first section, and Muscles opens the colour-coded illustrations directly. The separate 3D viewer and model package have been removed. Your exercise IDs, routines and saved training data use the same v2.9 format. See `docs/ORIGINAL-EXERCISE-DEMOS.md` for the release base and integration details.
 
 Posters work offline after the app's first successful load. Play each animation online once to cache it for later offline viewing. Animations do not autoplay or download as a full collection on installation.
 
@@ -58,7 +58,7 @@ Rest ranges from the old app use their upper end (2–3 minutes = 3 minutes). St
 
 Use **Keep screen awake** in the workout or Settings to prevent the screen dimming while a draft workout is visible. The app releases the request when you leave or finish the workout. Phone power settings may refuse the request; training data still saves normally.
 
-In the Guide’s **Muscles** tab, rotate or zoom the 3D anatomy and tap a muscle for its name, related exercises and your five most recent completed exercise entries. The **Show this exercise’s focus** button offers a quick way to explore the highlighted muscle. The data reflects completed logged sets, excluding drafts and imported summaries.
+The Guide’s **Muscles** tab shows the illustration, with orange primary muscles, blue supporting muscles, and purple focus outlines and arrows. Written muscle targets and training focus appear below. Use **Progress → Muscle statistics** to review completed sets by muscle group, or the Guide’s **Progress** tab for this exercise’s last completed sets and targets.
 
 ## Settings
 
