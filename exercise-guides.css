@@ -34,27 +34,6 @@
 .forge50-guide-checks{list-style:none;padding:0;margin:0;display:grid;gap:7px}
 .forge50-guide-checks li{background:#16231d;color:#b9efce;border:1px solid #244d36;border-radius:9px;padding:9px 10px;font-size:16px}
 body.forge50-guide-open{overflow:hidden}
-.anatomy-viewer{border:1px solid #394152;border-radius:16px;background:#0d121b;margin:12px 0;overflow:hidden}
-.anatomy-mode,.anatomy-controls{display:flex;flex-wrap:wrap;gap:6px;padding:10px 10px 0}
-.anatomy-mode button,.anatomy-controls button{min-height:44px;min-width:44px;border:1px solid #414c61;border-radius:9px;background:#222b3b;color:#e8ecf4;font:600 14px system-ui;padding:8px 11px;cursor:pointer}
-.anatomy-mode button{flex:1}.anatomy-mode button[aria-pressed="true"],.anatomy-controls button[aria-pressed="true"]{background:#563b72;border-color:#ab7dd8;color:#fff}
-.anatomy-stage{position:relative;height:clamp(330px,100vw,460px);margin-top:8px;background:radial-gradient(ellipse at 50% 40%,#283347,#0a101a 72%)}
-.anatomy-stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
-.anatomy-stage canvas:active{cursor:grabbing}
-.anatomy-status{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;color:#d0d9e8;pointer-events:none;text-shadow:0 1px 4px #000}
-.anatomy-message{padding:0 12px;color:#dbc9ef;font-size:14px;line-height:1.45}
-.anatomy-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 15px;padding:12px 8px;font-size:12px;color:#e8edf6}
-.anatomy-legend span{display:flex;align-items:center;gap:6px}.anatomy-legend i{display:inline-block;width:12px;height:12px;border-radius:50%}
-.anatomy-legend .primary{background:#f38a32}.anatomy-legend .secondary{background:#36aff4}.anatomy-legend .focus{border:2px solid #d195ff}
-.anatomy-credit{padding:7px 12px 12px;color:#a9b6ca;font-size:12px}.anatomy-credit summary{min-height:24px;cursor:pointer}.anatomy-credit p{line-height:1.5}.anatomy-credit a{color:#c5acff}
-.anatomy-illustration .muscle-diagram{border:0;margin:0}
-.anatomy-viewer [hidden]{display:none!important}
-.anatomy-history{border-top:1px solid #455068;background:#151b28;padding:16px;color:#e8edf6;line-height:1.5}
-.anatomy-history h3{font-size:19px;margin:0 0 3px;color:#f4e8ff}.anatomy-history h4{font-size:14px;margin:16px 0 5px;color:#cbb7eb}
-.anatomy-history p{margin:5px 0 12px}.anatomy-history .anatomy-role{color:#cfbbeb;font-size:14px}
-.anatomy-history ul{padding:0;margin:0;list-style:none}.anatomy-history li{padding:7px 0;border-bottom:1px solid #ffffff19;font-size:14px}
-.anatomy-history li small{margin-left:8px;color:#bbc9dc}.anatomy-history li span{display:block;color:#aebed3;margin-top:3px}
-.anatomy-history button{margin-top:14px;min-height:44px;border:1px solid #ab7dd8;background:#342747;color:#fff;border-radius:9px;padding:8px 12px;cursor:pointer;font-weight:600}
 .guide-btn{min-height:44px;border:1px solid #8b5cf6;background:#19152a;color:#d8c8ff;border-radius:11px;padding:9px 13px;font-weight:800;cursor:pointer;white-space:nowrap}
 .guide-btn:active{transform:scale(.98)}
 .exercise-header{display:flex;align-items:center;gap:10px}

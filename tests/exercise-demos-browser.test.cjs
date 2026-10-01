@@ -30,7 +30,7 @@ let browser,checks=0;const pass=message=>{checks++;console.log('PASS',message);}
  await page.locator('[data-demo-toggle]').click();assert.match(await page.locator('[data-demo-image]').getAttribute('src'),/posters\/lat-pulldown\.jpg$/);
  pass('Play loads a real looping GIF, caches it on demand, and Stop restores the static poster');
  await page.locator('[data-demo-toggle]').click();await page.locator('[data-demo-state="playing"]').waitFor();await page.locator('[data-guide-tab="muscles"]').click();
- assert.equal(await page.locator('.anatomy-illustration').isVisible(),true);assert.equal(await page.locator('.anatomy-live').isVisible(),false);assert.equal(await page.locator('.exercise-demo').getAttribute('data-demo-state'),'idle');
+ assert.equal(await page.locator('.muscle-diagram').isVisible(),true);assert.equal(await page.locator('[data-anatomy-mode],canvas,.anatomy-credit').count(),0);assert.equal(await page.locator('.exercise-demo').getAttribute('data-demo-state'),'idle');
  await page.locator('[data-guide-tab="demo"]').click();await page.locator('[data-demo-toggle]').click();await page.locator('[data-demo-state="playing"]').waitFor();
  await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));});
  assert.equal(await page.locator('.exercise-demo').getAttribute('data-demo-state'),'idle');await page.evaluate(()=>delete document.hidden);
