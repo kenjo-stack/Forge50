@@ -1,4 +1,8 @@
-# FORGE50 2.6 — Your Training Rhythm
+# FORGE50 2.9.1 — Original Exercise Demos
+
+This release uses the pre-dataset v2.9 app and adds 39 original animated GIF demonstrations. Open **Guide → Demo → Play demo**. Technique remains the first section, and Muscles still opens illustrations before optional 3D anatomy. Your exercise IDs, routines and saved training data use the same v2.9 format. See `docs/ORIGINAL-EXERCISE-DEMOS.md` for the release base and integration details.
+
+Posters work offline after the app's first successful load. Play each animation online once to cache it for later offline viewing. Animations do not autoplay or download as a full collection on installation.
 
 ## Start here
 

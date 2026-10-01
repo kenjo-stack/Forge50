@@ -65,13 +65,17 @@ body.forge50-guide-open{overflow:hidden}
   .guide-btn{font-size:15px;padding:8px 10px}
   .exercise-header h2{font-size:18px}
 }
-/* Dataset reference details and isolated demonstration controls. */
-.dataset-record{margin:14px 0;padding:14px;border:1px solid #596577;border-radius:12px}
-.dataset-record h4{margin:0 0 12px;text-transform:capitalize}
-.dataset-record dl{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin:12px 0}
-.dataset-record dt{font-weight:bold}.dataset-record dd{margin:0;overflow-wrap:anywhere}
-.dataset-record ol{padding-left:22px;line-height:1.6}.dataset-record li{margin:8px 0}
-.exercise-demo select{max-width:100%;width:100%;min-height:44px;margin-top:8px}
-.demo-stage{display:grid;place-items:center;min-height:190px;margin:16px 0}
-.demo-stage img{width:180px;height:180px;max-width:100%;object-fit:contain}.demo-stage [hidden]{display:none}
-.demo-actions{display:flex;gap:12px;flex-wrap:wrap}.demo-actions button{min-height:44px;padding:10px 14px;border-radius:9px;border:1px solid #596577;background:#252d39;color:#fff}
+/* Original exercise demonstrations. Motion starts only with the Play control. */
+.exercise-demo-stage{margin:0 0 14px;background:#090f17;border:1px solid #343c47;border-radius:12px;overflow:hidden}
+.exercise-demo-stage img{display:block;width:100%;max-height:60vh;height:auto;object-fit:contain;aspect-ratio:1}
+.exercise-demo-toggle{min-height:48px;width:100%;border:1px solid #ee893a;background:#ee893a;color:#17100a;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+.exercise-demo-toggle[aria-pressed="true"]{background:#242b35;color:#fff;border-color:#9eacbe}
+.exercise-demo-toggle:focus-visible,.exercise-demo-choice select:focus-visible{outline:3px solid #cc80ff;outline-offset:3px}
+.exercise-demo-status{margin:10px 0;color:#d0d8e2;font-size:.95rem}
+.exercise-demo-choice{display:grid;gap:8px;margin:0 0 14px;font-weight:600}
+.exercise-demo-choice select{min-height:48px;width:100%;max-width:100%;padding:10px;border:1px solid #566170;border-radius:8px;background:#171e27;color:#fff;font:inherit}
+.exercise-demo-legend{display:flex;flex-wrap:wrap;gap:9px 16px;margin:14px 0;padding:0;list-style:none;font-size:.9rem;color:#e1e7f0}
+.exercise-demo-legend li{display:flex;align-items:center;gap:7px}
+.exercise-demo-legend i{width:12px;height:12px;flex:none;border-radius:3px}
+.demo-primary{background:#f27a27}.demo-secondary{background:#27a9f5}.demo-focus{border:2px solid #c877fa;background:transparent}
+.exercise-demo[data-demo-state="error"] .exercise-demo-status{color:#f7c887}

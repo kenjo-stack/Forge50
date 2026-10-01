@@ -112,8 +112,7 @@ const Store = {
     const session=this.session(sessionId),old=session?.exercises.find(e=>e.id===exerciseId);
     if(!session||session.type!=='lifting'||session.status!=='draft'||!old)return [];
     const used=new Set(session.exercises.map(e=>e.id));
-    const candidates=Object.values(ForgeDefaults.catalog).filter(e=>e.muscle===old.muscle&&!used.has(e.id));
-    return window.ExerciseDataset?window.ExerciseDataset.alternatives(exerciseId,candidates).map(item=>item.exercise):candidates.sort((a,b)=>a.name.localeCompare(b.name));
+    return Object.values(ForgeDefaults.catalog).filter(e=>e.muscle===old.muscle&&!used.has(e.id)).sort((a,b)=>a.name.localeCompare(b.name));
   },
   swapExercise(sessionId,exerciseId,replacementId){
     const choice=this.swapOptions(sessionId,exerciseId).find(e=>e.id===replacementId);
