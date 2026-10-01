@@ -1,4 +1,10 @@
-# FORGE50 2.6 — Test notes
+# FORGE50 2.9.1 — Test notes
+
+## Original GIF checks
+
+- `node tests/exercise-demos.test.cjs` verifies all 39 catalogue mappings, SHA-256 hashes, 600 × 600 looping GIFs, 28-frame structure, posters, safe custom-exercise fallbacks and complete Pages references. GIFs are excluded from the initial precache.
+- `node tests/exercise-demos-browser.test.cjs` checks mobile/desktop Demo layout, explicit playback, Stop, tab/visibility/close cleanup, the combined-entry selector, all catalogue demos, cached offline playback, uncached offline fallback/retry and unchanged backups containing completed history and a draft.
+- To review the new feature, open any exercise Guide, select Demo, and tap Play demo. Test the High Row / Assisted Pull-Up selector, then return to Muscles and confirm the illustration appears first. After playing a demo online, reload offline and play it again.
 
 ## Checks completed
 
@@ -65,4 +71,4 @@ Use sample data first if testing at a new URL.
 
 - `node tests/store.test.cjs` requires only Node.js.
 - `tests/browser.test.cjs` additionally needs Playwright and Chromium. Install Playwright separately with `npm install playwright` and `npx playwright install chromium` if you want to rerun it. Tests use a local HTTP server and isolated browser profiles; they do not use your real browser data.
-- `node tests/anatomy.test.cjs` checks the packed model and muscle history mapping. `tests/anatomy-browser.test.cjs` exercises all 32 guides offline under the GitHub Pages subpath, touch controls and WebGL fallback.
+- `node tests/anatomy.test.cjs` checks the packed model and muscle history mapping. `tests/anatomy-browser.test.cjs` exercises all 39 guides offline under the GitHub Pages subpath, touch controls and WebGL fallback.
