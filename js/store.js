@@ -58,6 +58,7 @@ const Store = {
       if(!session||!safeId(session.id)||ids.has(session.id)||!this.validDate(session.date)||!['lifting','cycling','rest'].includes(session.type)||!['draft','completed','archived'].includes(session.status)||!text(session.title,150))fail();ids.add(session.id);
       if(session.type==='cycling'&&(!number(session.minutes,1,1440)||!['easy','moderate','hard'].includes(session.effort)))fail();
       if(session.notes!=null&&!text(session.notes,5000))fail();
+      if(session.coachCheckIn!==undefined){const c=session.coachCheckIn;if(session.type!=='lifting'||!c||!['ready','normal','fatigued'].includes(c.energy)||!['none','discomfort','pain'].includes(c.pain)||!text(c.notes,500))fail();}
       if(session.type==='lifting'){
         if(!safeId(session.templateId)||!Array.isArray(session.exercises)||session.exercises.length>100)fail();
         for(const e of session.exercises){if(!safeId(e.id)||!text(e.name,120)||!text(e.muscle,60)||!Array.isArray(e.sets)||e.sets.length>200)fail();
