@@ -1,5 +1,5 @@
 /* Atomic app-shell cache. New releases wait for the user's Update action. */
-const CACHE='forge50-v2.9.4-smarter-swaps';
+const CACHE='forge50-v2.9.5-simple-swaps';
 // These original GIFs are unchanged: retain their existing offline cache.
 const DEMO_CACHE='forge50-v2.9.1-original-gifs-demos';
 const DEMO_NAMES=['assisted-pull-up', 'cable-chest-press', 'cable-crunch', 'cable-curl', 'cable-lateral-raise', 'chest-supported-row', 'close-grip-barbell-bench-press', 'dumbbell-lateral-raise', 'dumbbell-shoulder-press', 'ez-bar-curl', 'flat-dumbbell-press', 'hammer-curl', 'high-face-pull', 'high-row-machine', 'high-to-low-cable-fly', 'incline-dumbbell-curl', 'incline-dumbbell-press', 'lat-pulldown', 'leg-extension', 'leg-press', 'low-to-high-cable-fly', 'machine-ab-crunch', 'machine-calf-raise', 'machine-lateral-raise', 'machine-lower-chest-press', 'overhead-cable-triceps-extension', 'pallof-press', 'preacher-curl', 'reverse-grip-cable-triceps-pushdown', 'reverse-pec-deck', 'romanian-deadlift', 'rope-triceps-pushdown', 'seated-cable-row', 'seated-leg-curl', 'seated-machine-front-raise', 'single-arm-cable-row', 'skull-crushers', 'straight-arm-pulldown', 'triceps-extension-machine'];
