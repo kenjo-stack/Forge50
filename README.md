@@ -1,8 +1,8 @@
-# FORGE50 2.9.2 — Muscle Illustrations and GIF Demos
+# FORGE50 2.9.3 — Automatic Exercise Demos
 
-This release uses the pre-dataset v2.9 app with 39 original animated GIF demonstrations. Open **Guide → Demo → Play demo**. Technique remains the first section, and Muscles opens the colour-coded illustrations directly. The separate 3D viewer and model package have been removed. Your exercise IDs, routines and saved training data use the same v2.9 format. See `docs/ORIGINAL-EXERCISE-DEMOS.md` for the release base and integration details.
+This release uses the pre-dataset v2.9 app with 39 original animated GIF demonstrations. Open **Guide → Demo** and the animation starts automatically. There is no extra Play button. Technique remains the first section, and Muscles opens the colour-coded illustrations directly. The separate 3D viewer and model package have been removed. Your exercise IDs, routines and saved training data use the same v2.9 format. See `docs/ORIGINAL-EXERCISE-DEMOS.md` for the release base and integration details.
 
-Posters work offline after the app's first successful load. Play each animation online once to cache it for later offline viewing. Animations do not autoplay or download as a full collection on installation.
+Posters work offline after the app's first successful load. Open each exercise’s Demo online once to cache its animation for later offline viewing. GIFs load when you select Demo; they do not download as a full collection on installation.
 
 ## Start here
 

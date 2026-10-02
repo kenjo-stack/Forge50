@@ -31,9 +31,9 @@ for(const [id,asset] of Object.entries(data.assets)){
  const gif=inspectGif(bytes);assert.equal(gif.frames,28,id);assert.equal(gif.duration,2330,id);
  const poster=fs.readFileSync(path.join(root,asset.poster));assert.equal(poster.readUInt16BE(0),0xffd8,id);assert.equal(poster.readUInt16BE(poster.length-2),0xffd9,id);
  const html=context.ExerciseDemos.render(id==='assisted-pull-up'?'high-row-machine-assisted-pull-up':id);
- assert.ok(html.includes('data-demo-toggle'));assert.ok(!/src="[^"]+\.gif"/.test(html));
+ assert.ok(html.includes('data-demo-retry'));assert.ok(!html.includes('data-demo-toggle')&&!html.includes('Play demo'));assert.ok(!/src="[^"]+\.gif"/.test(html));
 }
-console.log('PASS 39 original GIFs decode as looping 28-frame animations with verified hashes and posters; no autoplay');
+console.log('PASS 39 original GIFs decode as looping 28-frame animations with verified hashes and posters; no eager GIF source before Demo is selected');
 for(const id of ['custom-exercise','__proto__','constructor','<img src=x onerror=alert(1)>']){
  assert.equal(context.ExerciseDemos.assets(id).length,0);assert.ok(context.ExerciseDemos.render(id).includes('No animation'));
  assert.ok(!context.ExerciseDemos.render(id).includes('<img'));

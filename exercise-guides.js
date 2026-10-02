@@ -407,7 +407,8 @@ const ExerciseGuides = {
       const key=button.dataset.guideTab;
       body.querySelectorAll('[data-guide-tab]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));
       body.querySelectorAll('[data-guide-panel]').forEach(panel=>panel.hidden=panel.dataset.guidePanel!==key);
-      if(key!=='demo')window.ExerciseDemos?.stop();
+      if(key==='demo')window.ExerciseDemos?.play();
+      else window.ExerciseDemos?.stop();
     }));
     document.getElementById('forge50GuideModal').classList.add('open');
     document.body.classList.add('forge50-guide-open');
