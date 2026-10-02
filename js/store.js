@@ -27,7 +27,8 @@ const Store = {
   commit(next) {
     this.validate(next);next.updatedAt=new Date().toISOString();
     try{localStorage.setItem(this.KEY,JSON.stringify(next));}catch{throw new Error('Your latest change could not be saved. Free device space or export your data before continuing.');}
-    this.state=next;
+    const previous=this.state;this.state=next;
+    try{window.AutoBackups?.observe(previous,next);}catch{/* Backups must never prevent workout saving. */}
   },
   change(fn) { const next=this.copy(this.state);const result=fn(next);this.commit(next);return result; },
   applyRoutinePlan() {
