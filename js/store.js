@@ -108,14 +108,15 @@ const Store = {
     this.change(state=>{state.sessions.push({id,type:'lifting',templateId,title:t.title,date,status:'draft',startedAt:new Date().toISOString(),notes:'',exercises:t.exercises.map(e=>({...this.copy(e),skipped:false,notes:'',sets:Array.from({length:e.sets},()=>({id:this.id(),weight:e.weightMode==='bodyweight'?0:null,reps:null,rir:null,done:false}))}))});});return id;
   },
   patchSession(id,fn){return this.change(state=>{const s=state.sessions.find(s=>s.id===id);if(!s)throw new Error('Session not found.');return fn(s,state);});},
-  swapOptions(sessionId,exerciseId){
+  swapOptions(sessionId,exerciseId,filters){
     const session=this.session(sessionId),old=session?.exercises.find(e=>e.id===exerciseId);
-    if(!session||session.type!=='lifting'||session.status!=='draft'||!old)return [];
+    if(!session||session.type!=='lifting'||session.status!=='draft'||!old||!old.sets.some(set=>!set.done))return [];
     const used=new Set(session.exercises.map(e=>e.id));
-    return Object.values(ForgeDefaults.catalog).filter(e=>e.muscle===old.muscle&&!used.has(e.id)).sort((a,b)=>a.name.localeCompare(b.name));
+    const options=Object.values(ForgeDefaults.catalog).filter(e=>e.muscle===old.muscle&&!used.has(e.id)).sort((a,b)=>a.name.localeCompare(b.name));
+    return filters?(window.ExerciseSwaps?ExerciseSwaps.filter(options,old,filters):[]):options;
   },
-  swapExercise(sessionId,exerciseId,replacementId){
-    const choice=this.swapOptions(sessionId,exerciseId).find(e=>e.id===replacementId);
+  swapExercise(sessionId,exerciseId,replacementId,filters){
+    const choice=this.swapOptions(sessionId,exerciseId,filters).find(e=>e.id===replacementId);
     if(!choice)throw new Error('Choose another available exercise for the same muscle group.');
     return this.patchSession(sessionId,session=>{
       if(session.status!=='draft')throw new Error('Completed sessions cannot be swapped.');
