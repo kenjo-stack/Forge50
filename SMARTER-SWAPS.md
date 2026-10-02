@@ -18,3 +18,11 @@ Validation:
 - `node tests/exercise-demos-browser.test.cjs`
 
 Browser checks use Playwright; `FORGE_BROWSER_PATH` optionally supplies Chromium. No external dataset, Gym Visual media, 3D assets or new dependencies are added to the app.
+
+## Saved gym profile · 2.9.6
+
+Settings → Gym equipment includes an editable JD Gyms Oldbury preset. Review and Save gym profile once to activate it. The official club list (https://www.jdgyms.co.uk/gym/oldbury/, checked 2 October 2026) lists dumbbell sets, benches, barbell sets, cable towers/dual adjustable pulleys, strength machines and assisted chin/dip. EZ-bars are not explicitly listed and start unticked. Equipment categories describe broad apparatus; check the specific machine or attachment on the floor. This is a manual preset, not a live inventory.
+
+Saved equipment supplies Swap's default after reload, including offline use. Refine choices remains a temporary override. Saving a profile clears that override. Profile name and equipment are included in normal backups and validated on restore; old backups remain compatible. Save affects preferences only, leaving sessions, routines and cycle intact. Empty equipment is allowed and produces no matches. Existing profile values are retained during updates. The preset button fills the form without saving until Save gym profile is pressed.
+
+Additional validation: `node tests/gym-profile.test.cjs`, and profile save/reload/offline/preset interaction checks in `tests/exercise-swaps-browser.test.cjs`.
