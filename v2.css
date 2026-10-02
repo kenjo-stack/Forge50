@@ -30,3 +30,5 @@
 .swap-refine{margin:16px 0}.swap-refine summary{min-height:44px;display:list-item;padding:10px 0}.swap-choices{display:grid;gap:10px}.swap-choice{text-align:left;min-height:64px;width:100%;white-space:normal}.swap-choice strong,.swap-choice span{display:block}.swap-choice span{margin-top:4px;color:var(--muted);overflow-wrap:anywhere}
 
 .coach-exercise{padding:16px 0;border-bottom:1px solid #ffffff22}.coach-exercise p{margin-top:10px}.coach-table{overflow-x:auto}.coach-table table{width:100%;border-collapse:collapse}.coach-table th,.coach-table td{text-align:left;padding:12px 8px;border-bottom:1px solid #ffffff22}.coach-workout summary{min-height:44px;padding:8px 0}
+
+.auto-backup-point{flex-wrap:wrap}.auto-backup-point>div{min-width:0}.auto-backup-point strong{overflow-wrap:anywhere}
