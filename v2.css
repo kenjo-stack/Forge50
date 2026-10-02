@@ -28,3 +28,5 @@
 .swap-equipment{border:1px solid var(--border,#444);border-radius:12px;padding:12px;margin:16px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.swap-equipment label{display:flex;align-items:center;gap:8px;min-height:44px;margin:0}.swap-equipment input{width:20px;height:20px;flex:none}.swap-equipment legend{padding:0 6px} @media(max-width:400px){.swap-equipment{grid-template-columns:1fr}}
 
 .swap-refine{margin:16px 0}.swap-refine summary{min-height:44px;display:list-item;padding:10px 0}.swap-choices{display:grid;gap:10px}.swap-choice{text-align:left;min-height:64px;width:100%;white-space:normal}.swap-choice strong,.swap-choice span{display:block}.swap-choice span{margin-top:4px;color:var(--muted);overflow-wrap:anywhere}
+
+.coach-exercise{padding:16px 0;border-bottom:1px solid #ffffff22}.coach-exercise p{margin-top:10px}.coach-table{overflow-x:auto}.coach-table table{width:100%;border-collapse:collapse}.coach-table th,.coach-table td{text-align:left;padding:12px 8px;border-bottom:1px solid #ffffff22}.coach-workout summary{min-height:44px;padding:8px 0}
