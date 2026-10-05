@@ -13,7 +13,7 @@ for(const id of Object.keys(defaults.catalog)){
  assert.ok(!/canvas|data-anatomy|3D model credits/.test(html),id);
 }
 assert.equal(diagrams.render('custom-press'),'');
-console.log('PASS all 39 guides retain valid muscle illustrations, colour legends, purple arrows and written muscle targets');
+console.log('PASS all 40 guides retain valid muscle illustrations, colour legends, purple arrows and written muscle targets');
 
 for(const file of ['index.html','exercise-guides.js','exercise-guides.css','sw.js']){
  const text=fs.readFileSync(path.join(root,file),'utf8');

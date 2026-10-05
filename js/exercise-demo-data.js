@@ -279,6 +279,7 @@
     }
   },
   "exercises": {
+    "hack-squat": [],
     "cable-chest-press": [
       "cable-chest-press"
     ],
