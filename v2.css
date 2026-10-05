@@ -35,3 +35,29 @@
 
 /* Visual Workout Cockpit */
 .cockpit-map{display:flex;gap:10px;overflow-x:auto;padding:8px 2px;scroll-snap-type:x proximity}.cockpit-map-item{flex:0 0 145px;min-height:100px;background:var(--card);border:1px solid #ffffff30;border-radius:14px;padding:12px;text-align:left;color:var(--text);scroll-snap-align:start}.cockpit-map-item span{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#ffffff14;margin-bottom:8px}.cockpit-map-item strong,.cockpit-map-item small{display:block}.cockpit-map-item strong{font-size:14px;line-height:1.4}.cockpit-map-item small{color:var(--muted);margin-top:4px}.cockpit-map-item[aria-current]{border:2px solid var(--accent)}.cockpit-map-item.complete{border-color:#65d995;background:#19392a}.cockpit-map-item.skipped{border-style:dashed;opacity:.65}.cockpit-map-item.partial span{background:#70490f}.cockpit-key{margin:8px 0 16px}.cockpit-swipe-zone{touch-action:pan-y pinch-zoom}.cockpit-demo img{display:block;width:min(100%,250px);height:auto;margin:16px auto;border-radius:18px;pointer-events:none}.cockpit-demo p{flex:1;min-width:120px}.cockpit-steppers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}.cockpit-steppers>div>span{display:block;color:var(--muted);font-size:14px;margin-bottom:6px}.cockpit-steppers>div>div{display:flex;gap:6px}.cockpit-steppers button{flex:1;min-width:44px;min-height:48px;font-size:22px}.cockpit-card .guided-set input{min-height:56px;font-size:21px}.cockpit-card .guided-log{min-height:56px}.cockpit-rest{display:flex;align-items:center;gap:18px;padding:18px 0;flex-wrap:wrap}.cockpit-rest-ring{--rest-progress:100%;width:160px;height:160px;border-radius:50%;padding:10px;background:conic-gradient(var(--accent) var(--rest-progress),#ffffff14 0);flex:none}.cockpit-rest-ring>div{border-radius:50%;height:100%;background:var(--card);display:flex;flex-direction:column;justify-content:center;text-align:center;padding:8px}.cockpit-rest-ring strong{font-size:36px;font-variant-numeric:tabular-nums}.cockpit-rest-ring span{font-size:13px;line-height:1.4;color:var(--muted)}.cockpit-rest-ring.rest-complete{background:#65d995}.cockpit-rest-ring.rest-complete span{color:#65d995}.cockpit-rest>div:last-child{flex:1;min-width:150px}.cockpit-celebration{position:fixed;top:calc(20px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:1800;background:#19392a;border:2px solid #65d995;border-radius:18px;padding:18px 52px 18px 20px;width:min(90vw,420px);box-shadow:0 10px 50px #0008;animation:cockpit-record-in .35s ease-out}.cockpit-celebration strong,.cockpit-celebration span{display:block}.cockpit-celebration span{margin-top:6px;font-size:14px}.cockpit-celebration button{position:absolute;right:8px;top:8px;min-width:36px;min-height:36px}@keyframes cockpit-record-in{from{opacity:0;translate:0 -20px}to{opacity:1;translate:0 0}}@media(prefers-reduced-motion:reduce){.cockpit-celebration{animation:none}.cockpit-map{scroll-behavior:auto}}@media(max-width:380px){.cockpit-steppers{gap:5px}.cockpit-steppers>div>div{gap:3px}.cockpit-steppers button{min-width:40px}.cockpit-rest{justify-content:center}}
+
+/* Visual refresh: orange actions, green completion, blue rest, gold records. */
+:root{--success:#65d995;--rest:#80cfff;--record:#f4d478}
+.primary-btn{color:#191006;font-size:18px;min-height:56px}
+.next-card{padding:28px;border:1px solid #ff7a0055;background:radial-gradient(ellipse at top right,#ff7a0020,transparent 65%),var(--card)}
+.next-card .big-title{font-size:clamp(30px,7vw,42px);letter-spacing:-.7px;margin:16px 0 20px}
+.next-card .row{flex-wrap:wrap}.next-meta{margin:20px 0 4px}
+.muscle-tags{display:flex;flex-wrap:wrap;gap:8px}.muscle-tags span{padding:8px 12px;border:1px solid #ffffff24;border-radius:24px;background:#ffffff08;color:var(--text-secondary);font-size:15px}
+.home-tools{margin-top:20px;border-top:1px solid #ffffff18;padding-top:10px}
+.home-tools>summary,.exercise-tools>summary{min-height:44px;padding:10px 0;font-size:15px}
+.exercise-card{padding:24px}.exercise-heading{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+.exercise-card h2{font-size:clamp(23px,5vw,29px);line-height:1.3;margin:0;overflow-wrap:anywhere}
+.exercise-quick-actions{display:flex;gap:10px}.exercise-quick-actions .small-btn{min-height:44px;min-width:76px}
+.exercise-card .set-grid{gap:10px;margin-top:12px;grid-template-columns:24px minmax(0,1fr) minmax(0,1fr) minmax(0,.75fr) 48px}
+.exercise-card .set-grid input{font-size:21px;min-height:54px;padding:10px 3px}
+.exercise-card .set-head{font-size:12px;margin-top:24px}.exercise-card .set-button{min-height:54px;font-size:16px}
+.set-done input{border-color:#65d99580;background:#65d9950d}.set-done .set-number{color:var(--success)}
+.exercise-tools{margin-top:22px;border-top:1px solid #ffffff18;padding-top:8px}
+.timer-card{border-color:#80cfff50}.compact-timer,.timer-card h2{color:var(--rest)}
+.cockpit-rest-ring{background:conic-gradient(var(--rest) var(--rest-progress),#ffffff14 0)}
+.cockpit-rest-ring.rest-complete{background:var(--success)}.cockpit-rest-ring.rest-complete span{color:var(--success)}
+.cockpit-celebration{background:#342e1b;border-color:var(--record)}.cockpit-celebration strong,.record-card h2{color:var(--record)}
+.record-card{border-color:#f4d47840}.record-card .session-line>strong{color:var(--record)}
+.cockpit-map-item.partial span{background:#ff7a0026;color:var(--accent)}
+@media(max-width:380px){.next-card,.exercise-card{padding:18px}.exercise-card .set-grid{gap:6px;grid-template-columns:20px minmax(0,1fr) minmax(0,1fr) minmax(0,.7fr) 44px}.exercise-card .set-grid input{font-size:19px}.next-card .pill{font-size:12px}}
+@media(max-width:380px){.rotation{grid-template-columns:1fr}.rotation-item strong{font-size:18px}.rotation-item small{margin-bottom:10px}.metric-grid{gap:8px}.metric-grid strong{font-size:25px}}
