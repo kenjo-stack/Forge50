@@ -43,6 +43,7 @@ const Timer = {
     },
 
     start(seconds = null, label = "") {
+        this.completed = false;
         if (seconds !== null && seconds !== undefined) {
             this.setDuration(seconds, label);
         }
@@ -86,6 +87,7 @@ const Timer = {
     },
 
     reset() {
+        this.completed = false;
         this.pause();
         this.remaining = this.duration;
         this.pausedRemaining = this.duration;
@@ -96,6 +98,7 @@ const Timer = {
     add(seconds) {
         const amount = Math.round(Number(seconds) || 0);
         if (!amount) return;
+        this.completed = false;
         if (this.endTime) {
             this.endTime += amount * 1000;
             this.remaining = Math.max(0, Math.ceil((this.endTime - Date.now()) / 1000));
@@ -108,6 +111,7 @@ const Timer = {
     },
 
     skip() {
+        this.completed = false;
         clearInterval(this.interval);
         this.interval = null;
         this.endTime = null;
@@ -118,6 +122,7 @@ const Timer = {
     },
 
     finish() {
+        this.completed = true;
         clearInterval(this.interval);
         this.interval = null;
         this.endTime = null;
@@ -125,40 +130,12 @@ const Timer = {
         this.clearState();
         this.update();
 
-        if (navigator.vibrate) {
-            navigator.vibrate([300, 150, 300, 150, 600]);
-        }
-
-        this.playAlarm();
         this.showStatus("⏰ Rest complete! Next set.", "success");
     },
 
     showStatus(message, type = "success") {
         if (typeof WorkoutPage !== "undefined" && WorkoutPage.showToast) {
             WorkoutPage.showToast(message, type);
-        }
-    },
-
-    playAlarm() {
-        try {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (!AudioContext) return;
-            const ctx = new AudioContext();
-            const now = ctx.currentTime;
-            const gain = ctx.createGain();
-            const osc = ctx.createOscillator();
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(880, now);
-            gain.gain.setValueAtTime(0.001, now);
-            gain.gain.exponentialRampToValueAtTime(0.2, now + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.5);
-            setTimeout(() => ctx.close().catch(() => {}), 700);
-        } catch (e) {
-            // Audio is optional; vibration still provides feedback.
         }
     },
 
@@ -221,6 +198,7 @@ const Timer = {
         if (startButton) startButton.textContent = this.interval ? "⏱ Running" : "▶ Start Rest";
         if (pauseButton) pauseButton.disabled = !this.interval;
         if (guidedToggle) guidedToggle.textContent = this.interval ? "Pause rest" : "Start rest";
+        window.WorkoutCockpit?.updateTimer();
     }
 
 };
