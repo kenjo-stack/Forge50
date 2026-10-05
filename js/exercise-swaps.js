@@ -325,6 +325,7 @@ window.ExerciseSwaps={
    ]
   }
  ],
+ "hack-squat": [{"pattern":"knee-extension","equipment":["machine"]}],
  "leg-press": [
   {
    "pattern": "knee-extension",

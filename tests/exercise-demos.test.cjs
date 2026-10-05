@@ -3,12 +3,12 @@ const root=path.resolve(__dirname,'..'),context={document:{addEventListener(){}}
 for(const file of ['data.js','js/exercise-demo-data.js','js/exercise-demos.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
 const data=context.ForgeDemoData;
 assert.deepEqual(Object.keys(data.exercises).sort(),Object.keys(context.ForgeDefaults.catalog).sort());
-assert.equal(Object.keys(data.assets).length,39);
+assert.equal(Object.keys(data.assets).length,39);assert.equal(data.exercises['hack-squat'].length,0);assert.equal(context.ExerciseDemos.assets('hack-squat').length,0);
 assert.deepEqual(Array.from(data.exercises['high-row-machine-assisted-pull-up']),['high-row-machine','assisted-pull-up']);
 assert.equal(data.exercises['high-row-machine'][0],'high-row-machine');
 for(const [id,keys] of Object.entries(data.exercises))for(const key of keys)assert.ok(data.assets[key],id+' has a valid local asset');
 assert.ok(Object.isFrozen(data)&&Object.isFrozen(data.exercises)&&Object.isFrozen(data.assets));
-console.log('PASS all 39 v2.9 exercise IDs retain a local mapping, including both combined-entry demos');
+console.log('PASS original 39 exercise demos remain mapped; Hack Squat explicitly uses a no-animation fallback');
 
 // Decode GIF structure without an image-library dependency: count real frames and delays.
 function inspectGif(bytes){

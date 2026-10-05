@@ -45,8 +45,8 @@ let browser,checks=0;const pass=message=>{checks++;console.log('PASS',message);}
  assert.equal(await page.evaluate(()=>ExerciseGuides.current.id),'high-row-machine-assisted-pull-up');assert.equal(await snapshot(),before);
  pass('changing the combined-entry selector automatically plays the chosen GIF without changing its logged ID or backup');
  const ids=await page.evaluate(()=>Object.keys(ForgeDefaults.catalog));
- for(const id of ids){await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await page.locator('[data-demo-image]').evaluate(image=>image.naturalWidth),600,id);assert.equal(await page.getByRole('button',{name:'Play demo',exact:true}).count(),0,id);}
- pass('all 39 catalogue guides automatically play local demonstrations under /Forge50/');
+ for(const id of ids){if(id==='hack-squat'){await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="demo"]').tap();assert.match(await page.locator('[data-guide-panel="demo"]').innerText(),/No animation/);continue;}await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await page.locator('[data-demo-image]').evaluate(image=>image.naturalWidth),600,id);assert.equal(await page.getByRole('button',{name:'Play demo',exact:true}).count(),0,id);}
+ pass('original GIFs play under /Forge50/; Hack Squat has a clear no-animation fallback');
  await context.setOffline(true);await page.reload();await page.evaluate(()=>ExerciseGuides.open('lat-pulldown'));await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await snapshot(),before);
  pass('a cached GIF starts automatically after an offline reload with completed history, draft and backup unchanged');
  await page.evaluate(async()=>{const cache=await caches.open('forge50-v2.9.1-original-gifs-demos');await cache.delete('assets/exercise-demos/gifs/pallof-press.gif');ExerciseGuides.open('pallof-press');});await page.locator('[data-guide-tab="demo"]').tap();await page.locator('[data-demo-state="error"]').waitFor();

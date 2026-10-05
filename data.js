@@ -8,6 +8,7 @@ window.ForgeDefaults = {
     "goal": "Upper Body Hypertrophy Specialization"
   },
   "catalog": {
+    "hack-squat": {"id": "hack-squat", "name": "Hack Squat", "sets": 3, "reps": "8-12", "rir": 2, "rest": "3 min", "notes": "Controlled machine squat. Record the added plate load consistently; machine resistance varies.", "muscle": "Quads", "increment": 2.5, "weightMode": "total", "restSeconds": 180},
     "cable-chest-press": {"id": "cable-chest-press", "name": "Cable Chest Press", "sets": 3, "reps": "8-12", "rir": 2, "rest": "2 min", "notes": "Adjustable pressing path for chest.", "muscle": "Chest", "increment": 1, "weightMode": "total", "restSeconds": 120},
     "straight-arm-pulldown": {"id": "straight-arm-pulldown", "name": "Straight-Arm Cable Pulldown", "sets": 3, "reps": "10-15", "rir": 2, "rest": "90 sec", "notes": "Lat work with minimal elbow flexion.", "muscle": "Back", "increment": 1, "weightMode": "total", "restSeconds": 90},
     "cable-lateral-raise": {"id": "cable-lateral-raise", "name": "Cable Lateral Raise", "sets": 3, "reps": "12-20", "rir": 2, "rest": "90 sec", "notes": "Side deltoid isolation with adjustable cable height.", "muscle": "Shoulders", "increment": 0.5, "weightMode": "total", "restSeconds": 90},
@@ -823,6 +824,7 @@ window.ForgeDefaults = {
           "weightMode": "total",
           "restSeconds": 180
         },
+        {"id": "hack-squat", "name": "Hack Squat", "sets": 3, "reps": "8-12", "rir": 2, "rest": "3 min", "notes": "Controlled machine squat. Record the added plate load consistently; machine resistance varies.", "muscle": "Quads", "increment": 2.5, "weightMode": "total", "restSeconds": 180},
         {
           "id": "leg-press",
           "name": "Leg Press",

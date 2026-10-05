@@ -6,6 +6,13 @@
 
 const ExerciseGuides = {
   guides: {
+    "Hack Squat": {
+      focus:"Machine squat with quad emphasis",primary:"Quadriceps",secondary:"Glutes and adductors",
+      setup:"Adjust the machine to your height. Place your back and shoulders against the pads, feet firmly on the platform, and release the safety handles.",
+      perform:"Bend your knees and hips to lower through a comfortable range, keeping heels planted. Push through the platform to stand, then re-engage the safeties before stepping off.",
+      cues:["Keep back against the pad","Let knees follow the toes","Lower under control"],
+      mistakes:"Bouncing at the bottom, lifting heels, or forcing an uncomfortable depth.",equipment:"Hack squat machine"
+    },
     "Cable Chest Press": {
       focus:"Chest pressing", primary:"Pectoralis major", secondary:"Triceps and front delts",
       setup:"Set the handles around mid-chest height. Step into a stable stance and keep your shoulders comfortable.",

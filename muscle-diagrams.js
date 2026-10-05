@@ -16,6 +16,7 @@
     'reverse-grip-cable-triceps-pushdown':'triceps',
     'cable-crunch':'abs',
     'pallof-press':'abs',
+    'hack-squat':'quads',
     'romanian-deadlift':'posterior-chain',
     'lat-pulldown':'lats',
     'chest-supported-row':'mid-back',
