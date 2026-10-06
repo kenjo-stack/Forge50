@@ -11,7 +11,7 @@ const Store = {
   addDays(d,n) { const dt=this.date(d);dt.setDate(dt.getDate()+n);return this.localDate(dt); },
   id() { return crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`; },
   copy(x) { return JSON.parse(JSON.stringify(x)); },
-  fresh() { return {schema:2,legRoutineVersion:1,version:'2.7.1',routinePlan:'upper-body-2026-09-expanded',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},preferences:{preferredRestSeconds:120,includeLegs:false,keepAwake:false},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
+  fresh() { return {schema:2,chestRoutineVersion:1,legRoutineVersion:1,version:'2.7.1',routinePlan:'upper-body-2026-09-expanded',profile:this.copy(ForgeDefaults.profile),templates:this.copy(ForgeDefaults.templates),cycle:{next:'chest',nextDate:this.today()},preferences:{preferredRestSeconds:120,includeLegs:false,keepAwake:false},sessions:[],legacy:null,updatedAt:new Date().toISOString()}; },
   legacyInput() {
     const keys={history:'forge50-workoutHistory',currentProgress:'forge50-workoutProgress',exerciseLogs:'forge50-exerciseLogbook',personalRecords:'forge50-personalRecords'};
     const data={}; let found=false;
@@ -20,9 +20,19 @@ const Store = {
   },
   init() {
     const raw=localStorage.getItem(this.KEY);
-    if(raw!==null) { let next;try{next=JSON.parse(raw);}catch{throw new Error('Saved data could not be read. Export a recovery copy or restore a backup below.');} this.validate(next);if(this.upgradeLegRoutine(next)){this.validate(next);localStorage.setItem(this.KEY,JSON.stringify(next));}this.state=next;return; }
+    if(raw!==null) { let next;try{next=JSON.parse(raw);}catch{throw new Error('Saved data could not be read. Export a recovery copy or restore a backup below.');} this.validate(next);const legsUpdated=this.upgradeLegRoutine(next),chestUpdated=this.upgradeChestRoutine(next);if(legsUpdated||chestUpdated){this.validate(next);localStorage.setItem(this.KEY,JSON.stringify(next));}this.state=next;return; }
     const legacy=this.legacyInput(); const next=legacy?this.migrate(legacy):this.fresh();this.validate(next);
     localStorage.setItem(this.KEY,JSON.stringify(next));this.state=next;
+  },
+  upgradeChestRoutine(state) {
+    if(state.chestRoutineVersion===1)return false;
+    const exercises=state.templates.chest.exercises;
+    if(!exercises.some(e=>e.id==='incline-dumbbell-fly')&&exercises.length<40){
+      const index=exercises.findIndex(e=>e.id==='incline-dumbbell-press');
+      exercises.splice(index<0?exercises.length:index+1,0,this.copy(ForgeDefaults.catalog['incline-dumbbell-fly']));
+    }
+    state.chestRoutineVersion=1;
+    return true;
   },
   upgradeLegRoutine(state) {
     if(state.legRoutineVersion===1)return false;
@@ -44,12 +54,12 @@ const Store = {
   applyRoutinePlan() {
     this.change(state=>{
       for(const key of ['chest','back','shoulders'])state.templates[key]=this.copy(ForgeDefaults.templates[key]);
-      state.routinePlan='upper-body-2026-09-expanded';state.version='2.7.1';
+      state.routinePlan='upper-body-2026-09-expanded';state.chestRoutineVersion=1;state.version='2.7.1';
     });
   },
   validate(s) {
     const fail=()=>{throw new Error('This backup has invalid or unsupported workout data. Your existing data has not been replaced.');};
-    if(!s||s.legRoutineVersion!==undefined&&s.legRoutineVersion!==1||s.schema!==2||!s.profile||!s.templates||!s.cycle||!Array.isArray(s.sessions)||s.routinePlan!==undefined&&!['upper-body-2026-09','upper-body-2026-09-expanded'].includes(s.routinePlan))fail();
+    if(!s||s.chestRoutineVersion!==undefined&&s.chestRoutineVersion!==1||s.legRoutineVersion!==undefined&&s.legRoutineVersion!==1||s.schema!==2||!s.profile||!s.templates||!s.cycle||!Array.isArray(s.sessions)||s.routinePlan!==undefined&&!['upper-body-2026-09','upper-body-2026-09-expanded'].includes(s.routinePlan))fail();
     const number=(n,min,max)=>typeof n==='number'&&Number.isFinite(n)&&n>=min&&n<=max;
     const text=(x,max=1000)=>typeof x==='string'&&x.length<=max;
     if(s.preferences!==undefined&&(!s.preferences||!number(s.preferences.preferredRestSeconds,15,900)||typeof s.preferences.includeLegs!=='boolean'||s.preferences.keepAwake!==undefined&&typeof s.preferences.keepAwake!=='boolean'))fail();

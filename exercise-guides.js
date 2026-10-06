@@ -6,6 +6,13 @@
 
 const ExerciseGuides = {
   guides: {
+    "Incline Dumbbell Fly": {
+      focus:"Incline chest fly",primary:"Pectoralis major, with upper-chest emphasis",secondary:"Front deltoids and arm stabilisers",
+      setup:"Set a slight incline on the bench. Lie back with feet planted and hold the dumbbells above your chest with softly bent elbows.",
+      perform:"Lower the dumbbells out to the sides in a controlled arc through a comfortable range, then bring them back above your chest. Keep the elbow angle mostly fixed.",
+      cues:["Keep a soft elbow bend","Use a comfortable shoulder range","Control the lowering"],
+      mistakes:"Using too much weight, forcing a deep stretch, or turning the fly into a press.",equipment:"Dumbbells + incline bench"
+    },
     "Hack Squat": {
       focus:"Machine squat with quad emphasis",primary:"Quadriceps",secondary:"Glutes and adductors",
       setup:"Adjust the machine to your height. Place your back and shoulders against the pads, feet firmly on the platform, and release the safety handles.",

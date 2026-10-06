@@ -325,6 +325,7 @@ window.ExerciseSwaps={
    ]
   }
  ],
+ "incline-dumbbell-fly": [{"pattern":"chest-fly","equipment":["dumbbells","bench"]}],
  "hack-squat": [{"pattern":"knee-extension","equipment":["machine"]}],
  "leg-press": [
   {
