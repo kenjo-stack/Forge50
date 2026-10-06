@@ -16,6 +16,7 @@
     'reverse-grip-cable-triceps-pushdown':'triceps',
     'cable-crunch':'abs',
     'pallof-press':'abs',
+    'incline-dumbbell-fly':'upper-chest',
     'hack-squat':'quads',
     'romanian-deadlift':'posterior-chain',
     'lat-pulldown':'lats',

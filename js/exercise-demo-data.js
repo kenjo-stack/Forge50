@@ -279,6 +279,7 @@
     }
   },
   "exercises": {
+    "incline-dumbbell-fly": [],
     "hack-squat": [],
     "cable-chest-press": [
       "cable-chest-press"

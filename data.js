@@ -8,6 +8,7 @@ window.ForgeDefaults = {
     "goal": "Upper Body Hypertrophy Specialization"
   },
   "catalog": {
+    "incline-dumbbell-fly": {"id": "incline-dumbbell-fly", "name": "Incline Dumbbell Fly", "sets": 3, "reps": "10-15", "rir": 2, "rest": "90 sec", "notes": "Use a controlled arc and comfortable shoulder range. Record weight per dumbbell.", "muscle": "Chest", "increment": 0.5, "weightMode": "per-dumbbell", "restSeconds": 90},
     "hack-squat": {"id": "hack-squat", "name": "Hack Squat", "sets": 3, "reps": "8-12", "rir": 2, "rest": "3 min", "notes": "Controlled machine squat. Record the added plate load consistently; machine resistance varies.", "muscle": "Quads", "increment": 2.5, "weightMode": "total", "restSeconds": 180},
     "cable-chest-press": {"id": "cable-chest-press", "name": "Cable Chest Press", "sets": 3, "reps": "8-12", "rir": 2, "rest": "2 min", "notes": "Adjustable pressing path for chest.", "muscle": "Chest", "increment": 1, "weightMode": "total", "restSeconds": 120},
     "straight-arm-pulldown": {"id": "straight-arm-pulldown", "name": "Straight-Arm Cable Pulldown", "sets": 3, "reps": "10-15", "rir": 2, "rest": "90 sec", "notes": "Lat work with minimal elbow flexion.", "muscle": "Back", "increment": 1, "weightMode": "total", "restSeconds": 90},
@@ -487,6 +488,7 @@ window.ForgeDefaults = {
           "weightMode": "per-dumbbell",
           "restSeconds": 180
         },
+        {"id": "incline-dumbbell-fly", "name": "Incline Dumbbell Fly", "sets": 3, "reps": "10-15", "rir": 2, "rest": "90 sec", "notes": "Use a controlled arc and comfortable shoulder range. Record weight per dumbbell.", "muscle": "Chest", "increment": 0.5, "weightMode": "per-dumbbell", "restSeconds": 90},
         {
           "id": "flat-dumbbell-press",
           "name": "Flat Dumbbell Press",
