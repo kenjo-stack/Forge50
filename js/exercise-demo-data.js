@@ -4,6 +4,7 @@
   "version": "original-gifs-v1",
   "baseVersion": "2.9",
   "assets": {
+    "incline-dumbbell-fly": {"name": "Incline Dumbbell Fly", "gif": "assets/exercise-demos/gifs/incline-dumbbell-fly.gif", "poster": "assets/exercise-demos/posters/incline-dumbbell-fly.jpg", "bytes": 893589, "sha256": "5e9f58c970ab605fcebf189d8791decc5f389955cb8f5748dc86f89f4d3553be"},
     "cable-chest-press": {
       "name": "Cable Chest Press",
       "gif": "assets/exercise-demos/gifs/cable-chest-press.gif",
@@ -279,7 +280,7 @@
     }
   },
   "exercises": {
-    "incline-dumbbell-fly": [],
+    "incline-dumbbell-fly": ["incline-dumbbell-fly"],
     "hack-squat": [],
     "cable-chest-press": [
       "cable-chest-press"
