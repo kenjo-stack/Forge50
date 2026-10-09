@@ -1,5 +1,18 @@
 /* Additional exercise definitions. Existing profile and routines stay in data.js. */
 Object.assign(window.ForgeDefaults.catalog, {
+  "machine-seated-row": {
+    "id": "machine-seated-row",
+    "name": "Machine Seated Row (Chest-Supported)",
+    "sets": 3,
+    "reps": "8-12",
+    "rir": 2,
+    "rest": "2 min",
+    "notes": "Sit facing the weight stack with your chest against the upright pad. Pull the handles towards your lower ribs without lifting your chest or shrugging. Return slowly. Record the selected machine-stack load; start with a fresh load when swapping from another row.",
+    "muscle": "Back",
+    "increment": 1,
+    "weightMode": "total",
+    "restSeconds": 120
+  },
   "machine-chest-press": {
     "id": "machine-chest-press",
     "name": "Machine Chest Press",

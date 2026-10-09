@@ -1,6 +1,7 @@
 /* Muscle illustrations grouped by shared anatomy. */
 (() => {
   const maps = {
+    'machine-seated-row':'mid-back',
     "machine-chest-press": "lower-chest",
   "dumbbell-floor-press": "lower-chest",
   "flat-dumbbell-fly": "lower-chest",

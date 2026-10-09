@@ -2,7 +2,7 @@
 (function(){
   const data={
   "version": "original-gifs-v2",
-  "baseVersion": "2.12.0",
+  "baseVersion": "2.12.1",
   "assets": {
     "incline-dumbbell-fly": {
       "name": "Incline Dumbbell Fly",
@@ -623,6 +623,16 @@
       "frames": 8,
       "durationMs": 2400,
       "distinctFrames": 8
+    },
+    "machine-seated-row": {
+      "name": "Machine Seated Row (Chest-Supported)",
+      "gif": "assets/exercise-demos/gifs/machine-seated-row.gif",
+      "poster": "assets/exercise-demos/posters/machine-seated-row.jpg",
+      "bytes": 1238583,
+      "sha256": "315a2643e82e70206243308168604f769554937e0d8566396ff346e744e04f90",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
     }
   },
   "exercises": {
@@ -848,6 +858,9 @@
     ],
     "half-kneeling-pallof-press": [
       "half-kneeling-pallof-press"
+    ],
+    "machine-seated-row": [
+      "machine-seated-row"
     ]
   }
 };
