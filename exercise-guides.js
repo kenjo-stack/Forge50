@@ -6,6 +6,15 @@
 
 const ExerciseGuides = {
   guides: {
+    "Machine Seated Row (Chest-Supported)": {
+      focus:"Mid/upper-back thickness",
+      primary:"Rhomboids and middle trapezius", secondary:"Lats, rear delts, biceps",
+      setup:"Sit facing the weight stack with your chest against the upright pad and feet on the foot supports. Adjust the seat and chest pad so the handles are at lower-chest height and you can reach them with a neutral spine. Select a light starting load.",
+      perform:"Hold the neutral or horizontal grips and keep your chest on the pad. Pull the handles towards your lower ribs, driving the elbows back without shrugging. Pause briefly, then return slowly until your arms are comfortably extended. Let your shoulder blades move while your torso stays still.",
+      cues:["Chest stays against the pad","Pull elbows back towards the ribs","Keep shoulders away from ears","Return under control"],
+      mistakes:"Lifting away from the chest pad, rocking backwards, shrugging, jerking the handles, or locking the elbows at the reach.",
+      equipment:"Seated chest-supported row machine, such as the Matrix machine shown"
+    },
     "Machine Chest Press": {
     "focus": "Horizontal press",
     "primary": "Pectoralis major",

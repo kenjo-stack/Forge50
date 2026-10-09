@@ -1,8 +1,8 @@
-# FORGE50 2.12.0 — Test notes
+# FORGE50 2.12.1 — Test notes
 
 ## Original GIF checks
 
-- `node tests/exercise-demos.test.cjs` verifies all 74 catalogue mappings, SHA-256 hashes, 600 × 600 looping GIFs, original 28-frame and new eight-frame structure, posters, safe custom-exercise fallbacks and complete Pages references. GIFs are excluded from the initial precache and the Play button is absent.
+- `node tests/exercise-demos.test.cjs` verifies all 75 catalogue mappings, SHA-256 hashes, 600 × 600 looping GIFs, original 28-frame and new eight-frame structure, posters, safe custom-exercise fallbacks and complete Pages references. GIFs are excluded from the initial precache and the Play button is absent.
 - `node tests/exercise-demos-browser.test.cjs` checks mobile/desktop Demo layout, automatic playback on a Demo tap, tab/visibility/close cleanup and foreground resume, the combined-entry selector, all catalogue demos, cached offline playback, uncached offline fallback/retry and unchanged backups containing completed history and a draft. It also checks visibly changing GIF frames and leaving a slowly loading demo before its response arrives.
 - To review the guide, open any exercise Guide and select Demo. The GIF should start with that single tap, without a Play button. Test the High Row / Assisted Pull-Up selector, then return to Muscles and confirm the illustration appears directly, with no model controls or credit panel. After opening a demo online, reload offline and select Demo again.
 
@@ -71,8 +71,8 @@ Use sample data first if testing at a new URL.
 
 - `node tests/store.test.cjs` requires only Node.js.
 - `tests/browser.test.cjs` additionally needs Playwright and Chromium. Install Playwright separately with `npm install playwright` and `npx playwright install chromium` if you want to rerun it. Tests use a local HTTP server and isolated browser profiles; they do not use your real browser data.
-- `node tests/muscle-guides.test.cjs` checks all 74 illustration mappings, purple arrows, muscle targets, removal of the model package and cache activation. The existing browser suite opens all 74 muscle illustrations offline under the GitHub Pages subpath and checks that applying an update preserves cached GIFs while removing obsolete model caches.
+- `node tests/muscle-guides.test.cjs` checks all 75 illustration mappings, purple arrows, muscle targets, removal of the model package and cache activation. The existing browser suite opens all 75 muscle illustrations offline under the GitHub Pages subpath and checks that applying an update preserves cached GIFs while removing obsolete model caches.
 
 ## Complete exercise coverage
 
-`node tests/exercise-coverage.test.cjs` checks all 74 catalogue IDs for complete guides, muscle maps, animations, multiple muscle-group alternatives, and a same-pattern option. It exercises swaps across every ID after logging a set and checks preserved logs, clear replacement loads, unchanged templates/rotation, and valid backups. The exercise-demo browser suite checks the full tappable alternatives list and all 74 animations.
+`node tests/exercise-coverage.test.cjs` checks all 75 catalogue IDs for complete guides, muscle maps, animations, multiple muscle-group alternatives, and a same-pattern option. It exercises swaps across every ID after logging a set and checks preserved logs, clear replacement loads, unchanged templates/rotation, and valid backups. The exercise-demo browser suite checks the full tappable alternatives list and all 75 animations.

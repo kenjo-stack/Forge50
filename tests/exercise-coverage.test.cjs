@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),asse
 const root=path.resolve(__dirname,'..'),db=new Map(),c={console,crypto,Date,document:{addEventListener(){}},localStorage:{getItem:k=>db.get(k)||null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)}};c.window=c;vm.createContext(c);
 for(const file of ['data.js','js/exercise-catalog-expansion.js','js/exercise-swaps.js','js/store.js','exercise-guides.js','muscle-diagrams.js','js/exercise-demo-data.js','js/exercise-demos.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),c);
 const catalog=Object.values(c.ForgeDefaults.catalog),equipment=Object.keys(c.ExerciseSwaps.equipment),records=JSON.parse(fs.readFileSync(path.join(root,'docs/exercise-expansion.json'),'utf8'));
-assert.equal(catalog.length,74);assert.equal(records.length,34);
+assert.equal(catalog.length,75);assert.equal(records.length,34);
 for(const e of catalog){
  const options=c.ExerciseSwaps.filter(catalog.filter(x=>x.id!==e.id),e,{pattern:'same',equipment});
  assert.ok(options.length>=1,e.name+' needs a compatible alternative in its movement pattern');
@@ -20,7 +20,7 @@ assert.ok(c.ExerciseGuides.alternatives('incline-dumbbell-press').length>4);
 assert.equal(c.ExerciseGuides.alternatives('unknown-custom-id').length,0);
 for(const r of records)assert.deepEqual(Array.from(c.ForgeDemoData.exercises[r.id]),[r.id],r.id+' uses its own animation');
 assert.equal(new Set(records.map(r=>c.ForgeDemoData.assets[r.id].sha256)).size,34);
-console.log('PASS all 74 exercises have multiple compatible alternatives, complete guides, muscle illustrations and animations; all 34 new GIFs are distinct.');
+console.log('PASS all 75 exercises have multiple compatible alternatives, complete guides, muscle illustrations and animations; all 34 new GIFs are distinct.');
 const S=c.Store;S.init();const templates=JSON.stringify(S.state.templates),cycle=JSON.stringify(S.state.cycle);
 for(const e of catalog){
  const id=S.id(),exercise={...S.copy(e),skipped:false,sets:Array.from({length:3},()=>({id:S.id(),weight:null,reps:null,rir:null,done:false}))};
@@ -33,7 +33,7 @@ for(const e of catalog){
 }
 assert.equal(JSON.stringify(S.state.templates),templates);assert.equal(JSON.stringify(S.state.cycle),cycle);
 S.validate(S.readBackup(S.backup()));
-console.log('PASS swaps across all 74 IDs retain logged sets, clear replacement loads, preserve routines/rotation, and round-trip backups.');
+console.log('PASS swaps across all 75 IDs retain logged sets, clear replacement loads, preserve routines/rotation, and round-trip backups.');
 S.change(s=>{s.sessions=[];});
 for(const [template,replacement] of [['back','dumbbell-pullover'],['chest','dumbbell-overhead-triceps-extension'],['chest','flat-dumbbell-fly']]){
  const id=S.start(template),target=c.ForgeDefaults.catalog[replacement],old=S.session(id).exercises.find(e=>e.muscle===target.muscle),before=S.stats().volume;

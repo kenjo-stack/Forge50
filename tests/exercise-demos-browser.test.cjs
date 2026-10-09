@@ -54,7 +54,7 @@ let browser,checks=0;const pass=message=>{checks++;console.log('PASS',message);}
  pass('full alternatives are tappable, open their own animation, include calves and preserve saved training data on narrow phones');
  const ids=await page.evaluate(()=>Object.keys(ForgeDefaults.catalog));
  for(const id of ids){await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await page.locator('[data-demo-image]').evaluate(image=>image.naturalWidth),600,id);assert.equal(await page.getByRole('button',{name:'Play demo',exact:true}).count(),0,id);}
- pass('all 74 catalogue exercises play their animations under /Forge50/, including Hack Squat');
+ pass('all 75 catalogue exercises play their animations under /Forge50/, including Hack Squat');
  await context.setOffline(true);await page.reload();await page.evaluate(()=>ExerciseGuides.open('incline-dumbbell-fly'));await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.match(await page.locator('[data-demo-image]').getAttribute('src'),/incline-dumbbell-fly.gif$/);await page.evaluate(()=>ExerciseGuides.open('lat-pulldown'));await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await snapshot(),before);
  pass('a cached GIF starts automatically after an offline reload with completed history, draft and backup unchanged');
  await page.evaluate(async()=>{const cache=await caches.open('forge50-v2.9.1-original-gifs-demos');await cache.delete('assets/exercise-demos/gifs/pallof-press.gif');ExerciseGuides.open('pallof-press');});await page.locator('[data-guide-tab="demo"]').tap();await page.locator('[data-demo-state="error"]').waitFor();
