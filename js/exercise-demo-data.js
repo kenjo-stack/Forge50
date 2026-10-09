@@ -1,10 +1,16 @@
-/* Original Forge50 GIF assets. Existing catalogue IDs are kept unchanged. */
+/* Original Forge50 GIF assets. Stable exercise IDs and existing demonstrations are preserved. */
 (function(){
   const data={
-  "version": "original-gifs-v1",
-  "baseVersion": "2.9",
+  "version": "original-gifs-v2",
+  "baseVersion": "2.12.0",
   "assets": {
-    "incline-dumbbell-fly": {"name": "Incline Dumbbell Fly", "gif": "assets/exercise-demos/gifs/incline-dumbbell-fly.gif", "poster": "assets/exercise-demos/posters/incline-dumbbell-fly.jpg", "bytes": 893589, "sha256": "5e9f58c970ab605fcebf189d8791decc5f389955cb8f5748dc86f89f4d3553be"},
+    "incline-dumbbell-fly": {
+      "name": "Incline Dumbbell Fly",
+      "gif": "assets/exercise-demos/gifs/incline-dumbbell-fly.gif",
+      "poster": "assets/exercise-demos/posters/incline-dumbbell-fly.jpg",
+      "bytes": 893589,
+      "sha256": "5e9f58c970ab605fcebf189d8791decc5f389955cb8f5748dc86f89f4d3553be"
+    },
     "cable-chest-press": {
       "name": "Cable Chest Press",
       "gif": "assets/exercise-demos/gifs/cable-chest-press.gif",
@@ -277,11 +283,355 @@
       "poster": "assets/exercise-demos/posters/straight-arm-pulldown.jpg",
       "bytes": 1310414,
       "sha256": "b20ae03e971ad0c77c7ae9a57ea41eea5d65a98d8c9cd79ff724ba50b805d580"
+    },
+    "machine-chest-press": {
+      "name": "Machine Chest Press",
+      "gif": "assets/exercise-demos/gifs/machine-chest-press.gif",
+      "poster": "assets/exercise-demos/posters/machine-chest-press.jpg",
+      "bytes": 1200818,
+      "sha256": "ae0d51c9638dd2a29c806a5c6f7a6157af9b2a98d2c0e1b79a2dc1527409d257",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "dumbbell-floor-press": {
+      "name": "Dumbbell Floor Press",
+      "gif": "assets/exercise-demos/gifs/dumbbell-floor-press.gif",
+      "poster": "assets/exercise-demos/posters/dumbbell-floor-press.jpg",
+      "bytes": 1009297,
+      "sha256": "b54e27365a11272eb98a81053a9b6a065a5b69f7ca2e750f0e0a41e9164ceade",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "flat-dumbbell-fly": {
+      "name": "Flat Dumbbell Fly",
+      "gif": "assets/exercise-demos/gifs/flat-dumbbell-fly.gif",
+      "poster": "assets/exercise-demos/posters/flat-dumbbell-fly.jpg",
+      "bytes": 893322,
+      "sha256": "d6db98c8fef25cd43f9ee32047f893b5863926de8d18a361847f1d8b75a13867",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "pec-deck-fly": {
+      "name": "Pec Deck Fly",
+      "gif": "assets/exercise-demos/gifs/pec-deck-fly.gif",
+      "poster": "assets/exercise-demos/posters/pec-deck-fly.jpg",
+      "bytes": 1065654,
+      "sha256": "3bbeee98f9b2b310c2c3c468323860232f43694c5d76fc65ee6ace3e32edb7a6",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "machine-shoulder-press": {
+      "name": "Machine Shoulder Press",
+      "gif": "assets/exercise-demos/gifs/machine-shoulder-press.gif",
+      "poster": "assets/exercise-demos/posters/machine-shoulder-press.jpg",
+      "bytes": 958009,
+      "sha256": "66b80359b4fb1c5fb85fb0532f401097df492a7892c2b8fc30b06971e6ccef6c",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "seated-barbell-shoulder-press": {
+      "name": "Seated Barbell Shoulder Press",
+      "gif": "assets/exercise-demos/gifs/seated-barbell-shoulder-press.gif",
+      "poster": "assets/exercise-demos/posters/seated-barbell-shoulder-press.jpg",
+      "bytes": 994122,
+      "sha256": "f9153f5bdb029a84b4292f84db27dd3b988b04641d70885d4a7c63104cadd62f",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "leaning-dumbbell-lateral-raise": {
+      "name": "Leaning Dumbbell Lateral Raise",
+      "gif": "assets/exercise-demos/gifs/leaning-dumbbell-lateral-raise.gif",
+      "poster": "assets/exercise-demos/posters/leaning-dumbbell-lateral-raise.jpg",
+      "bytes": 876491,
+      "sha256": "a286853dacecc51430158ec61e433ee72fb94687eeb0c81166caa3762d4c32ee",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "bent-over-dumbbell-reverse-fly": {
+      "name": "Bent-Over Dumbbell Reverse Fly",
+      "gif": "assets/exercise-demos/gifs/bent-over-dumbbell-reverse-fly.gif",
+      "poster": "assets/exercise-demos/posters/bent-over-dumbbell-reverse-fly.jpg",
+      "bytes": 905137,
+      "sha256": "4f37f8b9a1866db416538dd6160aa12c79249f3f2f03f9f5b37bfa9585cb4cdb",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "cable-rear-delt-fly": {
+      "name": "Cable Rear Delt Fly",
+      "gif": "assets/exercise-demos/gifs/cable-rear-delt-fly.gif",
+      "poster": "assets/exercise-demos/posters/cable-rear-delt-fly.jpg",
+      "bytes": 1245468,
+      "sha256": "f8e82213a2da816727f30cd1491d6994fef557381ad002ce1b8f3c97e4454f13",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "rope-face-pull": {
+      "name": "Rope Face Pull",
+      "gif": "assets/exercise-demos/gifs/rope-face-pull.gif",
+      "poster": "assets/exercise-demos/posters/rope-face-pull.jpg",
+      "bytes": 809818,
+      "sha256": "2555af9ecd371bdf25b9edec70c8d8a0affd54929c8ae69817cb1e2547dbcba6",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "seated-cable-face-pull": {
+      "name": "Seated Cable Face Pull",
+      "gif": "assets/exercise-demos/gifs/seated-cable-face-pull.gif",
+      "poster": "assets/exercise-demos/posters/seated-cable-face-pull.jpg",
+      "bytes": 994819,
+      "sha256": "5fb6caa70ebfee22df7cefe1bbdcc173ae4fe36fe8a144328cae22f4af3fc841",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "one-arm-dumbbell-row": {
+      "name": "One-Arm Dumbbell Row",
+      "gif": "assets/exercise-demos/gifs/one-arm-dumbbell-row.gif",
+      "poster": "assets/exercise-demos/posters/one-arm-dumbbell-row.jpg",
+      "bytes": 1008932,
+      "sha256": "c6dc3df4cc25c6b0ede79fc5f1c725bae9944155b0588258a0f71db6551a4c56",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "neutral-grip-lat-pulldown": {
+      "name": "Neutral-Grip Lat Pulldown",
+      "gif": "assets/exercise-demos/gifs/neutral-grip-lat-pulldown.gif",
+      "poster": "assets/exercise-demos/posters/neutral-grip-lat-pulldown.jpg",
+      "bytes": 1160595,
+      "sha256": "698d30bbc230956fa9364c1cac7e6a9802c392343ec85c032c0345951c2ed38c",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "lying-cable-pullover": {
+      "name": "Lying Cable Pullover",
+      "gif": "assets/exercise-demos/gifs/lying-cable-pullover.gif",
+      "poster": "assets/exercise-demos/posters/lying-cable-pullover.jpg",
+      "bytes": 1126861,
+      "sha256": "366d599b0ecfac668313d6f2c0b9ae6cf4416336a586b3b2bfacd8e3bfcbf425",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "dumbbell-pullover": {
+      "name": "Dumbbell Pullover",
+      "gif": "assets/exercise-demos/gifs/dumbbell-pullover.gif",
+      "poster": "assets/exercise-demos/posters/dumbbell-pullover.jpg",
+      "bytes": 827711,
+      "sha256": "cdfdf5fc33ada663d46bf1730917c6b29bcfc867839004c591d2c2db34b99fcb",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "standing-dumbbell-curl": {
+      "name": "Standing Dumbbell Curl",
+      "gif": "assets/exercise-demos/gifs/standing-dumbbell-curl.gif",
+      "poster": "assets/exercise-demos/posters/standing-dumbbell-curl.jpg",
+      "bytes": 645536,
+      "sha256": "4939c22d2c6a4e6ad639e89c808876ea818242893f247d35869aca2ad1c42205",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "dumbbell-overhead-triceps-extension": {
+      "name": "Dumbbell Overhead Triceps Extension",
+      "gif": "assets/exercise-demos/gifs/dumbbell-overhead-triceps-extension.gif",
+      "poster": "assets/exercise-demos/posters/dumbbell-overhead-triceps-extension.jpg",
+      "bytes": 972494,
+      "sha256": "c02e4e87aa6a0fd11cf5f9c9f4aeda98b3c1741c900925ba130467bc8cdafbbb",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "close-grip-machine-chest-press": {
+      "name": "Close-Grip Machine Chest Press",
+      "gif": "assets/exercise-demos/gifs/close-grip-machine-chest-press.gif",
+      "poster": "assets/exercise-demos/posters/close-grip-machine-chest-press.jpg",
+      "bytes": 1281052,
+      "sha256": "bd3feb488f92872c1ec506699a77aa6a76f692a45e866aaf57808f94126513ae",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "dumbbell-front-raise": {
+      "name": "Dumbbell Front Raise",
+      "gif": "assets/exercise-demos/gifs/dumbbell-front-raise.gif",
+      "poster": "assets/exercise-demos/posters/dumbbell-front-raise.jpg",
+      "bytes": 667530,
+      "sha256": "c289d0d3a0db9680cf5afba998aa140c7f1eaf19e43a9b84fd1f35ac18a8a3b4",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "cable-front-raise": {
+      "name": "Cable Front Raise",
+      "gif": "assets/exercise-demos/gifs/cable-front-raise.gif",
+      "poster": "assets/exercise-demos/posters/cable-front-raise.jpg",
+      "bytes": 1021859,
+      "sha256": "f5cc93f0b5090bfdf7f03f300ea1dd3852dbb5d544604dbc80d9f0d0f46ba027",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "dumbbell-romanian-deadlift": {
+      "name": "Dumbbell Romanian Deadlift",
+      "gif": "assets/exercise-demos/gifs/dumbbell-romanian-deadlift.gif",
+      "poster": "assets/exercise-demos/posters/dumbbell-romanian-deadlift.jpg",
+      "bytes": 750876,
+      "sha256": "f295fd9d5ea7d28fb36760f1438cfd9a1602d04e9548cd598aa61073be3d55af",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "cable-pull-through": {
+      "name": "Cable Pull-Through",
+      "gif": "assets/exercise-demos/gifs/cable-pull-through.gif",
+      "poster": "assets/exercise-demos/posters/cable-pull-through.jpg",
+      "bytes": 665416,
+      "sha256": "c73389c17e76c0900f422d2d4dc3592c94b4af6b0d82138b81853a9de2af00b2",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "goblet-squat": {
+      "name": "Goblet Squat",
+      "gif": "assets/exercise-demos/gifs/goblet-squat.gif",
+      "poster": "assets/exercise-demos/posters/goblet-squat.jpg",
+      "bytes": 747489,
+      "sha256": "cd0eca2480921cf4ba849c48c2a13a3ff7aaa15d72954d778c38c33fd81e49da",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "smith-machine-squat": {
+      "name": "Smith Machine Squat",
+      "gif": "assets/exercise-demos/gifs/smith-machine-squat.gif",
+      "poster": "assets/exercise-demos/posters/smith-machine-squat.jpg",
+      "bytes": 884668,
+      "sha256": "8e082eb0d9846f3a5b2c5ec08269b85c19795be24ece264ee356f730fc2fae47",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "hack-squat": {
+      "name": "Hack Squat",
+      "gif": "assets/exercise-demos/gifs/hack-squat.gif",
+      "poster": "assets/exercise-demos/posters/hack-squat.jpg",
+      "bytes": 1143241,
+      "sha256": "503ed1728df89232cd7223f327533ed7252ebfe0729090dcf1256552ef0e4cbb",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "single-leg-extension": {
+      "name": "Single-Leg Extension",
+      "gif": "assets/exercise-demos/gifs/single-leg-extension.gif",
+      "poster": "assets/exercise-demos/posters/single-leg-extension.jpg",
+      "bytes": 1267255,
+      "sha256": "35db4fc4ae0bb25c69ae8abceabeb202124102983219a792c28922755d7cb12c",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "cable-leg-extension": {
+      "name": "Cable Leg Extension",
+      "gif": "assets/exercise-demos/gifs/cable-leg-extension.gif",
+      "poster": "assets/exercise-demos/posters/cable-leg-extension.jpg",
+      "bytes": 857722,
+      "sha256": "617bc99643ce2a1884a4f1e50e35951499d70792bbc70e4d2b7444a4d3df7dc4",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "lying-leg-curl": {
+      "name": "Lying Leg Curl",
+      "gif": "assets/exercise-demos/gifs/lying-leg-curl.gif",
+      "poster": "assets/exercise-demos/posters/lying-leg-curl.jpg",
+      "bytes": 1323300,
+      "sha256": "630c8ba57b9890e27489d16ab8a4a8804e91b0a3ee6c5b988e8b83a64aa11175",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "standing-leg-curl": {
+      "name": "Standing Leg Curl",
+      "gif": "assets/exercise-demos/gifs/standing-leg-curl.gif",
+      "poster": "assets/exercise-demos/posters/standing-leg-curl.jpg",
+      "bytes": 877310,
+      "sha256": "77435cf4114aef13588ecda5bb134e8c2fec9276a2339cb799e048ea059c4c73",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "standing-dumbbell-calf-raise": {
+      "name": "Standing Dumbbell Calf Raise",
+      "gif": "assets/exercise-demos/gifs/standing-dumbbell-calf-raise.gif",
+      "poster": "assets/exercise-demos/posters/standing-dumbbell-calf-raise.jpg",
+      "bytes": 688754,
+      "sha256": "2aa2718211498c7570f931daac063153899a2bdc295ed681b354f9e992c06445",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "seated-calf-raise": {
+      "name": "Seated Calf Raise",
+      "gif": "assets/exercise-demos/gifs/seated-calf-raise.gif",
+      "poster": "assets/exercise-demos/posters/seated-calf-raise.jpg",
+      "bytes": 874542,
+      "sha256": "2eaa942cc95a48160abf0646c67b5c2207cccc350afa631284ace858c9f3e206",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "decline-crunch": {
+      "name": "Decline Crunch",
+      "gif": "assets/exercise-demos/gifs/decline-crunch.gif",
+      "poster": "assets/exercise-demos/posters/decline-crunch.jpg",
+      "bytes": 923177,
+      "sha256": "c212e7174195b444ae4b6a2bbce910332820de072899f58dee9d33601d7ecbd1",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "tall-kneeling-pallof-press": {
+      "name": "Tall-Kneeling Pallof Press",
+      "gif": "assets/exercise-demos/gifs/tall-kneeling-pallof-press.gif",
+      "poster": "assets/exercise-demos/posters/tall-kneeling-pallof-press.jpg",
+      "bytes": 991331,
+      "sha256": "9b2a3fcfe28f468a7c17a64d59ce41731a575d5db1899a60d7258e7389d0b10a",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
+    },
+    "half-kneeling-pallof-press": {
+      "name": "Half-Kneeling Pallof Press",
+      "gif": "assets/exercise-demos/gifs/half-kneeling-pallof-press.gif",
+      "poster": "assets/exercise-demos/posters/half-kneeling-pallof-press.jpg",
+      "bytes": 1026721,
+      "sha256": "cc212024715844ed6642361c376d3a406fdd47781367ebc94ac72a9ee1537792",
+      "frames": 8,
+      "durationMs": 2400,
+      "distinctFrames": 8
     }
   },
   "exercises": {
-    "incline-dumbbell-fly": ["incline-dumbbell-fly"],
-    "hack-squat": [],
+    "incline-dumbbell-fly": [
+      "incline-dumbbell-fly"
+    ],
+    "hack-squat": [
+      "hack-squat"
+    ],
     "cable-chest-press": [
       "cable-chest-press"
     ],
@@ -399,6 +749,105 @@
     ],
     "flat-dumbbell-press": [
       "flat-dumbbell-press"
+    ],
+    "machine-chest-press": [
+      "machine-chest-press"
+    ],
+    "dumbbell-floor-press": [
+      "dumbbell-floor-press"
+    ],
+    "flat-dumbbell-fly": [
+      "flat-dumbbell-fly"
+    ],
+    "pec-deck-fly": [
+      "pec-deck-fly"
+    ],
+    "machine-shoulder-press": [
+      "machine-shoulder-press"
+    ],
+    "seated-barbell-shoulder-press": [
+      "seated-barbell-shoulder-press"
+    ],
+    "leaning-dumbbell-lateral-raise": [
+      "leaning-dumbbell-lateral-raise"
+    ],
+    "bent-over-dumbbell-reverse-fly": [
+      "bent-over-dumbbell-reverse-fly"
+    ],
+    "cable-rear-delt-fly": [
+      "cable-rear-delt-fly"
+    ],
+    "rope-face-pull": [
+      "rope-face-pull"
+    ],
+    "seated-cable-face-pull": [
+      "seated-cable-face-pull"
+    ],
+    "one-arm-dumbbell-row": [
+      "one-arm-dumbbell-row"
+    ],
+    "neutral-grip-lat-pulldown": [
+      "neutral-grip-lat-pulldown"
+    ],
+    "lying-cable-pullover": [
+      "lying-cable-pullover"
+    ],
+    "dumbbell-pullover": [
+      "dumbbell-pullover"
+    ],
+    "standing-dumbbell-curl": [
+      "standing-dumbbell-curl"
+    ],
+    "dumbbell-overhead-triceps-extension": [
+      "dumbbell-overhead-triceps-extension"
+    ],
+    "close-grip-machine-chest-press": [
+      "close-grip-machine-chest-press"
+    ],
+    "dumbbell-front-raise": [
+      "dumbbell-front-raise"
+    ],
+    "cable-front-raise": [
+      "cable-front-raise"
+    ],
+    "dumbbell-romanian-deadlift": [
+      "dumbbell-romanian-deadlift"
+    ],
+    "cable-pull-through": [
+      "cable-pull-through"
+    ],
+    "goblet-squat": [
+      "goblet-squat"
+    ],
+    "smith-machine-squat": [
+      "smith-machine-squat"
+    ],
+    "single-leg-extension": [
+      "single-leg-extension"
+    ],
+    "cable-leg-extension": [
+      "cable-leg-extension"
+    ],
+    "lying-leg-curl": [
+      "lying-leg-curl"
+    ],
+    "standing-leg-curl": [
+      "standing-leg-curl"
+    ],
+    "standing-dumbbell-calf-raise": [
+      "standing-dumbbell-calf-raise"
+    ],
+    "seated-calf-raise": [
+      "seated-calf-raise"
+    ],
+    "decline-crunch": [
+      "decline-crunch"
+    ],
+    "tall-kneeling-pallof-press": [
+      "tall-kneeling-pallof-press"
+    ],
+    "half-kneeling-pallof-press": [
+      "half-kneeling-pallof-press"
     ]
   }
 };

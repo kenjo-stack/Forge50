@@ -6,6 +6,278 @@ window.ExerciseSwaps={
  equipment:{"dumbbells": "Dumbbells", "bench": "Bench", "barbell": "Barbell", "ez-bar": "EZ-bar", "cable": "Cable station", "machine": "Resistance machines", "assisted-pull-up": "Assisted pull-up machine"},
  patterns:{"horizontal-press": "Horizontal press", "vertical-press": "Overhead press", "chest-fly": "Chest fly", "horizontal-pull": "Row", "vertical-pull": "Vertical pull", "straight-arm-pull": "Straight-arm pull", "lateral-raise": "Lateral raise", "front-raise": "Front raise", "rear-delt-fly": "Rear-delt fly", "face-pull": "Face pull", "elbow-flexion": "Curl", "elbow-extension": "Triceps extension", "hip-hinge": "Hip hinge", "knee-extension": "Knee extension", "knee-flexion": "Leg curl", "calf-raise": "Calf raise", "trunk-flexion": "Ab crunch", "anti-rotation": "Anti-rotation"},
  metadata:{
+    "machine-chest-press": [
+    {
+      "pattern": "horizontal-press",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "dumbbell-floor-press": [
+    {
+      "pattern": "horizontal-press",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "flat-dumbbell-fly": [
+    {
+      "pattern": "chest-fly",
+      "equipment": [
+        "dumbbells",
+        "bench"
+      ]
+    }
+  ],
+  "pec-deck-fly": [
+    {
+      "pattern": "chest-fly",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "machine-shoulder-press": [
+    {
+      "pattern": "vertical-press",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "seated-barbell-shoulder-press": [
+    {
+      "pattern": "vertical-press",
+      "equipment": [
+        "barbell",
+        "bench"
+      ]
+    }
+  ],
+  "leaning-dumbbell-lateral-raise": [
+    {
+      "pattern": "lateral-raise",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "bent-over-dumbbell-reverse-fly": [
+    {
+      "pattern": "rear-delt-fly",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "cable-rear-delt-fly": [
+    {
+      "pattern": "rear-delt-fly",
+      "equipment": [
+        "cable"
+      ]
+    }
+  ],
+  "rope-face-pull": [
+    {
+      "pattern": "face-pull",
+      "equipment": [
+        "cable"
+      ]
+    }
+  ],
+  "seated-cable-face-pull": [
+    {
+      "pattern": "face-pull",
+      "equipment": [
+        "cable",
+        "bench"
+      ]
+    }
+  ],
+  "one-arm-dumbbell-row": [
+    {
+      "pattern": "horizontal-pull",
+      "equipment": [
+        "dumbbells",
+        "bench"
+      ]
+    }
+  ],
+  "neutral-grip-lat-pulldown": [
+    {
+      "pattern": "vertical-pull",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "lying-cable-pullover": [
+    {
+      "pattern": "straight-arm-pull",
+      "equipment": [
+        "cable",
+        "bench"
+      ]
+    }
+  ],
+  "dumbbell-pullover": [
+    {
+      "pattern": "straight-arm-pull",
+      "equipment": [
+        "dumbbells",
+        "bench"
+      ]
+    }
+  ],
+  "standing-dumbbell-curl": [
+    {
+      "pattern": "elbow-flexion",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "dumbbell-overhead-triceps-extension": [
+    {
+      "pattern": "elbow-extension",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "close-grip-machine-chest-press": [
+    {
+      "pattern": "horizontal-press",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "dumbbell-front-raise": [
+    {
+      "pattern": "front-raise",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "cable-front-raise": [
+    {
+      "pattern": "front-raise",
+      "equipment": [
+        "cable"
+      ]
+    }
+  ],
+  "dumbbell-romanian-deadlift": [
+    {
+      "pattern": "hip-hinge",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "cable-pull-through": [
+    {
+      "pattern": "hip-hinge",
+      "equipment": [
+        "cable"
+      ]
+    }
+  ],
+  "goblet-squat": [
+    {
+      "pattern": "knee-extension",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "smith-machine-squat": [
+    {
+      "pattern": "knee-extension",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "single-leg-extension": [
+    {
+      "pattern": "knee-extension",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "cable-leg-extension": [
+    {
+      "pattern": "knee-extension",
+      "equipment": [
+        "cable",
+        "bench"
+      ]
+    }
+  ],
+  "lying-leg-curl": [
+    {
+      "pattern": "knee-flexion",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "standing-leg-curl": [
+    {
+      "pattern": "knee-flexion",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "standing-dumbbell-calf-raise": [
+    {
+      "pattern": "calf-raise",
+      "equipment": [
+        "dumbbells"
+      ]
+    }
+  ],
+  "seated-calf-raise": [
+    {
+      "pattern": "calf-raise",
+      "equipment": [
+        "machine"
+      ]
+    }
+  ],
+  "decline-crunch": [
+    {
+      "pattern": "trunk-flexion",
+      "equipment": [
+        "bench"
+      ]
+    }
+  ],
+  "tall-kneeling-pallof-press": [
+    {
+      "pattern": "anti-rotation",
+      "equipment": [
+        "cable"
+      ]
+    }
+  ],
+  "half-kneeling-pallof-press": [
+    {
+      "pattern": "anti-rotation",
+      "equipment": [
+        "cable"
+      ]
+    }
+  ],
+
  "cable-chest-press": [
   {
    "pattern": "horizontal-press",

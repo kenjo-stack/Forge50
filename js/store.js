@@ -149,7 +149,7 @@ const Store = {
       const done=old.sets.filter(set=>set.done),remaining=old.sets.length-done.length;
       if(done.length&&remaining===0)throw new Error('All sets are logged. Add another exercise to a future routine instead.');
       const count=done.length?remaining:old.sets.length;
-      const mode=/Dumbbell/.test(choice.name)?'per-dumbbell':choice.weightMode;
+      const mode=choice.singleDumbbell?'total':/Dumbbell/.test(choice.name)?'per-dumbbell':choice.weightMode;
       const replacement={...this.copy(choice),weightMode:mode,optional:!!old.optional,skipped:false,notes:done.length?'Added after '+old.name+' ('+done.length+' sets logged).':old.notes||'',sets:Array.from({length:count},()=>({id:this.id(),weight:mode==='bodyweight'?0:null,reps:null,rir:null,done:false}))};
       if(done.length){old.sets=done;old.skipped=false;session.exercises.splice(index+1,0,replacement);return index+1;}
       session.exercises.splice(index,1,replacement);return index;
