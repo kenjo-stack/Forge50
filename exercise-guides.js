@@ -6,6 +6,469 @@
 
 const ExerciseGuides = {
   guides: {
+    "Machine Chest Press": {
+    "focus": "Horizontal press",
+    "primary": "Pectoralis major",
+    "secondary": "Triceps and front deltoids",
+    "setup": "Adjust the seat so the handles are around mid-chest height. Keep your feet planted and your back supported.",
+    "perform": "Press the handles forward without lifting your shoulders or locking your elbows. Return slowly through a comfortable range.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Chest press machine"
+  },
+  "Dumbbell Floor Press": {
+    "focus": "Horizontal press",
+    "primary": "Pectoralis major",
+    "secondary": "Triceps and front deltoids",
+    "setup": "Lie on the floor with knees bent and feet planted. Hold the dumbbells above your chest with wrists over elbows.",
+    "perform": "Lower until your upper arms gently meet the floor. Pause without bouncing, then press the dumbbells upward.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Dumbbells + floor space"
+  },
+  "Flat Dumbbell Fly": {
+    "focus": "Chest fly",
+    "primary": "Pectoralis major",
+    "secondary": "Front deltoids and shoulder stabilisers",
+    "setup": "Lie on a flat bench with feet planted. Hold the dumbbells over your chest with a small, fixed bend in your elbows.",
+    "perform": "Open your arms in a controlled arc through a comfortable shoulder range. Bring the dumbbells back above the chest without changing the elbow bend.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Dumbbells + flat bench"
+  },
+  "Pec Deck Fly": {
+    "focus": "Chest fly",
+    "primary": "Pectoralis major",
+    "secondary": "Front deltoids and shoulder stabilisers",
+    "setup": "Adjust the seat and starting width to a comfortable chest-height position. Sit against the back pad and take the handles.",
+    "perform": "Bring the handles together in front of the chest. Keep your shoulders down and return slowly without forcing the stretch.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Pec deck machine"
+  },
+  "Machine Shoulder Press": {
+    "focus": "Overhead press",
+    "primary": "Anterior deltoids",
+    "secondary": "Triceps and lateral deltoids",
+    "setup": "Adjust the seat so the handles start around shoulder height. Keep your back supported and feet planted.",
+    "perform": "Press upward through a comfortable range, then lower the handles slowly. Keep your ribs down and avoid shrugging.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Shoulder press machine"
+  },
+  "Seated Barbell Shoulder Press": {
+    "focus": "Overhead press",
+    "primary": "Anterior deltoids",
+    "secondary": "Triceps and lateral deltoids",
+    "setup": "Use a stable bench and a suitable rack. Hold the bar slightly wider than shoulder width in front of your upper chest.",
+    "perform": "Press the bar overhead without leaning back. Lower it under control in front of your face through a comfortable range.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Barbell + bench + suitable rack"
+  },
+  "Leaning Dumbbell Lateral Raise": {
+    "focus": "Lateral raise",
+    "primary": "Lateral deltoids",
+    "secondary": "Supraspinatus and trapezius",
+    "setup": "Hold a secure support with one hand. Lean slightly away while keeping your feet stable and a dumbbell in the free hand.",
+    "perform": "Raise the dumbbell out to the side toward shoulder height with a small elbow bend. Lower slowly without swinging. Repeat on the other side.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "One dumbbell + secure support"
+  },
+  "Bent-Over Dumbbell Reverse Fly": {
+    "focus": "Rear-delt fly",
+    "primary": "Posterior deltoids",
+    "secondary": "Rhomboids, middle trapezius and rotator cuff",
+    "setup": "Hinge at the hips with knees softly bent and your torso stable. Let the dumbbells hang below your shoulders with slightly bent elbows.",
+    "perform": "Open the arms out to the sides without swinging your torso. Lower the dumbbells slowly and keep the same elbow bend.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Dumbbells"
+  },
+  "Cable Rear Delt Fly": {
+    "focus": "Rear-delt fly",
+    "primary": "Posterior deltoids",
+    "secondary": "Rhomboids, middle trapezius and rotator cuff",
+    "setup": "Set two cable pulleys around shoulder height. Take the opposite handles and stand with a stable stance and softly bent elbows.",
+    "perform": "Open your arms out to the sides, keeping your torso still. Return the handles forward slowly without shrugging.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Two adjustable cable pulleys"
+  },
+  "Rope Face Pull": {
+    "focus": "Face pull",
+    "primary": "Posterior deltoids",
+    "secondary": "Rhomboids, middle trapezius and rotator cuff",
+    "setup": "Attach a rope to a cable pulley around face height. Take both rope ends and step back into a stable stance.",
+    "perform": "Pull toward your face, separating the rope ends as your elbows move outward. Return slowly without leaning or shrugging.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Cable station + rope attachment"
+  },
+  "Seated Cable Face Pull": {
+    "focus": "Face pull",
+    "primary": "Posterior deltoids",
+    "secondary": "Rhomboids, middle trapezius and rotator cuff",
+    "setup": "Sit upright on a secure bench facing a cable pulley around face height. Hold the rope with arms extended and feet planted.",
+    "perform": "Pull the rope toward your face and separate its ends. Keep your trunk still, then return under control.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Cable station + rope + bench"
+  },
+  "One-Arm Dumbbell Row": {
+    "focus": "Row",
+    "primary": "Latissimus dorsi",
+    "secondary": "Biceps and middle-back muscles",
+    "setup": "Support one hand and knee on a stable bench. Keep your back level and let the dumbbell hang beneath the free shoulder.",
+    "perform": "Draw the dumbbell toward your hip while keeping your torso still. Lower until the arm is extended without twisting. Repeat on the other side.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "One dumbbell + bench"
+  },
+  "Neutral-Grip Lat Pulldown": {
+    "focus": "Vertical pull",
+    "primary": "Latissimus dorsi",
+    "secondary": "Biceps and middle-back muscles",
+    "setup": "Adjust the thigh pad and take a parallel-grip attachment with palms facing each other. Sit tall with feet planted.",
+    "perform": "Draw your elbows down and pull the attachment toward your upper chest. Return slowly overhead without swinging your torso.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Lat pulldown machine + neutral-grip attachment"
+  },
+  "Lying Cable Pullover": {
+    "focus": "Straight-arm pull",
+    "primary": "Latissimus dorsi",
+    "secondary": "Pectorals, triceps and trunk stabilisers",
+    "setup": "Position a stable bench near the low cable pulley. Lie with your head toward the pulley and hold the attachment with a small elbow bend.",
+    "perform": "Bring the attachment from behind your head to above your chest in a controlled arc. Keep your ribs down and use a comfortable shoulder range.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Cable station + attachment + bench"
+  },
+  "Dumbbell Pullover": {
+    "focus": "Straight-arm pull",
+    "primary": "Latissimus dorsi",
+    "secondary": "Pectorals, triceps and trunk stabilisers",
+    "setup": "Lie lengthwise on a stable bench with feet planted. Hold one dumbbell securely above your chest with both hands and slightly bent elbows.",
+    "perform": "Lower the dumbbell behind your head through a comfortable range. Bring it back above your chest without arching your lower back.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "One dumbbell + bench"
+  },
+  "Standing Dumbbell Curl": {
+    "focus": "Curl",
+    "primary": "Biceps brachii",
+    "secondary": "Brachialis and brachioradialis",
+    "setup": "Stand tall with a dumbbell in each hand, palms facing forward and elbows close to your sides.",
+    "perform": "Curl the dumbbells upward without moving your upper arms or swinging your torso. Lower slowly to the starting position.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Dumbbells"
+  },
+  "Dumbbell Overhead Triceps Extension": {
+    "focus": "Triceps extension",
+    "primary": "Triceps brachii",
+    "secondary": "Shoulder and trunk stabilisers",
+    "setup": "Hold one dumbbell securely with both hands overhead. Keep your trunk braced and your upper arms in a comfortable position.",
+    "perform": "Bend your elbows to lower the dumbbell behind your head. Extend them to lift it overhead without arching your back.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "One dumbbell"
+  },
+  "Close-Grip Machine Chest Press": {
+    "focus": "Horizontal press",
+    "primary": "Triceps brachii",
+    "secondary": "Pectorals and front deltoids",
+    "setup": "Use a chest press machine with suitable close or neutral handles. Adjust the seat to chest height and keep your back supported.",
+    "perform": "Press forward with your elbows comfortably close to your torso. Return slowly without flaring your elbows or lifting your shoulders.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Chest press machine with suitable close-grip handles"
+  },
+  "Dumbbell Front Raise": {
+    "focus": "Front raise",
+    "primary": "Anterior deltoids",
+    "secondary": "Upper chest and shoulder stabilisers",
+    "setup": "Stand tall with dumbbells in front of your thighs and a small elbow bend. Keep your ribs down.",
+    "perform": "Lift the dumbbells forward toward shoulder height, then lower slowly. Avoid swinging or leaning back.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Dumbbells"
+  },
+  "Cable Front Raise": {
+    "focus": "Front raise",
+    "primary": "Anterior deltoids",
+    "secondary": "Upper chest and shoulder stabilisers",
+    "setup": "Attach a suitable handle or straight bar to a low cable pulley. Stand with the attachment in front of your thighs and your torso braced.",
+    "perform": "Raise the attachment forward toward shoulder height with a small elbow bend. Lower under control without leaning back. Repeat on the other side if using a single handle.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Low cable pulley + handle"
+  },
+  "Dumbbell Romanian Deadlift": {
+    "focus": "Hip hinge",
+    "primary": "Hamstrings and glutes",
+    "secondary": "Spinal erectors and trunk stabilisers",
+    "setup": "Stand with a dumbbell in each hand in front of your thighs. Keep knees softly bent, shoulders set and your trunk braced.",
+    "perform": "Push your hips backward while the dumbbells stay close to your legs. Stop at a comfortable hamstring stretch and stand by bringing your hips forward.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Dumbbells"
+  },
+  "Cable Pull-Through": {
+    "focus": "Hip hinge",
+    "primary": "Hamstrings and glutes",
+    "secondary": "Spinal erectors and trunk stabilisers",
+    "setup": "Attach a rope to a low pulley. Face away from it, hold the rope between your legs and step forward to tension the cable.",
+    "perform": "Hinge your hips backward with softly bent knees. Stand by bringing your hips forward without leaning back or pulling with your arms.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Low cable pulley + rope"
+  },
+  "Goblet Squat": {
+    "focus": "Knee extension",
+    "primary": "Quadriceps",
+    "secondary": "Glutes and adductors",
+    "setup": "Hold one dumbbell close to your chest with both hands. Place your feet in a comfortable stance and brace your trunk.",
+    "perform": "Bend your knees and hips to squat through a comfortable range. Keep your heels planted, then push through the floor to stand.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "One dumbbell"
+  },
+  "Smith Machine Squat": {
+    "focus": "Knee extension",
+    "primary": "Quadriceps",
+    "secondary": "Glutes and adductors",
+    "setup": "Set the Smith machine bar and safety stops for your height and range. Position the bar across your upper back and take a stable stance.",
+    "perform": "Release the bar and squat through a comfortable range while keeping heels planted. Stand under control and re-engage the hooks before stepping away.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Smith machine + safety stops"
+  },
+  "Single-Leg Extension": {
+    "focus": "Knee extension",
+    "primary": "Quadriceps",
+    "secondary": "Hip and trunk stabilisers",
+    "setup": "Adjust the leg extension machine so its pivot lines up with your knee and the pad sits above your ankle. Use one leg at a time.",
+    "perform": "Straighten the working knee through a comfortable range. Lower slowly without lifting your hips. Repeat on the other leg.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Leg extension machine"
+  },
+  "Cable Leg Extension": {
+    "focus": "Knee extension",
+    "primary": "Quadriceps",
+    "secondary": "Hip and trunk stabilisers",
+    "setup": "Attach an ankle cuff to a low pulley and sit on a secure bench facing away from it. Keep your thigh supported and the cable clear of your foot.",
+    "perform": "Straighten the working knee without moving your thigh or leaning back. Lower slowly and repeat on the other leg.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Low cable pulley + ankle cuff + bench"
+  },
+  "Lying Leg Curl": {
+    "focus": "Leg curl",
+    "primary": "Hamstrings",
+    "secondary": "Calf and hip stabilisers",
+    "setup": "Lie face down on the leg curl machine. Align your knees with the pivot and set the roller just above your heels.",
+    "perform": "Curl your heels toward your hips while keeping your pelvis on the pad. Lower under control without arching your back.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Lying leg curl machine"
+  },
+  "Standing Leg Curl": {
+    "focus": "Leg curl",
+    "primary": "Hamstrings",
+    "secondary": "Calf and hip stabilisers",
+    "setup": "Adjust a standing leg curl machine for the working leg. Support your torso and place the roller behind the lower leg.",
+    "perform": "Bend the working knee to bring your heel upward without moving your hip. Lower slowly and repeat on the other side.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Standing leg curl machine"
+  },
+  "Standing Dumbbell Calf Raise": {
+    "focus": "Calf raise",
+    "primary": "Gastrocnemius and soleus",
+    "secondary": "Ankle and foot stabilisers",
+    "setup": "Stand on stable, level ground holding dumbbells at your sides. Keep your feet comfortably spaced and your balance steady.",
+    "perform": "Rise onto the balls of your feet, pause, then lower your heels slowly. Avoid bouncing or rolling your ankles.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Dumbbells + stable floor"
+  },
+  "Seated Calf Raise": {
+    "focus": "Calf raise",
+    "primary": "Soleus",
+    "secondary": "Ankle and foot stabilisers",
+    "setup": "Sit on a calf raise machine with the balls of your feet on the platform and the pads securely above your knees.",
+    "perform": "Lift your heels, pause at the top, then lower slowly through a comfortable range. Keep the balls of your feet planted and avoid bouncing.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Seated calf raise machine"
+  },
+  "Decline Crunch": {
+    "focus": "Ab crunch",
+    "primary": "Rectus abdominis",
+    "secondary": "Obliques and trunk stabilisers",
+    "setup": "Secure your lower legs on a suitable decline bench. Keep your hands lightly across your chest or beside your head without pulling on your neck.",
+    "perform": "Curl your ribs toward your pelvis to lift the shoulders slightly. Lower slowly; keep the movement a crunch rather than a full sit-up.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Decline bench with leg supports"
+  },
+  "Tall-Kneeling Pallof Press": {
+    "focus": "Anti-rotation",
+    "primary": "Abdominals and obliques",
+    "secondary": "Glutes and shoulder stabilisers",
+    "setup": "Kneel tall side-on to a cable pulley set near chest height. Hold the handle at your chest with your hips stacked above your knees.",
+    "perform": "Press the handle straight forward while resisting rotation. Pause, return to your chest and repeat on the other side.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Cable station + handle + comfortable kneeling surface"
+  },
+  "Half-Kneeling Pallof Press": {
+    "focus": "Anti-rotation",
+    "primary": "Abdominals and obliques",
+    "secondary": "Glutes and shoulder stabilisers",
+    "setup": "Take a stable half-kneeling position side-on to a chest-height cable pulley. Hold the handle against your chest with your trunk upright.",
+    "perform": "Press the handle forward without turning your shoulders or hips. Return under control, then repeat facing the other direction.",
+    "cues": [
+      "Use a stable setup",
+      "Move under control",
+      "Use a comfortable range"
+    ],
+    "mistakes": "Swinging or bouncing, losing the supported position, or forcing the range of motion.",
+    "equipment": "Cable station + handle + comfortable kneeling surface"
+  },
+
     "Incline Dumbbell Fly": {
       focus:"Incline chest fly",primary:"Pectoralis major, with upper-chest emphasis",secondary:"Front deltoids and arm stabilisers",
       setup:"Set a slight incline on the bench. Lie back with feet planted and hold the dumbbells above your chest with softly bent elbows.",
@@ -394,6 +857,13 @@ const ExerciseGuides = {
       mistakes:"Rushing, using momentum or a load you cannot control.",equipment:"See workout card."
     };
   },
+  alternatives(id) {
+    const catalog=Object.values(window.ForgeDefaults?.catalog||{});
+    const current=catalog.find(e=>e.id===id);
+    if(!current)return [];
+    const options=catalog.filter(e=>e.id!==id&&e.muscle===current.muscle);
+    return window.ExerciseSwaps?ExerciseSwaps.filter(options,current,{pattern:'any',equipment:Object.keys(ExerciseSwaps.equipment)}):options.sort((a,b)=>a.name.localeCompare(b.name));
+  },
   openByName(encoded) { this.open(decodeURIComponent(encoded)); },
   open(idOrName) {
     window.ExerciseDemos?.dispose();
@@ -403,7 +873,7 @@ const ExerciseGuides = {
     const safe=v=>this.escape(v);
     const catalog=Object.values(window.ForgeDefaults?.catalog||{});
     const current=catalog.find(e=>e.id===id);
-    const alternatives=catalog.filter(e=>e.id!==id && current && e.muscle===current.muscle).slice(0,4);
+    const alternatives=this.alternatives(id);
     const last=current && window.Store?.last?.(id,current.weightMode);
     const recommend=!!last;
     const previous=last?.exercise?.sets?.filter(x=>x.done).map(x=>`${safe(x.weight)} kg × ${safe(x.reps)} reps`).join(' · ');
@@ -412,11 +882,12 @@ const ExerciseGuides = {
       demo:window.ExerciseDemos?.render(id)||'<p>No demonstration is available.</p>',
       muscles:`${window.MuscleDiagrams?.render(id)||''}<div class="forge50-guide-muscles"><div><span>PRIMARY MUSCLES</span><strong>${safe(g.primary)}</strong></div><div><span>SECONDARY MUSCLES</span><strong>${safe(g.secondary)}</strong></div></div><section class="forge50-guide-section"><h3>TRAINING FOCUS</h3><p>${safe(g.focus)}</p></section>`,
       progress:`<section class="forge50-guide-section"><h3>LAST COMPLETED SESSION</h3><p>${previous||'No completed sets recorded yet.'}</p></section><section class="forge50-guide-section"><h3>NEXT SESSION</h3><p>${current?`Target: ${safe(current.sets)} sets × ${safe(current.reps)} reps. ${recommend?'Check the workout card for your calculated weight suggestion.':'Start with a weight you can control and record each set.'}`:'Open this exercise in a workout to view its targets.'}</p></section><p class="forge50-guide-note">Progression is guidance, not an automatic weight increase. Your saved workout history stays unchanged.</p>`,
-      alternatives:`<section class="forge50-guide-section"><h3>SIMILAR MUSCLE GROUP</h3>${alternatives.length?`<ul class="forge50-guide-alternatives">${alternatives.map(e=>`<li>${safe(e.name)} <span>${safe(e.muscle)}</span></li>`).join('')}</ul>`:'<p>No catalog alternatives are available for this exercise.</p>'}<p class="forge50-guide-note">These exercises train a similar muscle group but may not be equivalent. Changing your routine is done in Settings; this list does not modify your workout.</p></section>`
+      alternatives:`<section class="forge50-guide-section"><h3>SIMILAR MUSCLE GROUP</h3>${alternatives.length?`<ul class="forge50-guide-alternatives">${alternatives.map(e=>`<li><button type="button" class="forge50-guide-alternative" data-guide-alternative="${safe(e.id)}">${safe(e.name)}</button> <span>${safe(e.muscle)}</span></li>`).join('')}</ul>`:'<p>No catalog alternatives are available for this exercise.</p>'}<p class="forge50-guide-note">Tap an alternative to see its technique and animation. Similar muscle groups can involve different movements. Use Swap in your workout or edit your routine in Settings to make a change.</p></section>`
     };
     const body=document.getElementById('forge50GuideBody');
     body.innerHTML=`<div class="forge50-guide-title"><span class="forge50-guide-kicker">FORGE50 EXERCISE GUIDE</span><h2>${safe(name)}</h2><p class="forge50-guide-focus">${safe(g.focus)}</p></div><div class="forge50-guide-tabs" role="tablist" aria-label="Guide sections">${[['technique','Technique'],['demo','Demo'],['muscles','Muscles'],['progress','Progress'],['alternatives','Alternatives']].map(([key,label])=>`<button type="button" role="tab" data-guide-tab="${key}" aria-selected="${key==='technique'}">${label}</button>`).join('')}</div>${Object.entries(sections).map(([key,html])=>`<div data-guide-panel="${key}" role="tabpanel" ${key==='technique'?'':'hidden'}>${html}</div>`).join('')}`;
     window.ExerciseDemos?.mount(body.querySelector('.exercise-demo'),id);
+    body.querySelectorAll('[data-guide-alternative]').forEach(button=>button.addEventListener('click',()=>this.open(button.dataset.guideAlternative)));
     body.querySelectorAll('[data-guide-tab]').forEach(button=>button.addEventListener('click',()=>{
       const key=button.dataset.guideTab;
       body.querySelectorAll('[data-guide-tab]').forEach(b=>b.setAttribute('aria-selected',String(b===button)));

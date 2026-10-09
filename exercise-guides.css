@@ -58,3 +58,9 @@ body.forge50-guide-open{overflow:hidden}
 .exercise-demo-legend i{width:12px;height:12px;flex:none;border-radius:3px}
 .demo-primary{background:#f27a27}.demo-secondary{background:#27a9f5}.demo-focus{border:2px solid #c877fa;background:transparent}
 .exercise-demo[data-demo-state="error"] .exercise-demo-status{color:#f7c887}
+.forge50-guide-alternatives{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px}
+.forge50-guide-alternatives li{display:flex;align-items:center;gap:8px;border-bottom:1px solid #343b48;padding:4px 0}
+.forge50-guide-alternatives li>span{color:#aeb9cc;font-size:12px;flex-shrink:0}
+.forge50-guide-alternative{flex:1;min-width:0;min-height:44px;padding:10px 12px;border:1px solid #46536a;border-radius:10px;background:#202839;color:#f4f6fb;text-align:left;font:inherit;white-space:normal;cursor:pointer}
+.forge50-guide-alternative:hover{border-color:#b68cfc;background:#2c3450}
+.forge50-guide-alternative:focus-visible{outline:3px solid #c699ff;outline-offset:2px}

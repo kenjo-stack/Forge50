@@ -27,7 +27,9 @@ let browser,checks=0;const pass=message=>{checks++;console.log('PASS',message);}
  assert.equal(await page.getByRole('button',{name:'Play demo',exact:true}).count(),0);assert.equal(await page.locator('[data-demo-retry]').isVisible(),false);
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  await page.locator('.forge50-guide-panel').screenshot({path:'/tmp/forge50-v2.9.3-demo-mobile.png'});
- const firstFrame=await page.locator('[data-demo-image]').screenshot();await page.waitForTimeout(800);assert.notDeepEqual(await page.locator('[data-demo-image]').screenshot(),firstFrame);
+ const firstFrame=await page.locator('[data-demo-image]').screenshot();let motion=false;
+ for(let sample=0;sample<8&&!motion;sample++){await page.waitForTimeout(400);motion=!(await page.locator('[data-demo-image]').screenshot()).equals(firstFrame);}
+ assert.ok(motion,'the GIF visibly changes within a complete animation loop');
  await page.waitForFunction(async()=>!!(await (await caches.open('forge50-v2.9.1-original-gifs-demos')).match('assets/exercise-demos/gifs/lat-pulldown.gif')));
  pass('one finger tap on Demo starts a visibly animated GIF with no Play button and caches it on demand');
  await page.locator('[data-guide-tab="muscles"]').tap();assert.equal(await page.locator('.muscle-diagram').isVisible(),true);assert.equal(await page.locator('[data-anatomy-mode],canvas,.anatomy-credit').count(),0);
@@ -44,9 +46,15 @@ let browser,checks=0;const pass=message=>{checks++;console.log('PASS',message);}
  await page.locator('[data-demo-choice]').selectOption('high-row-machine');await playing();assert.match(await page.locator('[data-demo-image]').getAttribute('src'),/gifs\/high-row-machine\.gif$/);
  assert.equal(await page.evaluate(()=>ExerciseGuides.current.id),'high-row-machine-assisted-pull-up');assert.equal(await snapshot(),before);
  pass('changing the combined-entry selector automatically plays the chosen GIF without changing its logged ID or backup');
+ await page.evaluate(()=>ExerciseGuides.open('incline-dumbbell-press'));await page.locator('[data-guide-tab="alternatives"]').tap();
+ assert.ok(await page.locator('[data-guide-alternative]').count()>4);
+ await page.locator('[data-guide-alternative="dumbbell-floor-press"]').tap();assert.equal(await page.evaluate(()=>ExerciseGuides.current.id),'dumbbell-floor-press');await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await snapshot(),before);
+ await page.evaluate(()=>ExerciseGuides.open('machine-calf-raise'));await page.locator('[data-guide-tab="alternatives"]').tap();assert.equal(await page.locator('[data-guide-alternative]').count(),2);
+ await page.setViewportSize({width:320,height:740});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await page.setViewportSize({width:390,height:844});
+ pass('full alternatives are tappable, open their own animation, include calves and preserve saved training data on narrow phones');
  const ids=await page.evaluate(()=>Object.keys(ForgeDefaults.catalog));
- for(const id of ids){if(id==='hack-squat'){await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="demo"]').tap();assert.match(await page.locator('[data-guide-panel="demo"]').innerText(),/No animation/);continue;}await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await page.locator('[data-demo-image]').evaluate(image=>image.naturalWidth),600,id);assert.equal(await page.getByRole('button',{name:'Play demo',exact:true}).count(),0,id);}
- pass('original GIFs play under /Forge50/; Hack Squat has a clear no-animation fallback');
+ for(const id of ids){await page.evaluate(id=>ExerciseGuides.open(id),id);await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await page.locator('[data-demo-image]').evaluate(image=>image.naturalWidth),600,id);assert.equal(await page.getByRole('button',{name:'Play demo',exact:true}).count(),0,id);}
+ pass('all 74 catalogue exercises play their animations under /Forge50/, including Hack Squat');
  await context.setOffline(true);await page.reload();await page.evaluate(()=>ExerciseGuides.open('incline-dumbbell-fly'));await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.match(await page.locator('[data-demo-image]').getAttribute('src'),/incline-dumbbell-fly.gif$/);await page.evaluate(()=>ExerciseGuides.open('lat-pulldown'));await page.locator('[data-guide-tab="demo"]').tap();await playing();assert.equal(await snapshot(),before);
  pass('a cached GIF starts automatically after an offline reload with completed history, draft and backup unchanged');
  await page.evaluate(async()=>{const cache=await caches.open('forge50-v2.9.1-original-gifs-demos');await cache.delete('assets/exercise-demos/gifs/pallof-press.gif');ExerciseGuides.open('pallof-press');});await page.locator('[data-guide-tab="demo"]').tap();await page.locator('[data-demo-state="error"]').waitFor();

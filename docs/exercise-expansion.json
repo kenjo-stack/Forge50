@@ -1,0 +1,519 @@
+[
+  {
+    "id": "machine-chest-press",
+    "name": "Machine Chest Press",
+    "base": "flat-dumbbell-press",
+    "source": "Machine chest press motion sequence.png",
+    "pattern": "horizontal-press",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "lower-chest",
+    "setup": "Adjust the seat so the handles are around mid-chest height. Keep your feet planted and your back supported.",
+    "perform": "Press the handles forward without lifting your shoulders or locking your elbows. Return slowly through a comfortable range.",
+    "equipmentLabel": "Chest press machine"
+  },
+  {
+    "id": "dumbbell-floor-press",
+    "name": "Dumbbell Floor Press",
+    "base": "flat-dumbbell-press",
+    "source": "Eight-frame dumbbell floor press anatomy guide.png",
+    "pattern": "horizontal-press",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "lower-chest",
+    "setup": "Lie on the floor with knees bent and feet planted. Hold the dumbbells above your chest with wrists over elbows.",
+    "perform": "Lower until your upper arms gently meet the floor. Pause without bouncing, then press the dumbbells upward.",
+    "equipmentLabel": "Dumbbells + floor space"
+  },
+  {
+    "id": "flat-dumbbell-fly",
+    "name": "Flat Dumbbell Fly",
+    "base": "incline-dumbbell-fly",
+    "source": "Anatomical flat dumbbell fly sequence.png",
+    "pattern": "chest-fly",
+    "equipment": [
+      "dumbbells",
+      "bench"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "lower-chest",
+    "setup": "Lie on a flat bench with feet planted. Hold the dumbbells over your chest with a small, fixed bend in your elbows.",
+    "perform": "Open your arms in a controlled arc through a comfortable shoulder range. Bring the dumbbells back above the chest without changing the elbow bend.",
+    "equipmentLabel": "Dumbbells + flat bench"
+  },
+  {
+    "id": "pec-deck-fly",
+    "name": "Pec Deck Fly",
+    "base": "incline-dumbbell-fly",
+    "source": "Pec Deck Fly Motion Study.png",
+    "pattern": "chest-fly",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "lower-chest",
+    "setup": "Adjust the seat and starting width to a comfortable chest-height position. Sit against the back pad and take the handles.",
+    "perform": "Bring the handles together in front of the chest. Keep your shoulders down and return slowly without forcing the stretch.",
+    "equipmentLabel": "Pec deck machine"
+  },
+  {
+    "id": "machine-shoulder-press",
+    "name": "Machine Shoulder Press",
+    "base": "dumbbell-shoulder-press",
+    "source": "Machine shoulder press anatomy sequence.png",
+    "pattern": "vertical-press",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "front-delts",
+    "setup": "Adjust the seat so the handles start around shoulder height. Keep your back supported and feet planted.",
+    "perform": "Press upward through a comfortable range, then lower the handles slowly. Keep your ribs down and avoid shrugging.",
+    "equipmentLabel": "Shoulder press machine"
+  },
+  {
+    "id": "seated-barbell-shoulder-press",
+    "name": "Seated Barbell Shoulder Press",
+    "base": "dumbbell-shoulder-press",
+    "source": "Seated Barbell Shoulder Press Anatomy Guide.png",
+    "pattern": "vertical-press",
+    "equipment": [
+      "barbell",
+      "bench"
+    ],
+    "weightMode": "total",
+    "muscleMap": "front-delts",
+    "setup": "Use a stable bench and a suitable rack. Hold the bar slightly wider than shoulder width in front of your upper chest.",
+    "perform": "Press the bar overhead without leaning back. Lower it under control in front of your face through a comfortable range.",
+    "equipmentLabel": "Barbell + bench + suitable rack"
+  },
+  {
+    "id": "leaning-dumbbell-lateral-raise",
+    "name": "Leaning Dumbbell Lateral Raise",
+    "base": "dumbbell-lateral-raise",
+    "source": "Leaning Dumbbell Lateral Raise Motion Guide.png",
+    "pattern": "lateral-raise",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "side-delts",
+    "setup": "Hold a secure support with one hand. Lean slightly away while keeping your feet stable and a dumbbell in the free hand.",
+    "perform": "Raise the dumbbell out to the side toward shoulder height with a small elbow bend. Lower slowly without swinging. Repeat on the other side.",
+    "equipmentLabel": "One dumbbell + secure support"
+  },
+  {
+    "id": "bent-over-dumbbell-reverse-fly",
+    "name": "Bent-Over Dumbbell Reverse Fly",
+    "base": "reverse-pec-deck",
+    "source": "Bent-Over Dumbbell Reverse Fly Anatomy.png",
+    "pattern": "rear-delt-fly",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "rear-delts",
+    "setup": "Hinge at the hips with knees softly bent and your torso stable. Let the dumbbells hang below your shoulders with slightly bent elbows.",
+    "perform": "Open the arms out to the sides without swinging your torso. Lower the dumbbells slowly and keep the same elbow bend.",
+    "equipmentLabel": "Dumbbells"
+  },
+  {
+    "id": "cable-rear-delt-fly",
+    "name": "Cable Rear Delt Fly",
+    "base": "reverse-pec-deck",
+    "source": "Cable rear delt fly exercise sequence.png",
+    "pattern": "rear-delt-fly",
+    "equipment": [
+      "cable"
+    ],
+    "weightMode": "total",
+    "muscleMap": "rear-delts",
+    "setup": "Set two cable pulleys around shoulder height. Take the opposite handles and stand with a stable stance and softly bent elbows.",
+    "perform": "Open your arms out to the sides, keeping your torso still. Return the handles forward slowly without shrugging.",
+    "equipmentLabel": "Two adjustable cable pulleys"
+  },
+  {
+    "id": "rope-face-pull",
+    "name": "Rope Face Pull",
+    "base": "high-face-pull",
+    "source": "Rope Face Pull Motion Study.png",
+    "pattern": "face-pull",
+    "equipment": [
+      "cable"
+    ],
+    "weightMode": "total",
+    "muscleMap": "rear-delts",
+    "setup": "Attach a rope to a cable pulley around face height. Take both rope ends and step back into a stable stance.",
+    "perform": "Pull toward your face, separating the rope ends as your elbows move outward. Return slowly without leaning or shrugging.",
+    "equipmentLabel": "Cable station + rope attachment"
+  },
+  {
+    "id": "seated-cable-face-pull",
+    "name": "Seated Cable Face Pull",
+    "base": "high-face-pull",
+    "source": "Seated Cable Face Pull Motion Guide.png",
+    "pattern": "face-pull",
+    "equipment": [
+      "cable",
+      "bench"
+    ],
+    "weightMode": "total",
+    "muscleMap": "rear-delts",
+    "setup": "Sit upright on a secure bench facing a cable pulley around face height. Hold the rope with arms extended and feet planted.",
+    "perform": "Pull the rope toward your face and separate its ends. Keep your trunk still, then return under control.",
+    "equipmentLabel": "Cable station + rope + bench"
+  },
+  {
+    "id": "one-arm-dumbbell-row",
+    "name": "One-Arm Dumbbell Row",
+    "base": "single-arm-cable-row",
+    "source": "One-arm dumbbell row anatomy sequence.png",
+    "pattern": "horizontal-pull",
+    "equipment": [
+      "dumbbells",
+      "bench"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "lats",
+    "setup": "Support one hand and knee on a stable bench. Keep your back level and let the dumbbell hang beneath the free shoulder.",
+    "perform": "Draw the dumbbell toward your hip while keeping your torso still. Lower until the arm is extended without twisting. Repeat on the other side.",
+    "equipmentLabel": "One dumbbell + bench"
+  },
+  {
+    "id": "neutral-grip-lat-pulldown",
+    "name": "Neutral-Grip Lat Pulldown",
+    "base": "lat-pulldown",
+    "source": "Neutral-Grip Lat Pulldown Anatomy Guide(1).png",
+    "pattern": "vertical-pull",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "lats",
+    "setup": "Adjust the thigh pad and take a parallel-grip attachment with palms facing each other. Sit tall with feet planted.",
+    "perform": "Draw your elbows down and pull the attachment toward your upper chest. Return slowly overhead without swinging your torso.",
+    "equipmentLabel": "Lat pulldown machine + neutral-grip attachment"
+  },
+  {
+    "id": "lying-cable-pullover",
+    "name": "Lying Cable Pullover",
+    "base": "straight-arm-pulldown",
+    "source": "Anatomical lying cable pullover sequence.png",
+    "pattern": "straight-arm-pull",
+    "equipment": [
+      "cable",
+      "bench"
+    ],
+    "weightMode": "total",
+    "muscleMap": "lats",
+    "setup": "Position a stable bench near the low cable pulley. Lie with your head toward the pulley and hold the attachment with a small elbow bend.",
+    "perform": "Bring the attachment from behind your head to above your chest in a controlled arc. Keep your ribs down and use a comfortable shoulder range.",
+    "equipmentLabel": "Cable station + attachment + bench"
+  },
+  {
+    "id": "dumbbell-pullover",
+    "name": "Dumbbell Pullover",
+    "base": "straight-arm-pulldown",
+    "source": "Dumbbell Pullover Anatomy Motion Sequence.png",
+    "pattern": "straight-arm-pull",
+    "equipment": [
+      "dumbbells",
+      "bench"
+    ],
+    "weightMode": "total",
+    "muscleMap": "lats",
+    "setup": "Lie lengthwise on a stable bench with feet planted. Hold one dumbbell securely above your chest with both hands and slightly bent elbows.",
+    "perform": "Lower the dumbbell behind your head through a comfortable range. Bring it back above your chest without arching your lower back.",
+    "equipmentLabel": "One dumbbell + bench",
+    "singleDumbbell": true
+  },
+  {
+    "id": "standing-dumbbell-curl",
+    "name": "Standing Dumbbell Curl",
+    "base": "cable-curl",
+    "source": "Standing Dumbbell Curl Anatomy Sequence.png",
+    "pattern": "elbow-flexion",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "biceps",
+    "setup": "Stand tall with a dumbbell in each hand, palms facing forward and elbows close to your sides.",
+    "perform": "Curl the dumbbells upward without moving your upper arms or swinging your torso. Lower slowly to the starting position.",
+    "equipmentLabel": "Dumbbells"
+  },
+  {
+    "id": "dumbbell-overhead-triceps-extension",
+    "name": "Dumbbell Overhead Triceps Extension",
+    "base": "overhead-cable-triceps-extension",
+    "source": "Dumbbell overhead triceps extension sequence.png",
+    "pattern": "elbow-extension",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "total",
+    "muscleMap": "triceps",
+    "setup": "Hold one dumbbell securely with both hands overhead. Keep your trunk braced and your upper arms in a comfortable position.",
+    "perform": "Bend your elbows to lower the dumbbell behind your head. Extend them to lift it overhead without arching your back.",
+    "equipmentLabel": "One dumbbell",
+    "singleDumbbell": true
+  },
+  {
+    "id": "close-grip-machine-chest-press",
+    "name": "Close-Grip Machine Chest Press",
+    "base": "close-grip-barbell-bench-press",
+    "source": "Eight-frame close-grip chest press guide.png",
+    "pattern": "horizontal-press",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "triceps",
+    "setup": "Use a chest press machine with suitable close or neutral handles. Adjust the seat to chest height and keep your back supported.",
+    "perform": "Press forward with your elbows comfortably close to your torso. Return slowly without flaring your elbows or lifting your shoulders.",
+    "equipmentLabel": "Chest press machine with suitable close-grip handles"
+  },
+  {
+    "id": "dumbbell-front-raise",
+    "name": "Dumbbell Front Raise",
+    "base": "seated-machine-front-raise",
+    "source": "Dumbbell Front Raise Anatomy Sequence.png",
+    "pattern": "front-raise",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "front-delts",
+    "setup": "Stand tall with dumbbells in front of your thighs and a small elbow bend. Keep your ribs down.",
+    "perform": "Lift the dumbbells forward toward shoulder height, then lower slowly. Avoid swinging or leaning back.",
+    "equipmentLabel": "Dumbbells"
+  },
+  {
+    "id": "cable-front-raise",
+    "name": "Cable Front Raise",
+    "base": "seated-machine-front-raise",
+    "source": "Cable Front Raise Motion Study.png",
+    "pattern": "front-raise",
+    "equipment": [
+      "cable"
+    ],
+    "weightMode": "total",
+    "muscleMap": "front-delts",
+    "setup": "Attach a suitable handle or straight bar to a low cable pulley. Stand with the attachment in front of your thighs and your torso braced.",
+    "perform": "Raise the attachment forward toward shoulder height with a small elbow bend. Lower under control without leaning back. Repeat on the other side if using a single handle.",
+    "equipmentLabel": "Low cable pulley + handle"
+  },
+  {
+    "id": "dumbbell-romanian-deadlift",
+    "name": "Dumbbell Romanian Deadlift",
+    "base": "romanian-deadlift",
+    "source": "Dumbbell Romanian Deadlift Motion Study.png",
+    "pattern": "hip-hinge",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "posterior-chain",
+    "setup": "Stand with a dumbbell in each hand in front of your thighs. Keep knees softly bent, shoulders set and your trunk braced.",
+    "perform": "Push your hips backward while the dumbbells stay close to your legs. Stop at a comfortable hamstring stretch and stand by bringing your hips forward.",
+    "equipmentLabel": "Dumbbells"
+  },
+  {
+    "id": "cable-pull-through",
+    "name": "Cable Pull-Through",
+    "base": "romanian-deadlift",
+    "source": "Cable pull-through anatomy motion sheet.png",
+    "pattern": "hip-hinge",
+    "equipment": [
+      "cable"
+    ],
+    "weightMode": "total",
+    "muscleMap": "posterior-chain",
+    "setup": "Attach a rope to a low pulley. Face away from it, hold the rope between your legs and step forward to tension the cable.",
+    "perform": "Hinge your hips backward with softly bent knees. Stand by bringing your hips forward without leaning back or pulling with your arms.",
+    "equipmentLabel": "Low cable pulley + rope"
+  },
+  {
+    "id": "goblet-squat",
+    "name": "Goblet Squat",
+    "base": "hack-squat",
+    "source": "Goblet squat anatomy motion sheet.png",
+    "pattern": "knee-extension",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "total",
+    "muscleMap": "quads",
+    "setup": "Hold one dumbbell close to your chest with both hands. Place your feet in a comfortable stance and brace your trunk.",
+    "perform": "Bend your knees and hips to squat through a comfortable range. Keep your heels planted, then push through the floor to stand.",
+    "equipmentLabel": "One dumbbell"
+  },
+  {
+    "id": "smith-machine-squat",
+    "name": "Smith Machine Squat",
+    "base": "hack-squat",
+    "source": "Smith Machine Squat Motion Study.png",
+    "pattern": "knee-extension",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "quads",
+    "setup": "Set the Smith machine bar and safety stops for your height and range. Position the bar across your upper back and take a stable stance.",
+    "perform": "Release the bar and squat through a comfortable range while keeping heels planted. Stand under control and re-engage the hooks before stepping away.",
+    "equipmentLabel": "Smith machine + safety stops"
+  },
+  {
+    "id": "hack-squat",
+    "name": "Hack Squat",
+    "base": "hack-squat",
+    "source": "Hack Squat Anatomy Motion Study.png",
+    "pattern": "knee-extension",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "quads",
+    "existing": true
+  },
+  {
+    "id": "single-leg-extension",
+    "name": "Single-Leg Extension",
+    "base": "leg-extension",
+    "source": "Single-Leg Extension Anatomy Motion Study.png",
+    "pattern": "knee-extension",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "quads",
+    "setup": "Adjust the leg extension machine so its pivot lines up with your knee and the pad sits above your ankle. Use one leg at a time.",
+    "perform": "Straighten the working knee through a comfortable range. Lower slowly without lifting your hips. Repeat on the other leg.",
+    "equipmentLabel": "Leg extension machine"
+  },
+  {
+    "id": "cable-leg-extension",
+    "name": "Cable Leg Extension",
+    "base": "leg-extension",
+    "source": "Cable leg extension motion study.png",
+    "pattern": "knee-extension",
+    "equipment": [
+      "cable",
+      "bench"
+    ],
+    "weightMode": "total",
+    "muscleMap": "quads",
+    "setup": "Attach an ankle cuff to a low pulley and sit on a secure bench facing away from it. Keep your thigh supported and the cable clear of your foot.",
+    "perform": "Straighten the working knee without moving your thigh or leaning back. Lower slowly and repeat on the other leg.",
+    "equipmentLabel": "Low cable pulley + ankle cuff + bench"
+  },
+  {
+    "id": "lying-leg-curl",
+    "name": "Lying Leg Curl",
+    "base": "seated-leg-curl",
+    "source": "Lying leg curl motion study.png",
+    "pattern": "knee-flexion",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "hamstrings",
+    "setup": "Lie face down on the leg curl machine. Align your knees with the pivot and set the roller just above your heels.",
+    "perform": "Curl your heels toward your hips while keeping your pelvis on the pad. Lower under control without arching your back.",
+    "equipmentLabel": "Lying leg curl machine"
+  },
+  {
+    "id": "standing-leg-curl",
+    "name": "Standing Leg Curl",
+    "base": "seated-leg-curl",
+    "source": "Standing leg curl anatomy sequence.png",
+    "pattern": "knee-flexion",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "hamstrings",
+    "setup": "Adjust a standing leg curl machine for the working leg. Support your torso and place the roller behind the lower leg.",
+    "perform": "Bend the working knee to bring your heel upward without moving your hip. Lower slowly and repeat on the other side.",
+    "equipmentLabel": "Standing leg curl machine"
+  },
+  {
+    "id": "standing-dumbbell-calf-raise",
+    "name": "Standing Dumbbell Calf Raise",
+    "base": "machine-calf-raise",
+    "source": "Standing Dumbbell Calf Raise Motion Study.png",
+    "pattern": "calf-raise",
+    "equipment": [
+      "dumbbells"
+    ],
+    "weightMode": "per-dumbbell",
+    "muscleMap": "calves",
+    "setup": "Stand on stable, level ground holding dumbbells at your sides. Keep your feet comfortably spaced and your balance steady.",
+    "perform": "Rise onto the balls of your feet, pause, then lower your heels slowly. Avoid bouncing or rolling your ankles.",
+    "equipmentLabel": "Dumbbells + stable floor"
+  },
+  {
+    "id": "seated-calf-raise",
+    "name": "Seated Calf Raise",
+    "base": "machine-calf-raise",
+    "source": "Seated calf raise motion sequence.png",
+    "pattern": "calf-raise",
+    "equipment": [
+      "machine"
+    ],
+    "weightMode": "total",
+    "muscleMap": "calves",
+    "setup": "Sit on a calf raise machine with the balls of your feet on the platform and the pads securely above your knees.",
+    "perform": "Lift your heels, pause at the top, then lower slowly through a comfortable range. Keep the balls of your feet planted and avoid bouncing.",
+    "equipmentLabel": "Seated calf raise machine"
+  },
+  {
+    "id": "decline-crunch",
+    "name": "Decline Crunch",
+    "base": "cable-crunch",
+    "source": "Decline crunch anatomy motion sequence.png",
+    "pattern": "trunk-flexion",
+    "equipment": [
+      "bench"
+    ],
+    "weightMode": "bodyweight",
+    "muscleMap": "abs",
+    "setup": "Secure your lower legs on a suitable decline bench. Keep your hands lightly across your chest or beside your head without pulling on your neck.",
+    "perform": "Curl your ribs toward your pelvis to lift the shoulders slightly. Lower slowly; keep the movement a crunch rather than a full sit-up.",
+    "equipmentLabel": "Decline bench with leg supports"
+  },
+  {
+    "id": "tall-kneeling-pallof-press",
+    "name": "Tall-Kneeling Pallof Press",
+    "base": "pallof-press",
+    "source": "Tall-Kneeling Pallof Press Motion Sequence.png",
+    "pattern": "anti-rotation",
+    "equipment": [
+      "cable"
+    ],
+    "weightMode": "total",
+    "muscleMap": "abs",
+    "setup": "Kneel tall side-on to a cable pulley set near chest height. Hold the handle at your chest with your hips stacked above your knees.",
+    "perform": "Press the handle straight forward while resisting rotation. Pause, return to your chest and repeat on the other side.",
+    "equipmentLabel": "Cable station + handle + comfortable kneeling surface"
+  },
+  {
+    "id": "half-kneeling-pallof-press",
+    "name": "Half-Kneeling Pallof Press",
+    "base": "pallof-press",
+    "source": "Half-Kneeling Pallof Press Motion Sequence.png",
+    "pattern": "anti-rotation",
+    "equipment": [
+      "cable"
+    ],
+    "weightMode": "total",
+    "muscleMap": "abs",
+    "setup": "Take a stable half-kneeling position side-on to a chest-height cable pulley. Hold the handle against your chest with your trunk upright.",
+    "perform": "Press the handle forward without turning your shoulders or hips. Return under control, then repeat facing the other direction.",
+    "equipmentLabel": "Cable station + handle + comfortable kneeling surface"
+  }
+]

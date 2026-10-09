@@ -13,3 +13,7 @@ The legacy `high-row-machine-assisted-pull-up` catalogue entry offers separate H
 Original artwork generated with the built-in image-generation tool for Forge50. No third-party exercise media. This 600 × 600 GIF loops eight illustrated poses over 2.4 seconds, using the existing orange primary / blue secondary / purple focus palette. It is an illustrated movement reference, not a continuous filmed demonstration. Technique guidance remains available. The original 39 GIFs are unchanged.
 
 Assembly: `python scripts/assemble-incline-fly.py sheet.png` using Pillow. The source sheet has four columns and two rows of equal square cells. Final generation brief: eight locked-camera incline dumbbell fly poses with slightly bent arms sweeping inward and outward, grey fibrous anatomy, orange chest, blue front deltoids, purple chest outline and curved movement arrows, dark navy background, black shorts/shoes and incline bench.
+
+## 2.12.0 additions
+
+34 additional original animations were assembled from the recovered eight-pose motion sheets created for Forge50. They cover all 33 new catalogue exercises and Hack Squat. Each uses eight illustrated poses and a 2.4-second loop; tall source panels keep their proportions. `docs/exercise-expansion.json` preserves source-sheet names and `docs/expanded-demo-assets.json` preserves asset hashes and timing. No third-party exercise images were introduced. These are illustrated movement references; written Technique cues remain available alongside each demonstration.

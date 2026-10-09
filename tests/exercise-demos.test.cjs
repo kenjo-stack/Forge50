@@ -1,14 +1,14 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..'),context={document:{addEventListener(){}}};context.window=context;vm.createContext(context);
-for(const file of ['data.js','js/exercise-demo-data.js','js/exercise-demos.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
+for(const file of ['data.js','js/exercise-catalog-expansion.js','js/exercise-demo-data.js','js/exercise-demos.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
 const data=context.ForgeDemoData;
 assert.deepEqual(Object.keys(data.exercises).sort(),Object.keys(context.ForgeDefaults.catalog).sort());
-assert.equal(Object.keys(data.assets).length,40);assert.equal(data.exercises['incline-dumbbell-fly'].length,1);assert.equal(context.ExerciseDemos.assets('incline-dumbbell-fly').length,1);assert.equal(data.exercises['hack-squat'].length,0);assert.equal(context.ExerciseDemos.assets('hack-squat').length,0);
+assert.equal(Object.keys(data.assets).length,74);assert.equal(data.exercises['incline-dumbbell-fly'].length,1);assert.equal(context.ExerciseDemos.assets('incline-dumbbell-fly').length,1);assert.equal(data.exercises['hack-squat'].length,1);assert.equal(context.ExerciseDemos.assets('hack-squat').length,1);
 assert.deepEqual(Array.from(data.exercises['high-row-machine-assisted-pull-up']),['high-row-machine','assisted-pull-up']);
 assert.equal(data.exercises['high-row-machine'][0],'high-row-machine');
 for(const [id,keys] of Object.entries(data.exercises))for(const key of keys)assert.ok(data.assets[key],id+' has a valid local asset');
 assert.ok(Object.isFrozen(data)&&Object.isFrozen(data.exercises)&&Object.isFrozen(data.assets));
-console.log('PASS original 39 exercise demos remain mapped; Incline Dumbbell Fly has its own GIF; Hack Squat retains its no-animation fallback');
+console.log('PASS all 74 catalogue entries have valid animations, including Hack Squat; the combined entry retains both demonstrations');
 
 // Decode GIF structure without an image-library dependency: count real frames and delays.
 function inspectGif(bytes){
@@ -28,12 +28,12 @@ function inspectGif(bytes){
 for(const [id,asset] of Object.entries(data.assets)){
  assert.equal(asset.gif,`assets/exercise-demos/gifs/${id}.gif`);assert.equal(asset.poster,`assets/exercise-demos/posters/${id}.jpg`);
  const bytes=fs.readFileSync(path.join(root,asset.gif));assert.equal(bytes.length,asset.bytes,id);assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),asset.sha256,id);
- const gif=inspectGif(bytes);assert.equal(gif.frames,id==='incline-dumbbell-fly'?8:28,id);assert.equal(gif.duration,id==='incline-dumbbell-fly'?2400:2330,id);
+ const gif=inspectGif(bytes);assert.equal(gif.frames,asset.frames??(id==='incline-dumbbell-fly'?8:28),id);assert.equal(gif.duration,asset.durationMs??(id==='incline-dumbbell-fly'?2400:2330),id);
  const poster=fs.readFileSync(path.join(root,asset.poster));assert.equal(poster.readUInt16BE(0),0xffd8,id);assert.equal(poster.readUInt16BE(poster.length-2),0xffd9,id);
  const html=context.ExerciseDemos.render(id==='assisted-pull-up'?'high-row-machine-assisted-pull-up':id);
  assert.ok(html.includes('data-demo-retry'));assert.ok(!html.includes('data-demo-toggle')&&!html.includes('Play demo'));assert.ok(!/src="[^"]+\.gif"/.test(html));
 }
-console.log('PASS 39 original GIFs and the 8-pose Fly GIF decode as looping animations with verified hashes and posters; no eager GIF source before Demo is selected');
+console.log('PASS all 74 GIFs have verified hashes, looping frames and posters; GIFs load only after Demo is selected');
 for(const id of ['custom-exercise','__proto__','constructor','<img src=x onerror=alert(1)>']){
  assert.equal(context.ExerciseDemos.assets(id).length,0);assert.ok(context.ExerciseDemos.render(id).includes('No animation'));
  assert.ok(!context.ExerciseDemos.render(id).includes('<img'));

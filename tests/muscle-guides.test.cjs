@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..'),context={window:{}};vm.createContext(context);
-for(const file of ['data.js','muscle-diagrams.js','exercise-guides.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
+for(const file of ['data.js','js/exercise-catalog-expansion.js','muscle-diagrams.js','exercise-guides.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
 const {ForgeDefaults:defaults,MuscleDiagrams:diagrams,ExerciseGuides:guides}=context.window;
 assert.deepEqual(Object.keys(diagrams.maps).sort(),Object.keys(defaults.catalog).sort());
 for(const id of Object.keys(defaults.catalog)){
@@ -13,7 +13,7 @@ for(const id of Object.keys(defaults.catalog)){
  assert.ok(!/canvas|data-anatomy|3D model credits/.test(html),id);
 }
 assert.equal(diagrams.render('custom-press'),'');
-console.log('PASS all 41 guides retain valid muscle illustrations, colour legends, purple arrows and written muscle targets');
+console.log('PASS all 74 guides retain valid muscle illustrations, colour legends, purple arrows and written muscle targets');
 
 for(const file of ['index.html','exercise-guides.js','exercise-guides.css','sw.js']){
  const text=fs.readFileSync(path.join(root,file),'utf8');
