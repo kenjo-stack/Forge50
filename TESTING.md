@@ -1,4 +1,10 @@
-# FORGE50 2.12.1 — Test notes
+# FORGE50 2.12.2 — Test notes
+
+## Skip exercise regression
+
+`node tests/exercise-skip.test.cjs` checks guided advancement, consecutive skipped/completed exercises, the next unlogged set, unskipping, final-exercise review, earlier unfinished sets, full-view quick controls and focus, preserved logged sets and backups, unchanged routine/rotation, and failed-save handling. It runs the production App and Store methods with a minimal DOM adapter. The cockpit browser suite now expects Skip to advance and uses the progress map to return and Unskip.
+
+For this release, all eight skip regressions, 24 Store checks, exercise swaps and exercise coverage passed. The new regression also reproduces the original navigation failure against the previous App source. The cockpit browser test could not launch because this environment has no installed Chromium executable; no new mobile layout verification is claimed.
 
 ## Original GIF checks
 
