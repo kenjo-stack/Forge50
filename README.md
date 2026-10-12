@@ -1,4 +1,6 @@
-# FORGE50 2.12.1 — Machine Seated Row Swap
+# FORGE50 2.12.2 — Skip Exercise Navigation
+
+Skip exercise now moves the guided workout to the next unfinished exercise, passing over skipped or fully logged exercises. The full workout shows Skip exercise beside Guide and Swap, then scrolls to the next exercise. Unskip exercise restores it; logged sets, routines and training history are preserved.
 
 Forge50 2.12.1 adds Machine Seated Row (Chest-Supported) as a Back-row swap with its own animation, setup guide and muscle illustration, bringing the catalogue to 75 exercises. See `MACHINE-SEATED-ROW.md` for this update and `EXERCISE-EXPANSION.md` for the preceding catalogue expansion. The original v2.9 demonstrations are retained. Open **Guide → Demo** and the animation starts automatically. There is no extra Play button. Technique remains the first section, and Muscles opens the colour-coded illustrations directly. The separate 3D viewer and model package have been removed. Your exercise IDs, routines and saved training data use the same v2.9 format. See `docs/ORIGINAL-EXERCISE-DEMOS.md` for the release base and integration details.
 
