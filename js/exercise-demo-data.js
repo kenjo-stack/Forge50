@@ -2,7 +2,7 @@
 (function(){
   const data={
   "version": "original-gifs-v2",
-  "baseVersion": "2.12.1",
+  "baseVersion": "2.12.3",
   "assets": {
     "incline-dumbbell-fly": {
       "name": "Incline Dumbbell Fly",
@@ -633,6 +633,16 @@
       "frames": 8,
       "durationMs": 2400,
       "distinctFrames": 8
+    },
+    "back-extension-45": {
+      "name": "45° Back Extension (Roman Chair)",
+      "gif": "assets/exercise-demos/gifs/back-extension-45.gif",
+      "poster": "assets/exercise-demos/posters/back-extension-45.jpg",
+      "bytes": 847852,
+      "sha256": "7b4b85d05c8ef995d6295d77d2b41a5d87b58297a579bebcf7d2e5c1d9816177",
+      "frames": 8,
+      "durationMs": 3200,
+      "distinctFrames": 8
     }
   },
   "exercises": {
@@ -861,6 +871,9 @@
     ],
     "machine-seated-row": [
       "machine-seated-row"
+    ],
+    "back-extension-45": [
+      "back-extension-45"
     ]
   }
 };

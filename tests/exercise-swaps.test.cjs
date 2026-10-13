@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict'),crypto=require('crypto');
 const db=new Map(),c={console,crypto,Date,localStorage:{getItem:k=>db.get(k)||null,setItem:(k,v)=>db.set(k,v),removeItem:k=>db.delete(k)}};c.window=c;vm.createContext(c);for(const f of ['data.js','js/exercise-catalog-expansion.js','js/exercise-swaps.js','js/store.js'])vm.runInContext(fs.readFileSync(f,'utf8'),c);c.Store.init();const S=c.Store,X=c.ExerciseSwaps,all=Object.keys(X.equipment);
-assert.equal(Object.keys(X.metadata).length,75);for(const id of Object.keys(c.ForgeDefaults.catalog)){assert.ok(X.metadata[id],id);for(const v of X.metadata[id]){assert.ok(X.patterns[v.pattern]);v.equipment.forEach(e=>assert.ok(X.equipment[e]));}}
+assert.equal(Object.keys(X.metadata).length,76);for(const id of Object.keys(c.ForgeDefaults.catalog)){assert.ok(X.metadata[id],id);for(const v of X.metadata[id]){assert.ok(X.patterns[v.pattern]);v.equipment.forEach(e=>assert.ok(X.equipment[e]));}}
 console.log('PASS all stable catalogue IDs have valid equipment and movement metadata');
 assert.equal(X.variants('high-row-machine-assisted-pull-up','lat-pulldown',{pattern:'same',equipment:['machine']}).length,0);assert.equal(X.variants('high-row-machine-assisted-pull-up','lat-pulldown',{pattern:'same',equipment:['assisted-pull-up']}).length,1);
 assert.equal(X.variants('flat-dumbbell-press','incline-dumbbell-press',{pattern:'same',equipment:['dumbbells']}).length,0);
@@ -25,3 +25,27 @@ const rowOriginal=S.session(rowSession).exercises.find(e=>e.id===rowSource.id),r
 assert.equal(JSON.stringify(rowOriginal.sets[0]),rowLogged);assert.equal(rowOriginal.sets.length,1);assert.equal(rowReplacement.sets.length,rowSource.sets.length-1);assert.ok(rowReplacement.sets.every(s=>!s.done&&s.weight===null));
 assert.equal(JSON.stringify(S.state.templates),rowTemplates);assert.equal(JSON.stringify(S.state.cycle),rowCycle);assert.ok(S.readBackup(S.backup()).sessions.find(s=>s.id===rowSession).exercises.some(e=>e.id==='machine-seated-row'));
 console.log('PASS a cable row swaps to the photographed machine only with machine equipment; logged sets survive, the new load is blank, and routines/rotation/backups are preserved');
+
+const legSession=S.start('legs'),hinge=S.session(legSession).exercises.find(e=>e.id==='romanian-deadlift'),benchFilters={pattern:'same',equipment:['back-extension-bench']};
+assert.deepEqual(Array.from(S.swapOptions(legSession,hinge.id,benchFilters),e=>e.id),['back-extension-45']);
+assert.ok(!S.swapOptions(legSession,hinge.id,{pattern:'same',equipment:['bench','machine']}).some(e=>e.id==='back-extension-45'));
+assert.ok(!S.swapOptions(legSession,'seated-leg-curl',benchFilters).some(e=>e.id==='back-extension-45'));
+assert.ok(!S.swapOptions(rowSession,'lat-pulldown',benchFilters).some(e=>e.id==='back-extension-45'));
+const legTemplates=JSON.stringify(S.state.templates),legCycle=JSON.stringify(S.state.cycle);
+S.saveSet(legSession,hinge.id,hinge.sets[0].id,{weight:40,reps:10,rir:2,done:true});
+const hingeLogged=JSON.stringify(S.session(legSession).exercises.find(e=>e.id===hinge.id).sets[0]);
+S.swapExercise(legSession,hinge.id,'back-extension-45',benchFilters);
+const legOriginal=S.session(legSession).exercises.find(e=>e.id===hinge.id),benchExercise=S.session(legSession).exercises.find(e=>e.id==='back-extension-45');
+assert.equal(JSON.stringify(legOriginal.sets[0]),hingeLogged);assert.equal(legOriginal.sets.length,1);
+assert.equal(benchExercise.weightMode,'bodyweight');assert.equal(benchExercise.sets.length,hinge.sets.length-1);
+assert.ok(benchExercise.sets.every(s=>!s.done&&s.weight===0&&s.reps===null&&s.rir===null));
+S.saveSet(legSession,benchExercise.id,benchExercise.sets[0].id,{weight:0,reps:12,rir:2,done:true});
+S.change(s=>s.preferences.gymEquipment={name:'My gym',equipment:['back-extension-bench']});S.init();
+const restored=S.readBackup(S.backup()),restoredBench=restored.sessions.find(s=>s.id===legSession).exercises.find(e=>e.id==='back-extension-45');
+assert.equal(restoredBench.weightMode,'bodyweight');assert.equal(restoredBench.sets[0].weight,0);assert.equal(restoredBench.sets[0].done,true);
+assert.deepEqual(Array.from(restored.preferences.gymEquipment.equipment),['back-extension-bench']);
+S.change(s=>s.preferences.gymEquipment={name:'Complete gym',equipment:Object.keys(X.equipment)});S.init();
+assert.deepEqual(Array.from(S.readBackup(S.backup()).preferences.gymEquipment.equipment),Object.keys(X.equipment));
+assert.equal(JSON.stringify(S.state.templates),legTemplates);assert.equal(JSON.stringify(S.state.cycle),legCycle);
+const benchmark=JSON.stringify(S.state);assert.throws(()=>S.swapExercise(legSession,benchExercise.id,'romanian-deadlift',benchFilters));assert.equal(JSON.stringify(S.state),benchmark);
+console.log('PASS Roman-chair swaps require the dedicated bench, match hip hinges, preserve logged RDL sets, start at 0 kg added, and survive profile/reload/backup round-trips');

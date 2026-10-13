@@ -1,6 +1,6 @@
 # Original Forge50 exercise demonstrations
 
-These 39 GIFs and their static posters are the original anatomical illustrations generated for Forge50 and reviewed by its owner. No Gym visual media or external exercise-dataset media is included.
+The original 39 GIFs and their static posters are anatomical illustrations generated for Forge50 and reviewed by its owner. Later additions are listed below. No Gym visual media or external exercise-dataset media is included.
 
 Each 600 × 600 GIF loops a sequence of four illustrated poses, encoded as 28 frames with a 2.33-second cycle. Orange highlights depict primary muscles, blue depicts supporting muscles, and purple outlines/arrows depict focus or movement. These are illustrative references: camera, equipment and anatomy details can vary between generated poses. They are not motion-capture recordings or professionally certified technique demonstrations. The existing written Technique guide remains the source for setup and form cues.
 
@@ -17,3 +17,11 @@ Assembly: `python scripts/assemble-incline-fly.py sheet.png` using Pillow. The s
 ## 2.12.0 additions
 
 34 additional original animations were assembled from the recovered eight-pose motion sheets created for Forge50. They cover all 33 new catalogue exercises and Hack Squat. Each uses eight illustrated poses and a 2.4-second loop; tall source panels keep their proportions. `docs/exercise-expansion.json` preserves source-sheet names and `docs/expanded-demo-assets.json` preserves asset hashes and timing. No third-party exercise images were introduced. These are illustrated movement references; written Technique cues remain available alongside each demonstration.
+
+## 2.12.1 — Machine Seated Row
+
+An original eight-pose chest-supported machine-row animation was generated with the built-in Image Generation tool, matching the user's Matrix machine photograph. It loops at 600 × 600 over 2.4 seconds. `docs/machine-seated-row-demo.json` records the asset hash, size and timing. See `MACHINE-SEATED-ROW.md`.
+
+## 2.12.3 — 45° Back Extension
+
+An original eight-pose Roman-chair animation was generated with the built-in Image Generation tool using the user's Matrix bench photo and Forge50's existing anatomy style. Orange highlights show glutes/hamstrings; blue highlights show supporting spinal erectors. It loops at 600 × 600 over 3.2 seconds. The original sheet is retained in `sources/back-extension-45-motion-sheet.png`; `scripts/assemble-back-extension.py` builds the GIF and poster without changing the illustrated poses. `docs/back-extension-demo.json` records its hash, size and timing. See `BACK-EXTENSION.md` for the final brief and technique.

@@ -6,6 +6,15 @@
 
 const ExerciseGuides = {
   guides: {
+    "45° Back Extension (Roman Chair)": {
+      focus:"Posterior chain / supported hip hinge",
+      primary:"Glutes and hamstrings (hip extension)", secondary:"Erector spinae and abdominals (trunk stabilisation)",
+      setup:"Use the angled back extension bench with split thigh pads, footplates and lower-leg rollers. Adjust and lock the pads just below your hip crease so your hips can bend freely. Place your feet on the plates, secure your lower legs against the rollers and use the handles to get into position. Begin with bodyweight and cross your arms over your chest.",
+      perform:"Brace your trunk and keep your neck in line with your back. Lower your torso slowly by hinging at the hips through a comfortable range. Keep your feet and legs supported. Use your glutes and hamstrings to raise your torso until shoulders, hips and heels form one straight line. Stop there without arching past the leg line. Start with no added load: record 0 kg. If you later hold a plate or dumbbell at your chest, record only that added weight.",
+      cues:["Pads below the hip crease; adjustment locked","Feet and lower legs stay supported","Hinge at the hips with a neutral spine","Finish in a straight line; no extra back arch"],
+      mistakes:"Setting the pads across the abdomen, rounding or over-arching the lower back, bouncing at the bottom, throwing the head back, or logging body mass as added weight.",
+      equipment:"45° back extension bench / Roman chair, such as the Matrix bench shown. Select Back extension bench / Roman chair in Gym equipment."
+    },
     "Machine Seated Row (Chest-Supported)": {
       focus:"Mid/upper-back thickness",
       primary:"Rhomboids and middle trapezius", secondary:"Lats, rear delts, biceps",

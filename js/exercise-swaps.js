@@ -3,9 +3,10 @@
 'use strict';
 window.ExerciseSwaps={
  oldbury:{name:'JD Gyms Oldbury',equipment:['dumbbells','bench','barbell','cable','machine','assisted-pull-up'],source:'https://www.jdgyms.co.uk/gym/oldbury/',checked:'2 October 2026'},
- equipment:{"dumbbells": "Dumbbells", "bench": "Bench", "barbell": "Barbell", "ez-bar": "EZ-bar", "cable": "Cable station", "machine": "Resistance machines", "assisted-pull-up": "Assisted pull-up machine"},
+ equipment:{"dumbbells": "Dumbbells", "bench": "Bench", "barbell": "Barbell", "ez-bar": "EZ-bar", "cable": "Cable station", "machine": "Resistance machines", "assisted-pull-up": "Assisted pull-up machine", "back-extension-bench": "Back extension bench / Roman chair"},
  patterns:{"horizontal-press": "Horizontal press", "vertical-press": "Overhead press", "chest-fly": "Chest fly", "horizontal-pull": "Row", "vertical-pull": "Vertical pull", "straight-arm-pull": "Straight-arm pull", "lateral-raise": "Lateral raise", "front-raise": "Front raise", "rear-delt-fly": "Rear-delt fly", "face-pull": "Face pull", "elbow-flexion": "Curl", "elbow-extension": "Triceps extension", "hip-hinge": "Hip hinge", "knee-extension": "Knee extension", "knee-flexion": "Leg curl", "calf-raise": "Calf raise", "trunk-flexion": "Ab crunch", "anti-rotation": "Anti-rotation"},
  metadata:{
+  "back-extension-45": [{"pattern":"hip-hinge","equipment":["back-extension-bench"]}],
   "machine-seated-row": [{"pattern":"horizontal-pull","equipment":["machine"]}],
     "machine-chest-press": [
     {
