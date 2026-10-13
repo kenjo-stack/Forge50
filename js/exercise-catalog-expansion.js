@@ -1,5 +1,18 @@
 /* Additional exercise definitions. Existing profile and routines stay in data.js. */
 Object.assign(window.ForgeDefaults.catalog, {
+  "back-extension-45": {
+    "id": "back-extension-45",
+    "name": "45° Back Extension (Roman Chair)",
+    "sets": 3,
+    "reps": "10-15",
+    "rir": 2,
+    "rest": "90 sec",
+    "notes": "Set the split thigh pads just below your hip crease and secure your feet and lower legs. Hinge down with a neutral spine, then rise until shoulders, hips and heels align. Start with bodyweight; 0 kg means no added load. Log only extra weight held at the chest, never your body mass.",
+    "muscle": "Hamstrings",
+    "increment": 1,
+    "weightMode": "bodyweight",
+    "restSeconds": 90
+  },
   "machine-seated-row": {
     "id": "machine-seated-row",
     "name": "Machine Seated Row (Chest-Supported)",

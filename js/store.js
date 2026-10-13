@@ -64,7 +64,7 @@ const Store = {
     const text=(x,max=1000)=>typeof x==='string'&&x.length<=max;
     if(s.preferences!==undefined&&(!s.preferences||!number(s.preferences.preferredRestSeconds,15,900)||typeof s.preferences.includeLegs!=='boolean'||s.preferences.keepAwake!==undefined&&typeof s.preferences.keepAwake!=='boolean'))fail();
     const gym=s.preferences?.gymEquipment;
-    if(gym!==undefined&&(!gym||!text(gym.name,80)||!gym.name.trim()||!Array.isArray(gym.equipment)||gym.equipment.length>7||new Set(gym.equipment).size!==gym.equipment.length||gym.equipment.some(id=>!['dumbbells','bench','barbell','ez-bar','cable','machine','assisted-pull-up'].includes(id))))fail();
+    if(gym!==undefined&&(!gym||!text(gym.name,80)||!gym.name.trim()||!Array.isArray(gym.equipment)||gym.equipment.length>8||new Set(gym.equipment).size!==gym.equipment.length||gym.equipment.some(id=>!['dumbbells','bench','barbell','ez-bar','cable','machine','assisted-pull-up','back-extension-bench'].includes(id))))fail();
     const includeLegs=s.preferences?.includeLegs===true;
     if(!['chest','back','shoulders',...(includeLegs?['legs']:[])].includes(s.cycle.next)||!this.validDate(s.cycle.nextDate))fail();
     const ids=new Set();

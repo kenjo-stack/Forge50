@@ -1,4 +1,6 @@
-# FORGE50 2.12.2 — Skip Exercise Navigation
+# FORGE50 2.12.3 — 45° Back Extension
+
+Adds **45° Back Extension (Roman Chair)** for the photographed Matrix bench, with its own looping animation, setup guide and posterior-chain illustration. In **Settings → Gym equipment**, select **Back extension bench / Roman chair** and save. In Legs, swap **Romanian Deadlift** to the new exercise, or add it to a routine through Settings. Record **0 kg** for bodyweight or only the extra weight held at your chest. The catalogue now contains 76 exercises. See `BACK-EXTENSION.md` for details.
 
 Skip exercise now moves the guided workout to the next unfinished exercise, passing over skipped or fully logged exercises. The full workout shows Skip exercise beside Guide and Swap, then scrolls to the next exercise. Unskip exercise restores it; logged sets, routines and training history are preserved.
 
