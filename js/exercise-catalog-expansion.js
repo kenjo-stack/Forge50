@@ -1,5 +1,18 @@
 /* Additional exercise definitions. Existing profile and routines stay in data.js. */
 Object.assign(window.ForgeDefaults.catalog, {
+  "exigo-plate-loaded-low-row": {
+    "id": "exigo-plate-loaded-low-row",
+    "name": "Exigo Plate-Loaded Low Row",
+    "sets": 3,
+    "reps": "8-12",
+    "rir": 2,
+    "rest": "2 min",
+    "notes": "Adjust the seat so the handles are within comfortable reach. Keep your torso steady and shoulders down, pull the handles toward your lower ribs with elbows travelling back, then return under control. Record added plate weight consistently (total plates across both sides); machine leverage differs from cable rows.",
+    "muscle": "Back",
+    "increment": 2.5,
+    "weightMode": "total",
+    "restSeconds": 120
+  },
   "machine-seated-row": {
     "id": "machine-seated-row",
     "name": "Machine Seated Row (Chest-Supported)",
